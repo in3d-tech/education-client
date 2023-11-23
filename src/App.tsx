@@ -1,40 +1,41 @@
-import { useState, useEffect } from "react";
 import "./App.css";
-import { Authentication } from "./authentication/Authentication";
+import { Authentification } from "./authentication/Authentification";
 import { Homepage } from "./homepage/Homepage";
-import useFetch from "./common/useFetch";
+// import useFetch from "./common/useFetch";
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { CreateLesson } from "./portals/lessons/CreateLesson";
+import { Lesson } from "./portals/lessons/Lesson";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [user, setUser] = useState<User | null>(null);
+  // const data = useFetch("");
+  // console.log({ data });
 
-  const data = useFetch("");
-  console.log({ data });
-
-  // useEffect(() => {
-  //   try {
-  //     // fetch("http://localhost:3000")
-  //     //   .then((response) => {
-  //     //     return response.text();
-  //     //   })
-  //     //   .then((data) => {
-  //     //     console.log({ data });
-  //     //   });
-  //     console.log("in 1");
-
-  //     console.log("in 2");
-  //     console.log({ data });
-  //   } catch (err) {
-  //     console.log("in the error");
-  //     console.log(err);
-  //   }
-  // }, []);
-
+  // https://www.youtube.com/watch?v=NIXJJoqM8BQ&ab_channel=AlvinTang    ar/scan
   return (
     <>
-      <Authentication />
-      <Homepage />
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              !user ? <Authentification setUser={setUser} /> : <Homepage />
+            }
+          />
+          <Route path="/new-lesson" element={<CreateLesson />} />
+          <Route path="/lesson" element={<Lesson />} />
+        </Routes>
+      </Router>
     </>
   );
 }
 
 export default App;
+
+export type User = {
+  name: string;
+  email: string;
+  phone: string;
+  role: string;
+};

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import useFetch from "../common/useFetch";
+// import useFetch from "../common/useFetch";
 
 export function SignUp() {
   return (
@@ -11,25 +11,18 @@ export function SignUp() {
 
 const Form: React.FC = () => {
   const { register, handleSubmit } = useForm<FormData>();
+
   const onSubmit = async (data: FormData) => {
-    console.log("submitting sign-in");
-    console.log(data);
     try {
-      //   const res = fetch("http://localhost:3000/signup");
-      const res = await fetch("http://localhost:3000/signup", {
+      const response = await fetch("http://localhost:3000/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          startDate: null,
-          endDate: null,
-        }),
-      }); //useFetch("/signup");
-      console.log("this is the signup res!~");
-      console.log({ res });
-      const data = await res.json();
-      console.log("dataaaaa", { data });
-    } catch (error) {
-      console.log(error);
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+      return res;
+    } catch {
+      console.log("error with signup");
     }
   };
 
@@ -68,13 +61,11 @@ const Form: React.FC = () => {
       </div>
 
       <div>
-        <label htmlFor="role">Role: </label>
-        <select {...register("role")}>
-          <option value="administrator">Administrator</option>
-          <option value="teacher">Teacher</option>
-          <option value="student">Student</option>
-          <option value="other">Other</option>
-        </select>
+        <label htmlFor="code">code: </label>
+        <input
+          placeholder="code"
+          {...register("code")} // , { required: "Phone Required" }
+        />
       </div>
 
       <input type="submit" />
@@ -87,5 +78,5 @@ type FormData = {
   lastName: string;
   email: string;
   phone: string;
-  role: string;
+  code: string;
 };
