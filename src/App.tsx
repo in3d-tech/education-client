@@ -6,11 +6,14 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CreateLesson } from "./portals/lessons/CreateLesson";
 import { Lesson } from "./portals/lessons/Lesson";
+import Modal from "react-modal";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
   // const data = useFetch("");
   // console.log({ data });
+
+  Modal.setAppElement("#root");
 
   // https://www.youtube.com/watch?v=NIXJJoqM8BQ&ab_channel=AlvinTang    ar/scan
   return (
@@ -20,10 +23,9 @@ function App() {
           <Route
             path="/"
             element={
-              !user ? <Authentification setUser={setUser} /> : <Homepage />
+              user ? <Authentification setUser={setUser} /> : <Homepage />
             }
           />
-          <Route path="/new-lesson" element={<CreateLesson />} />
           <Route path="/lesson" element={<Lesson />} />
         </Routes>
       </Router>

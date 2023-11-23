@@ -37,33 +37,49 @@ const Form: React.FC = () => {
       </div>
 
       <div>
-        <label htmlFor="lastName">Last Name: </label>
+        <label htmlFor="lastName">שם משפחה: </label>
         <input
-          placeholder="Last Name"
+          placeholder="שם משפחה"
           {...register("lastName")} // , { required: "First Name Required" }
         />
       </div>
 
       <div>
-        <label htmlFor="email">Email: </label>
+        <label htmlFor="email">דואר אלקטרוני </label>
         <input
-          placeholder="Email"
+          placeholder="דואר אלקטרוני"
           {...register("email", { required: "Email Required" })} // , { required: "Email Required" }
         />
       </div>
 
       <div>
-        <label htmlFor="phone">Phone: </label>
+        <label htmlFor="password">סיסמה</label>
         <input
-          placeholder="Phone"
+          placeholder="סיסמה"
+          {...register("password", { required: "Password Required" })} // , { required: "Email Required" }
+        />
+      </div>
+
+      <div>
+        <label htmlFor="confirmPassword">סיסמה confirm </label>
+        <input
+          placeholder="סיסמה"
+          {...register("confirmPassword", { required: "Password Required" })} // , { required: "Email Required" }
+        />
+      </div>
+
+      <div>
+        <label htmlFor="phone">טלפון: </label>
+        <input
+          placeholder="טלפון"
           {...register("phone")} // , { required: "Phone Required" }
         />
       </div>
 
       <div>
-        <label htmlFor="code">code: </label>
+        <label htmlFor="code">קוד: </label>
         <input
-          placeholder="code"
+          placeholder="קוד"
           {...register("code")} // , { required: "Phone Required" }
         />
       </div>
@@ -77,6 +93,8 @@ type FormData = {
   firstName: string;
   lastName: string;
   email: string;
+  password: string;
+  confirmPassword: string;
   phone: string;
   code: string;
 };
