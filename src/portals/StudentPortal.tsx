@@ -1,12 +1,14 @@
 import Modal from "react-modal";
 import { useState } from "react";
+import { User } from "../App";
+import { MyLessons } from "./lessons/MyLessons";
 
-export function StudentPortal() {
+type StudentPortalProps = {
+  user: User;
+};
+
+export function StudentPortal({ user }: StudentPortalProps) {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [activeLessons, setActiveLessons] = useState<any[]>([
-    { title: "first lesson" },
-    { title: "second lesson" },
-  ]);
 
   const handleModel = (prevState: boolean) => {
     setModalIsOpen(!prevState);
@@ -22,16 +24,7 @@ export function StudentPortal() {
           onRequestClose={() => handleModel(modalIsOpen)}
           contentLabel="Create Lesson Modal"
         >
-          {activeLessons.length
-            ? activeLessons.map((lesson) => {
-                return (
-                  <div>
-                    <button>{lesson.title}</button>
-                  </div>
-                );
-              })
-            : null}
-          <h1 style={{ color: "black" }}>Create Lesson</h1>
+          <MyLessons userId={user?.userId} />
           <button onClick={() => handleModel(modalIsOpen)}>close</button>
           {/* Your form or any other content can go here */}
         </Modal>

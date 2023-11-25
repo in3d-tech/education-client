@@ -4,12 +4,20 @@ import { Homepage } from "./homepage/Homepage";
 // import useFetch from "./common/useFetch";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { CreateLesson } from "./portals/lessons/CreateLesson";
 import { Lesson } from "./portals/lessons/Lesson";
 import Modal from "react-modal";
 
+const tempUser = {
+  userId: "26040550-3950-424e-ba29-ee5382d4c6e0",
+  name: "jon",
+  // lastName: "marks",
+  email: "jmarks@put.com",
+  phone: "0577777777",
+  role: "teacher",
+};
+
 function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(tempUser);
   // const data = useFetch("");
   // console.log({ data });
 
@@ -23,7 +31,11 @@ function App() {
           <Route
             path="/"
             element={
-              user ? <Authentification setUser={setUser} /> : <Homepage />
+              !user ? (
+                <Authentification setUser={setUser} />
+              ) : (
+                <Homepage user={user} />
+              )
             }
           />
           <Route path="/lesson" element={<Lesson />} />
@@ -40,4 +52,5 @@ export type User = {
   email: string;
   phone: string;
   role: string;
-};
+  userId: string;
+} | null;

@@ -1,12 +1,24 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
+import { User } from "../App";
+import { MyLessons } from "./lessons/MyLessons";
 
-export function TeacherPortal() {
+type TeacherPortalProps = {
+  user: User;
+};
+
+export function TeacherPortal({ user }: TeacherPortalProps) {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [currentLessonsModal, setCurrentLessonsModal] =
+    useState<boolean>(false);
 
   const handleModel = (prevState: boolean) => {
     setModalIsOpen(!prevState);
+  };
+
+  const handleCurrentLessonsModal = (prevState: boolean) => {
+    setCurrentLessonsModal(!prevState);
   };
 
   return (
@@ -22,20 +34,45 @@ export function TeacherPortal() {
           contentLabel="Create Lesson Modal"
         >
           <h1 style={{ color: "black" }}>Create Lesson</h1>
-          <CreateLessonForm />
+          <CreateLessonForm
+            setModalIsOpen={setModalIsOpen}
+            userId={user?.userId}
+          />
           <button onClick={() => handleModel(modalIsOpen)}>close</button>
           {/* Your form or any other content can go here */}
         </Modal>
-        <button>Current Lessons</button>
+        <button onClick={() => handleCurrentLessonsModal(false)}>
+          My Lessons
+        </button>
+        <Modal
+          isOpen={currentLessonsModal}
+          onRequestClose={() => handleCurrentLessonsModal(currentLessonsModal)}
+          contentLabel="Create Lesson Modal"
+        >
+          <MyLessons userId={user?.userId} />
+          <button
+            onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
+          >
+            close
+          </button>
+          {/* Your form or any other content can go here */}
+        </Modal>
       </div>
     </div>
   );
 }
 
-const CreateLessonForm = () => {
+type LessonFormProps = {
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  userId: string | undefined;
+};
+
+const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
+    console.log("about to send data ", data);
+    data.userId = userId;
     try {
       const response = await fetch("http://localhost:3000/create-lesson", {
         method: "POST",
@@ -43,7 +80,12 @@ const CreateLessonForm = () => {
         body: JSON.stringify(data),
       });
       const res = await response.json();
-      return res;
+      console.log({ res });
+      if (res.acknowledged == true) {
+        setModalIsOpen(false);
+      } else {
+        alert("issue creating lesson");
+      }
     } catch {
       console.log("error with signup");
     }
@@ -105,4 +147,5 @@ type FormData = {
   instructions: string;
   language: string;
   class: string | number;
+  userId?: string;
 };
