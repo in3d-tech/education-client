@@ -119,10 +119,10 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
 
       <div>
         <label htmlFor="language">Language: </label>
-        <input
-          placeholder="Language"
-          {...register("language")} // , { required: "Phone Required" }
-        />
+        <select {...register("language")}>
+          <option value="he">Hebrew</option>
+          <option value="ar">Arabic</option>
+        </select>
       </div>
 
       <div>
