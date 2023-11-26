@@ -46,6 +46,9 @@ export function MyLessons({ userId }: MyLessonsProps) {
       ) : (
         <div style={{ color: "black" }}>No active lessons</div>
       )}
+      <Link to="/lesson">
+        <button> {"fake click this for camera"}</button>
+      </Link>
     </div>
   );
 }
