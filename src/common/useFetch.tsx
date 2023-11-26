@@ -37,6 +37,7 @@ function useFetch(url: string) {
         res.content && setData(res.content);
       })
       .catch((err) => {
+        console.log(err);
         setLoading(false);
         setError("An error occurred. Awkward..");
       });
