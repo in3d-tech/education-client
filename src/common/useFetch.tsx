@@ -49,4 +49,4 @@ function useFetch(url: string) {
   return { data, loading, error };
 }
 
-export default useFetch;
+// export default useFetch;
