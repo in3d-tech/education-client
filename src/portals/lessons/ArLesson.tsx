@@ -50,6 +50,16 @@
 // };
 
 const ARComponent = () => {
+  console.log(navigator.mediaDevices);
+  if (!navigator.mediaDevices) {
+    return (
+      <div>
+        <p>
+          WebRTC not supported in this browser. Please use a supported browser.
+        </p>
+      </div>
+    );
+  }
   const iframeHTML = `
     <html>
       <head>

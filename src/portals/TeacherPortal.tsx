@@ -74,7 +74,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     console.log("about to send data ", data);
     data.userId = userId;
     try {
-      const response = await fetch("http://localhost:3000/create-lesson", {
+      const response = await fetch("http://192.168.1.224:3000/create-lesson", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -104,7 +104,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       <div>
         <label htmlFor="description">Description: </label>
         <input
-          placeholder="Last Name"
+          placeholder="Description"
           {...register("description")} // , { required: "First Name Required" }
         />
       </div>
