@@ -69,7 +69,7 @@ export function Login({ setUser, setUserSignup }: LoginProps) {
         </div>
         <div className="auth-btns-wrapper">
           <button className="btn" type="submit">
-            שלך (temp)
+            שלך (x2)
           </button>
           <button
             onClick={() => setUserSignup(true)}
