@@ -17,7 +17,7 @@ const tempUser = {
 };
 
 function App() {
-  const [user, setUser] = useState<User | null>(tempUser);
+  const [user, setUser] = useState<User | null>(null);
   // const data = useFetch("");
   // console.log({ data });
 

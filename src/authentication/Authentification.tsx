@@ -12,7 +12,11 @@ export function Authentification({ setUser }: AuthentificationProps) {
 
   return (
     <div className="auth-wrapper">
-      {userSignup ? <SignUp /> : <Login setUser={setUser} />}
+      {userSignup ? (
+        <SignUp setUser={setUser} setUserSignup={setUserSignup} />
+      ) : (
+        <Login setUser={setUser} setUserSignup={setUserSignup} />
+      )}
       <button onClick={() => setUserSignup(!userSignup)}>sign up</button>
     </div>
   );

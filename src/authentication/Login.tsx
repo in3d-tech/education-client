@@ -1,12 +1,15 @@
 import { useForm } from "react-hook-form";
 // import useFetch from "../common/useFetch";
 import { User } from "../App";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 type LoginProps = {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setUserSignup: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export function Login({ setUser }: LoginProps) {
+export function Login({ setUser, setUserSignup }: LoginProps) {
   const Form: React.FC = () => {
     const { register, handleSubmit } = useForm<FormData>();
 
@@ -18,8 +21,8 @@ export function Login({ setUser }: LoginProps) {
           body: JSON.stringify(data),
         });
         const res = await response.json();
+        console.log({ res });
         setUser(res);
-        return res;
       } catch {
         console.log("error with login");
       }
@@ -27,23 +30,56 @@ export function Login({ setUser }: LoginProps) {
 
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="email">דואר אלקטרוני:</label>
+        <div className="input-container">
+          {/* <label style={{ color: "black" }} htmlFor="email">
+            דואר אלקטרוני:
+          </label> */}
+
           <input
+            style={{ color: "black" }}
             placeholder="דואר אלקטרוני"
             {...register("email")} //, { required: "First Name Required" }
           />
         </div>
 
-        <div>
-          <label htmlFor="password">סיסמה: </label>
+        <div className="input-container">
+          {/* <label htmlFor="password">סיסמה: </label> */}
           <input
+            style={{ color: "black" }}
             placeholder="סיסמה"
             {...register("password")} // , { required: "First Name Required" }
           />
         </div>
+        <div className="auth-btns-wrapper">
+          <button className="btn" type="submit">
+            שלך
+          </button>
+          <button
+            onClick={() => setUserSignup(true)}
+            className="btn"
+            type="submit"
+          >
+            Signup
+          </button>
+        </div>
 
-        <button type="submit">שלך</button>
+        {/* <Box>
+          <div>
+            <TextField
+              id="standard-search"
+              label="Search field"
+              type="search"
+              variant="standard"
+            />
+            <TextField
+              id="standard-helperText"
+              label="Helper text"
+              defaultValue="Default Value"
+              helperText="Some important text"
+              variant="standard"
+            />
+          </div>
+        </Box> */}
       </form>
     );
   };

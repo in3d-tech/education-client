@@ -22,18 +22,29 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "2em",
+      }}
+    >
       <div>
-        <h1>teacher portal</h1>
+        <h1 style={{ color: "black" }}>teacher portal</h1>
       </div>
-      <div>
-        <button onClick={() => handleModel(false)}>New Lesson</button>
+      <div className="portal-wrapper">
+        <button className="btn" onClick={() => handleModel(false)}>
+          New Lesson
+        </button>
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={() => handleModel(modalIsOpen)}
           contentLabel="Create Lesson Modal"
         >
-          <h1 style={{ color: "black" }}>Create Lesson</h1>
+          <h1 style={{ textAlign: "center", color: "black" }}>Create Lesson</h1>
           <CreateLessonForm
             setModalIsOpen={setModalIsOpen}
             userId={user?.userId}
@@ -41,7 +52,10 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           <button onClick={() => handleModel(modalIsOpen)}>close</button>
           {/* Your form or any other content can go here */}
         </Modal>
-        <button onClick={() => handleCurrentLessonsModal(false)}>
+        <button
+          className="btn"
+          onClick={() => handleCurrentLessonsModal(false)}
+        >
           My Lessons
         </button>
         <Modal
@@ -71,10 +85,9 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    console.log("about to send data ", data);
     data.userId = userId;
     try {
-      const response = await fetch("http://192.168.1.224:3000/create-lesson", {
+      const response = await fetch("http://localhost:3000/create-lesson", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -93,24 +106,24 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="headline">Headline: </label>
+      <div className="input-container">
+        {/* <label htmlFor="headline">Headline: </label> */}
         <input
           placeholder="Headline"
           {...register("headline")} //, { required: "First Name Required" }
         />
       </div>
 
-      <div>
-        <label htmlFor="description">Description: </label>
+      <div className="input-container">
+        {/* <label htmlFor="description">Description: </label> */}
         <input
           placeholder="Description"
           {...register("description")} // , { required: "First Name Required" }
         />
       </div>
 
-      <div>
-        <label htmlFor="instructions">Instructions: </label>
+      <div className="input-container">
+        {/* <label htmlFor="instructions">Instructions: </label> */}
         <input
           placeholder="Instructions"
           {...register("instructions")} // , { required: "Email Required" }
@@ -136,6 +149,14 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         </select>
       </div>
 
+      {/* <div>
+        <label htmlFor="model">Choose Model: </label>
+        <select {...register("model")}>
+          <option value="square">Square</option>
+          <option value="circle">Circle</option>
+        </select>
+      </div> */}
+
       <input type="submit" />
     </form>
   );
@@ -148,4 +169,5 @@ type FormData = {
   language: string;
   class: string | number;
   userId?: string;
+  // model: string;
 };

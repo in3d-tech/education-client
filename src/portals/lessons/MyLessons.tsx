@@ -10,7 +10,7 @@ export function MyLessons({ userId }: MyLessonsProps) {
 
   const fetchMyLessons = async () => {
     try {
-      const response = await fetch("http://192.168.1.224:3000/active-lessons", {
+      const response = await fetch("http://localhost:3000/active-lessons", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId }),

@@ -20,7 +20,7 @@ const Form: React.FC = () => {
     // try {
 
     try {
-      const response = await fetch("http://192.168.1.224:3000/create-lesson", {
+      const response = await fetch("http://localhost:3000/create-lesson", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -34,7 +34,7 @@ const Form: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+      <div className="input-container">
         <label htmlFor="headline">headline</label>
         <input
           placeholder="headline"
@@ -42,7 +42,7 @@ const Form: React.FC = () => {
         />
       </div>
 
-      <div>
+      <div className="input-container">
         <label htmlFor="description">Description</label>
         <input
           placeholder="Description"
@@ -50,7 +50,7 @@ const Form: React.FC = () => {
         />
       </div>
 
-      <div>
+      <div className="input-container">
         <label htmlFor="instructions">Instructions: </label>
         <input
           placeholder="Instructions"

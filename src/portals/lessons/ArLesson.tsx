@@ -50,7 +50,6 @@
 // };
 
 const ARComponent = () => {
-  console.log(navigator.mediaDevices);
   if (!navigator.mediaDevices) {
     return (
       <div>

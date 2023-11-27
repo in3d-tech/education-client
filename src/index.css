@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* background-color: #dd6666; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -16,21 +16,129 @@
 
 body {
   margin: 0;
+  background: #a96622;
+  background: -webkit-linear-gradient(#ffffff, #d68f44);
+  background: -moz-linear-gradient(#ffffff, #d68f44);
+  background: linear-gradient(#ffffff, #d68f44);
+}
+
+.auth-btns-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .auth-child {
   height: 80%;
-  width: 60%;
+  width: 90%;
+}
+
+.auth-form-input-wrapper {
+  /* border: 1px solid red; */
+  margin-bottom: 10px; /* Add margin at the bottom for spacing between input rows */
 }
 
 .auth-wrapper {
   width: 100vw;
   height: 100vh;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .signup-wrapper {
-  border: 1px solid orange;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Add styling for labels */
+label {
+  margin-bottom: 5px; /* Add margin at the bottom of labels */
+}
+
+/* this is a break */
+
+.text-center {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 23px;
+  margin: -50px 0 80px 0;
+  display: block;
+  text-align: center;
+}
+.box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.89);
+  border-radius: 3px;
+  padding: 70px 100px;
+}
+.input-container {
+  position: relative;
+  margin-bottom: 25px;
+}
+.input-container label {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 16px;
+  color: #fff;
+  transition: all 0.5s ease-in-out;
+}
+.input-container input {
+  border: 0;
+  border-bottom: 1px solid #555;
+  background: transparent;
+  width: 100%;
+  padding: 8px 0 5px 0;
+  font-size: 16px;
+  color: #fff;
+}
+.input-container input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #3a3b46;
+}
+.btn {
+  color: #fff;
+  background-color: #383028;
+  outline: none;
+  border: 0;
+  color: #fff;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  margin-top: 50px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+/*.btn:after{
+	content:"";
+	position:absolute;
+	background:rgba(0,0,0,0.50);
+	top:0;
+	right:0;
+	width:100%;
+	height:100%;
+}*/
+.input-container input:focus ~ label,
+.input-container input:valid ~ label {
+  top: -12px;
+  font-size: 12px;
+}
+
+.portal-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 60vh;
 }
