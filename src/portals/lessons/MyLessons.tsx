@@ -34,7 +34,6 @@ export function MyLessons({ userId }: MyLessonsProps) {
   return (
     <div className="my-lesson-wrapper">
       <div className="my-lessons-list">
-        <h2 style={{ color: "black" }}>my lessons</h2>
         {myLessons.length ? (
           myLessons.map((lesson, idx) => {
             return (
@@ -42,7 +41,6 @@ export function MyLessons({ userId }: MyLessonsProps) {
                 key={idx}
                 style={{
                   color: "black",
-                  border: "1px solid red",
                   width: "80%",
                   marginTop: "2em",
                   margin: 0,
@@ -62,11 +60,11 @@ export function MyLessons({ userId }: MyLessonsProps) {
           <div style={{ color: "black" }}>No active lessons</div>
         )}
       </div>
-      <div>
+      {/* <div>
         <Link to="/lesson">
           <button> {"fake click this for camera"}</button>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }

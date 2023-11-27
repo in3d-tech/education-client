@@ -35,10 +35,11 @@ const Form: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">
-        <label htmlFor="headline">headline</label>
+        {/* <label htmlFor="headline">headline</label> */}
         <input
           placeholder="headline"
           {...register("headline")} //, { required: "First Name Required" }
+          style={{ color: "red" }}
         />
       </div>
 

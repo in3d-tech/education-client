@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { User } from "../App";
 import { MyLessons } from "./lessons/MyLessons";
+import { Link } from "react-router-dom";
 
 type TeacherPortalProps = {
   user: User;
@@ -63,8 +64,15 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           onRequestClose={() => handleCurrentLessonsModal(currentLessonsModal)}
           contentLabel="Create Lesson Modal"
         >
-          <div className="form-bg">
+          <div className="form-bg lessons-center">
+            <h2 style={{ color: "black" }}>My Lessons</h2>
+
             <MyLessons userId={user?.userId} />
+            <div>
+              <Link to="/lesson">
+                <button> {"fake click this for camera"}</button>
+              </Link>
+            </div>
             <button
               onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
             >
@@ -114,6 +122,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         <input
           placeholder="Headline"
           {...register("headline")} //, { required: "First Name Required" }
+          style={{ color: "black" }}
         />
       </div>
 
@@ -122,6 +131,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         <input
           placeholder="Description"
           {...register("description")} // , { required: "First Name Required" }
+          style={{ color: "black" }}
         />
       </div>
 
@@ -130,6 +140,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         <input
           placeholder="Instructions"
           {...register("instructions")} // , { required: "Email Required" }
+          style={{ color: "black" }}
         />
       </div>
 
@@ -164,6 +175,11 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
           <option value="square">Square</option>
           <option value="circle">Circle</option>
         </select>
+      </div>
+
+      <div>
+        <label htmlFor="upload"></label>
+        <input type="file" />
       </div>
 
       <input className="btn" style={{ width: "20%" }} type="submit" />
