@@ -25,8 +25,8 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
   return (
     <div
       style={{
-        height: "100vh",
-        width: "100vw",
+        // height: "100vh",
+        // width: "100vw",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -34,7 +34,7 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
       }}
     >
       <div>
-        <h1 style={{ color: "black" }}>פורטל מורים</h1>
+        <h1 className="portal-title">פורטל מורים</h1>
       </div>
       <div className="portal-wrapper">
         <button className="btn" onClick={() => handleModel(false)}>
@@ -44,14 +44,32 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           isOpen={modalIsOpen}
           onRequestClose={() => handleModel(modalIsOpen)}
           contentLabel="Create Lesson Modal"
+          style={{
+            content: {
+              padding: 0,
+              overflow: "hidden",
+              boxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
+              WebkitBoxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
+            },
+          }}
+
+          // className="test"
         >
-          <h1 style={{ textAlign: "center", color: "black" }}>Create Lesson</h1>
-          <CreateLessonForm
-            setModalIsOpen={setModalIsOpen}
-            userId={user?.userId}
-          />
-          {/* <button onClick={() => handleModel(modalIsOpen)}>close</button> */}
-          {/* Your form or any other content can go here */}
+          <div
+            style={{
+              height: "100%",
+            }}
+          >
+            <h1 style={{ textAlign: "center", color: "black" }}>
+              Create Lesson
+            </h1>
+            <CreateLessonForm
+              setModalIsOpen={setModalIsOpen}
+              userId={user?.userId}
+            />
+            {/* <button onClick={() => handleModel(modalIsOpen)}>close</button> */}
+            {/* Your form or any other content can go here */}
+          </div>
         </Modal>
         <button
           className="btn"
@@ -65,7 +83,9 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           contentLabel="Create Lesson Modal"
         >
           <div className="form-bg lessons-center">
-            <h2 style={{ color: "black" }}>My Lessons</h2>
+            <h2 className="portal-title" style={{ fontSize: "2em" }}>
+              My Lessons
+            </h2>
 
             <MyLessons userId={user?.userId} />
             <div>
@@ -144,7 +164,14 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         />
       </div>
 
-      <div>
+      <div
+        style={{
+          width: "14em",
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "1em",
+        }}
+      >
         <label htmlFor="language" style={{ color: "black" }}>
           שפה:
         </label>
@@ -154,7 +181,14 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         </select>
       </div>
 
-      <div>
+      <div
+        style={{
+          width: "14em",
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "1em",
+        }}
+      >
         <label htmlFor="class" style={{ color: "black" }}>
           כיתה:
         </label>
@@ -167,7 +201,14 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         </select>
       </div>
 
-      <div>
+      <div
+        style={{
+          width: "14em",
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "1em",
+        }}
+      >
         <label htmlFor="model" style={{ color: "black" }}>
           Choose Model:
         </label>
@@ -177,11 +218,11 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         </select>
       </div>
 
-      <div>
+      <div style={{ marginTop: "2em" }}>
         <label htmlFor="upload"></label>
         <input type="file" />
       </div>
-
+      {/* <Temp /> */}
       <input className="btn" style={{ width: "20%" }} type="submit" />
     </form>
   );
@@ -195,4 +236,48 @@ type FormData = {
   class: string | number;
   userId?: string;
   model: string;
+};
+
+const Temp = () => {
+  return (
+    <div className="sec-center">
+      <input
+        className="dropdown"
+        type="checkbox"
+        id="dropdown"
+        name="dropdown"
+      />
+      <label className="for-dropdown" htmlFor="dropdown">
+        Dropdown Menu <i className="uil uil-arrow-down"></i>
+      </label>
+      <div className="section-dropdown">
+        <a href="#">
+          Dropdown Link <i className="uil uil-arrow-right"></i>
+        </a>
+        <input
+          className="dropdown-sub"
+          type="checkbox"
+          id="dropdown-sub"
+          name="dropdown-sub"
+        />
+        <label className="for-dropdown-sub" htmlFor="dropdown-sub">
+          Dropdown Sub <i className="uil uil-plus"></i>
+        </label>
+        <div className="section-dropdown-sub">
+          <a href="#">
+            Dropdown Link <i className="uil uil-arrow-right"></i>
+          </a>
+          <a href="#">
+            Dropdown Link <i className="uil uil-arrow-right"></i>
+          </a>
+        </div>
+        <a href="#">
+          Dropdown Link <i className="uil uil-arrow-right"></i>
+        </a>
+        <a href="#">
+          Dropdown Link <i className="uil uil-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  );
 };

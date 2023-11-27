@@ -49,7 +49,7 @@ export function MyLessons({ userId }: MyLessonsProps) {
                 }}
               >
                 <Link to="/lesson">
-                  <button className="btn" style={{ width: "100%" }}>
+                  <button className="btn" style={{ width: "30vw" }}>
                     {lesson.headline}
                   </button>
                 </Link>

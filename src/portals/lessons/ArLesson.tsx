@@ -98,7 +98,7 @@ const ARComponent = () => {
         scale="0.002 0.002 0.002 position="-3 0.01 -2">
           <a-animation
               attribute="rotation"
-              dur="8000"
+              dur="11000"
               to="360 360 0"
               repeat="indefinite"
               easing="linear"

@@ -16,7 +16,7 @@ export function StudentPortal({ user }: StudentPortalProps) {
   return (
     <div>
       <div>
-        <h1>Student portal</h1>
+        <h1 className="portal-title">פורטל student</h1>
       </div>
       <div>
         <Modal
