@@ -31,7 +31,7 @@ function App() {
           <Route
             path="/"
             element={
-              user ? (
+              !user ? (
                 <Authentification setUser={setUser} />
               ) : (
                 <Homepage user={user} />
