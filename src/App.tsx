@@ -7,17 +7,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Lesson } from "./portals/lessons/Lesson";
 import Modal from "react-modal";
 
-// const tempUser = {
-//   userId: "26040550-3950-424e-ba29-ee5382d4c6e0",
-//   name: "jon",
-//   // lastName: "marks",
-//   email: "jmarks@put.com",
-//   phone: "0577777777",
-//   role: "teacher",
-// };
+const tempUser = {
+  userId: "26040550-3950-424e-ba29-ee5382d4c6e0",
+  name: "jon",
+  // lastName: "marks",
+  email: "jmarks@put.com",
+  phone: "0577777777",
+  role: "teacher",
+};
 // http://192.168.1.224/
 function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(tempUser);
   // const data = useFetch("");
   // console.log({ data });
 
