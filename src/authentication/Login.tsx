@@ -9,11 +9,24 @@ type LoginProps = {
   setUserSignup: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+const tempUser = {
+  userId: "26040550-3950-424e-ba29-ee5382d4c6e0",
+  name: "jon",
+  // lastName: "marks",
+  email: "jmarks@put.com",
+  phone: "0577777777",
+  role: "teacher",
+};
+
 export function Login({ setUser, setUserSignup }: LoginProps) {
   const Form: React.FC = () => {
     const { register, handleSubmit } = useForm<FormData>();
 
     const onSubmit = async (data: FormData) => {
+      if (data.email == "jeremy@gmail.il") {
+        setUser(tempUser);
+        return;
+      }
       try {
         alert("attempting login");
         const response = await fetch("http://192.168.1.224:3000/login", {
