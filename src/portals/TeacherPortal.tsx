@@ -34,7 +34,7 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
       }}
     >
       <div>
-        <h1 style={{ color: "black" }}>teacher portal</h1>
+        <h1 style={{ color: "black" }}>פורטל מורים</h1>
       </div>
       <div className="portal-wrapper">
         <button className="btn" onClick={() => handleModel(false)}>

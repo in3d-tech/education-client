@@ -95,7 +95,7 @@ const ARComponent = () => {
       </a-assets>
       <a-marker preset="hiro">
         <a-entity gltf-model="#3D-model"
-        scale="0.5 0.5 0.5 position="0 0.5 0">
+        scale="0.2 0.2 0.2 position="-3 0.1 0">
           <a-animation
               attribute="rotation"
               dur="5000"
