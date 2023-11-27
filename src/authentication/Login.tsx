@@ -25,24 +25,23 @@ export function Login({ setUser, setUserSignup }: LoginProps) {
     const onSubmit = async (data: FormData) => {
       if (data.email == "jeremy@gmail.il") {
         setUser(tempUser);
-        return;
-      }
-      try {
-        alert("attempting login");
-        const response = await fetch("http://192.168.1.224:3000/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
+      } else {
+        try {
+          alert("attempting login");
+          const response = await fetch("http://192.168.1.224:3000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
 
-        const res = await response.json();
-        alert(res);
-        console.log({ res });
-        setUser(res);
-        return;
-      } catch {
-        alert("error with login ");
-        console.log("error with login");
+          const res = await response.json();
+          alert(res);
+          console.log({ res });
+          setUser(res);
+        } catch {
+          alert("error with login ");
+          console.log("error with login");
+        }
       }
     };
 
