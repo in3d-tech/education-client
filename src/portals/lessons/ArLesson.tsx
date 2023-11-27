@@ -94,7 +94,8 @@ const ARComponent = () => {
         <a-asset-item id="3D-model" src="./assets/models/new-tank/tanky future new.gltf"></a-asset-item>
       </a-assets>
       <a-marker preset="hiro">
-        <a-entity gltf-model="#3D-model">
+        <a-entity gltf-model="#3D-model"
+        scale="0.5 0.5 0.5 position="0 0.5 0">
           <a-animation
               attribute="rotation"
               dur="5000"
