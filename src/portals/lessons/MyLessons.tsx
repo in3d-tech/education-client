@@ -10,7 +10,7 @@ export function MyLessons({ userId }: MyLessonsProps) {
 
   const fetchMyLessons = async () => {
     try {
-      const response = await fetch("http://localhost:3000/active-lessons", {
+      const response = await fetch("http://192.168.1.224:3000/active-lessons", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId }),
@@ -32,23 +32,41 @@ export function MyLessons({ userId }: MyLessonsProps) {
   }, []);
 
   return (
-    <div>
-      {myLessons.length ? (
-        myLessons.map((lesson, idx) => {
-          return (
-            <div key={idx} style={{ color: "black" }}>
-              <Link to="/lesson">
-                <button> {lesson.headline}</button>
-              </Link>
-            </div>
-          );
-        })
-      ) : (
-        <div style={{ color: "black" }}>No active lessons</div>
-      )}
-      <Link to="/lesson">
-        <button> {"fake click this for camera"}</button>
-      </Link>
+    <div className="my-lesson-wrapper">
+      <div className="my-lessons-list">
+        <h2 style={{ color: "black" }}>my lessons</h2>
+        {myLessons.length ? (
+          myLessons.map((lesson, idx) => {
+            return (
+              <div
+                key={idx}
+                style={{
+                  color: "black",
+                  border: "1px solid red",
+                  width: "80%",
+                  marginTop: "2em",
+                  margin: 0,
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Link to="/lesson">
+                  <button className="btn" style={{ width: "100%" }}>
+                    {lesson.headline}
+                  </button>
+                </Link>
+              </div>
+            );
+          })
+        ) : (
+          <div style={{ color: "black" }}>No active lessons</div>
+        )}
+      </div>
+      <div>
+        <Link to="/lesson">
+          <button> {"fake click this for camera"}</button>
+        </Link>
+      </div>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 // import useFetch from "../common/useFetch";
 import { User } from "../App";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+// import Box from "@mui/material/Box";
+// import TextField from "@mui/material/TextField";
 
 type LoginProps = {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -15,15 +15,20 @@ export function Login({ setUser, setUserSignup }: LoginProps) {
 
     const onSubmit = async (data: FormData) => {
       try {
-        const response = await fetch("http://localhost:3000/login", {
+        alert("attempting login");
+        const response = await fetch("http://192.168.1.224:3000/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
+
         const res = await response.json();
+        alert(res);
         console.log({ res });
         setUser(res);
+        return;
       } catch {
+        alert("error with login ");
         console.log("error with login");
       }
     };

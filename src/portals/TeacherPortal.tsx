@@ -49,7 +49,7 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
             setModalIsOpen={setModalIsOpen}
             userId={user?.userId}
           />
-          <button onClick={() => handleModel(modalIsOpen)}>close</button>
+          {/* <button onClick={() => handleModel(modalIsOpen)}>close</button> */}
           {/* Your form or any other content can go here */}
         </Modal>
         <button
@@ -63,12 +63,15 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           onRequestClose={() => handleCurrentLessonsModal(currentLessonsModal)}
           contentLabel="Create Lesson Modal"
         >
-          <MyLessons userId={user?.userId} />
-          <button
-            onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
-          >
-            close
-          </button>
+          <div className="form-bg">
+            <MyLessons userId={user?.userId} />
+            <button
+              onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
+            >
+              close
+            </button>
+          </div>
+
           {/* Your form or any other content can go here */}
         </Modal>
       </div>
@@ -87,7 +90,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   const onSubmit = async (data: FormData) => {
     data.userId = userId;
     try {
-      const response = await fetch("http://localhost:3000/create-lesson", {
+      const response = await fetch("http://192.168.1.224:3000/create-lesson", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -105,7 +108,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="form-bg">
       <div className="input-container">
         {/* <label htmlFor="headline">Headline: </label> */}
         <input
@@ -131,7 +134,9 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       </div>
 
       <div>
-        <label htmlFor="language">Language: </label>
+        <label htmlFor="language" style={{ color: "black" }}>
+          שפה:
+        </label>
         <select {...register("language")}>
           <option value="he">Hebrew</option>
           <option value="ar">Arabic</option>
@@ -139,7 +144,9 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       </div>
 
       <div>
-        <label htmlFor="class">Class: </label>
+        <label htmlFor="class" style={{ color: "black" }}>
+          כיתה:
+        </label>
         <select {...register("class")}>
           {[...Array(12).keys()].map((number) => (
             <option key={number + 1} value={number + 1}>
@@ -149,15 +156,17 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         </select>
       </div>
 
-      {/* <div>
-        <label htmlFor="model">Choose Model: </label>
+      <div>
+        <label htmlFor="model" style={{ color: "black" }}>
+          Choose Model:
+        </label>
         <select {...register("model")}>
           <option value="square">Square</option>
           <option value="circle">Circle</option>
         </select>
-      </div> */}
+      </div>
 
-      <input type="submit" />
+      <input className="btn" style={{ width: "20%" }} type="submit" />
     </form>
   );
 };
@@ -169,5 +178,5 @@ type FormData = {
   language: string;
   class: string | number;
   userId?: string;
-  // model: string;
+  model: string;
 };

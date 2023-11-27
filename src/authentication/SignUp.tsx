@@ -17,7 +17,7 @@ export function SignUp({ setUser, setUserSignup }: SignupProps) {
         return;
       }
       try {
-        const response = await fetch("http://localhost:3000/signup", {
+        const response = await fetch("http://192.168.1.224:3000/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
