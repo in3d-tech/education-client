@@ -91,7 +91,7 @@ const ARComponent = () => {
   <body style="margin: 0px; overflow: hidden">
     <a-scene embedded arjs>
       <a-assets>
-        <a-asset-item id="3D-model" position="0 0.5 0" src="./assets/models/new-tank/tanky future new.gltf"></a-asset-item>
+        <a-asset-item id="3D-model" src="./assets/models/new-tank/tanky future new.gltf"></a-asset-item>
       </a-assets>
       <a-marker preset="hiro">
         <a-entity gltf-model="#3D-model">
