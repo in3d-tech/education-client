@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { User } from "../App";
 import { MyLessons } from "./lessons/MyLessons";
 import { Link } from "react-router-dom";
+import { Navbar } from "../navigation/Navbar";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 type TeacherPortalProps = {
   user: User;
@@ -33,9 +35,8 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
         marginTop: "2em",
       }}
     >
-      <div>
-        <h1 className="portal-title">פורטל מורים</h1>
-      </div>
+      <Navbar user={user} title={"פורטל מורים"} />
+      <div>{/* <h1 className="portal-title">פורטל מורים</h1> */}</div>
       <div className="portal-wrapper">
         <button className="btn" onClick={() => handleModel(false)}>
           New Lesson
@@ -114,8 +115,15 @@ type LessonFormProps = {
 
 const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   const { register, handleSubmit } = useForm<FormData>();
+  const [modelForm, setModelForm] = useState<any>();
+
+  const [list, setList] = useState<any[]>([]);
+  let [uniqueId, setUniqueId] = useState(0); // To uniquely identify each form
 
   const onSubmit = async (data: FormData) => {
+    if (list.length) {
+      data.qrList = list;
+    }
     data.userId = userId;
     try {
       const response = await fetch("http://192.168.1.224:3000/create-lesson", {
@@ -135,6 +143,19 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     }
   };
 
+  const handleAddQr = () => {
+    setList([...list, { uniqueId }]);
+    // Each time a user added, increment the uniqueId
+    setUniqueId(uniqueId + 1);
+  };
+
+  const handleDeleteQr = (id: any) => {
+    console.log(id);
+    setList(list.filter((item) => item.uniqueId !== id));
+  };
+
+  console.log(list);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-bg">
       <div className="input-container">
@@ -145,7 +166,6 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
           style={{ color: "black" }}
         />
       </div>
-
       <div className="input-container">
         {/* <label htmlFor="description">Description: </label> */}
         <input
@@ -154,7 +174,6 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
           style={{ color: "black" }}
         />
       </div>
-
       <div className="input-container">
         {/* <label htmlFor="instructions">Instructions: </label> */}
         <input
@@ -163,10 +182,9 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
           style={{ color: "black" }}
         />
       </div>
-
       <div
         style={{
-          width: "14em",
+          width: "50%",
           display: "flex",
           justifyContent: "space-between",
           marginTop: "1em",
@@ -180,10 +198,9 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
           <option value="ar">Arabic</option>
         </select>
       </div>
-
       <div
         style={{
-          width: "14em",
+          width: "50%",
           display: "flex",
           justifyContent: "space-between",
           marginTop: "1em",
@@ -200,30 +217,49 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
           ))}
         </select>
       </div>
-
-      <div
-        style={{
-          width: "14em",
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "1em",
-        }}
-      >
-        <label htmlFor="model" style={{ color: "black" }}>
-          Choose Model:
-        </label>
-        <select {...register("model")}>
-          <option value="square">Square</option>
-          <option value="circle">Circle</option>
-        </select>
+      <button style={{ marginTop: "1em" }} type="button" onClick={handleAddQr}>
+        Add QR and choose 3D model
+      </button>
+      <div style={{ width: "50%", marginTop: "1em" }}>
+        {list.map((item: any, idx) => (
+          <div
+            key={idx}
+            style={{
+              // width: "14em",
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "1em",
+            }}
+          >
+            <label htmlFor={`model${idx}`} style={{ color: "black" }}>
+              Choose Model:
+            </label>
+            <select>
+              // Unique name per model
+              <option value="square">Square</option>
+              <option value="circle">Circle</option>
+            </select>
+            <button
+              style={{ all: "unset" }}
+              type="button"
+              onClick={() => handleDeleteQr(item.uniqueId)}
+            >
+              <DeleteForeverIcon sx={{ fontSize: "large", color: "black" }} />
+            </button>
+          </div>
+        ))}
       </div>
-
       <div style={{ marginTop: "2em" }}>
         <label htmlFor="upload"></label>
         <input type="file" />
       </div>
       {/* <Temp /> */}
-      <input className="btn" style={{ width: "20%" }} type="submit" />
+      <input
+        className="btn"
+        style={{ width: "20%" }}
+        type="submit"
+        value={"שלח"}
+      />
     </form>
   );
 };
@@ -236,6 +272,7 @@ type FormData = {
   class: string | number;
   userId?: string;
   model: string;
+  qrList?: any[];
 };
 
 // const Temp = () => {

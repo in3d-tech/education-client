@@ -105,7 +105,7 @@ label {
 .input-container {
   position: relative;
   margin-bottom: 25px;
-  width: 30%;
+  width: 50%;
 }
 .input-container label {
   position: absolute;
@@ -201,10 +201,38 @@ label {
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
 }
 
+.nav-left-corner {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px;
+}
+
+.nav-name {
+  flex: 1;
+  padding: 4px;
+  /* margin-left: 5em; */
+  font-family: gotham;
+}
+
+.nav-title {
+  flex: 1;
+}
+
+.nav-wrapper {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.235);
+  width: 100vw;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 5em;
+}
+
 .portal-title {
   color: black;
   font-family: Gotham;
-  font-size: 3em;
+  font-size: 2em;
   text-align: center;
 }
 
