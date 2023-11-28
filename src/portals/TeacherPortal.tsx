@@ -118,7 +118,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   const [modelForm, setModelForm] = useState<any>();
 
   const [list, setList] = useState<any[]>([]);
-  let [uniqueId, setUniqueId] = useState(0); // To uniquely identify each form
+  let [uniqueId, setUniqueId] = useState(1); // To uniquely identify each form
 
   const onSubmit = async (data: FormData) => {
     if (list.length) {
@@ -154,7 +154,15 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     setList(list.filter((item) => item.uniqueId !== id));
   };
 
-  console.log(list);
+  const handleSelectChange = (id: any, selectedModel: string) => {
+    const updatedList = list.map((item) => {
+      if (item.uniqueId === id) {
+        return { ...item, model: selectedModel };
+      }
+      return item;
+    });
+    setList(updatedList);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-bg">
@@ -194,8 +202,8 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
           שפה:
         </label>
         <select {...register("language")}>
-          <option value="he">Hebrew</option>
-          <option value="ar">Arabic</option>
+          <option value="he">עיברית</option>
+          <option value="ar">עֲרָבִית</option>
         </select>
       </div>
       <div
@@ -228,17 +236,25 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               // width: "14em",
               display: "flex",
               justifyContent: "space-between",
+              alignItems: "center",
               marginTop: "1em",
+              borderBottom: "1px solid rgba(0, 0, 0, 0.4)",
+              padding: "2px",
             }}
           >
             <label htmlFor={`model${idx}`} style={{ color: "black" }}>
               Choose Model:
             </label>
-            <select>
+            <select
+              onChange={(e) =>
+                handleSelectChange(item.uniqueId, e.target.value)
+              }
+            >
               // Unique name per model
               <option value="square">Square</option>
               <option value="circle">Circle</option>
             </select>
+            <div style={{ color: "black" }}>{`QR id: ${item.uniqueId}`}</div>
             <button
               style={{ all: "unset" }}
               type="button"
@@ -271,7 +287,6 @@ type FormData = {
   language: string;
   class: string | number;
   userId?: string;
-  model: string;
   qrList?: any[];
 };
 
