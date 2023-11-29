@@ -115,7 +115,7 @@ type LessonFormProps = {
 
 const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   const { register, handleSubmit } = useForm<FormData>();
-  const [modelForm, setModelForm] = useState<any>();
+  // const [modelForm, setModelForm] = useState<any>();
 
   const [list, setList] = useState<any[]>([]);
   let [uniqueId, setUniqueId] = useState(1); // To uniquely identify each form
@@ -254,7 +254,9 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               <option value="square">Square</option>
               <option value="circle">Circle</option>
             </select>
-            <div style={{ color: "black" }}>{`QR id: ${item.uniqueId}`}</div>
+            <div style={{ color: "black" }}>{`QR id: ${idx + 1}`}</div>
+            {/* <div style={{ color: "black" }}>{`QR id: ${item.uniqueId}`}</div> */}
+
             <button
               style={{ all: "unset" }}
               type="button"
