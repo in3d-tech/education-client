@@ -88,11 +88,17 @@ export function SignUp({ setUser, setUserSignup }: SignupProps) {
           />
         </div>
 
-        <input type="submit" value="Sign up" />
+        <input
+          type="submit"
+          value="Sign up"
+          className="btn"
+          style={{ width: "10em" }}
+        />
         <button
           onClick={() => setUserSignup(false)}
           className="btn"
           type="submit"
+          style={{ width: "10em" }}
         >
           Back to login
         </button>

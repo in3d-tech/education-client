@@ -144,7 +144,8 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   };
 
   const handleAddQr = () => {
-    setList([...list, { uniqueId }]);
+    const standardModel = "square";
+    setList([...list, { uniqueId, model: standardModel }]);
     // Each time a user added, increment the uniqueId
     setUniqueId(uniqueId + 1);
   };
@@ -225,7 +226,17 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
           ))}
         </select>
       </div>
-      <button style={{ marginTop: "1em" }} type="button" onClick={handleAddQr}>
+      <button
+        style={{
+          marginTop: "1em",
+          color: "black",
+          height: "2.5em",
+          background: "white",
+        }}
+        className="btn"
+        type="button"
+        onClick={handleAddQr}
+      >
         Add QR and choose 3D model
       </button>
       <div style={{ width: "50%", marginTop: "1em" }}>
@@ -253,10 +264,10 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               // Unique name per model
               <option value="square">Square</option>
               <option value="circle">Circle</option>
+              <option value="doctor">Doctor</option>
+              <option value="tank">Tank</option>
             </select>
-            <div style={{ color: "black" }}>{`QR id: ${idx + 1}`}</div>
-            {/* <div style={{ color: "black" }}>{`QR id: ${item.uniqueId}`}</div> */}
-
+            <div style={{ color: "black" }}>{`QR id: ${item.uniqueId}`}</div>
             <button
               style={{ all: "unset" }}
               type="button"
