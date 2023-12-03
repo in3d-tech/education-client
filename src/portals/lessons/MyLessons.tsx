@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 
 type MyLessonsProps = {
   userId: string | undefined;
+  role?: string | undefined | null;
 };
 
-export function MyLessons({ userId }: MyLessonsProps) {
+export function MyLessons({ userId, role }: MyLessonsProps) {
   const [myLessons, setMyLessons] = useState<any[]>([]);
+  const [lessonCode, setLessonCode] = useState<string>("");
 
   const fetchMyLessons = async () => {
     try {
@@ -31,9 +33,38 @@ export function MyLessons({ userId }: MyLessonsProps) {
     fetchMyLessons();
   }, []);
 
+  const joinLesson = async () => {
+    try {
+      const data = { lessonCode, userId };
+      console.log("joining lessson", data);
+      const response = await fetch("http://localhost:3000/join-lesson", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const res = await response.json();
+      alert(res);
+    } catch {
+      alert("error with login ");
+      console.log("error with login");
+    }
+  };
+
   return (
     <div className="my-lesson-wrapper">
       <div className="my-lessons-list">
+        <div>
+          <input
+            onChange={(e) => setLessonCode(e.target.value)}
+            type="text"
+            placeholder="Lesson code"
+            value={lessonCode}
+          />
+          <button onClick={() => joinLesson()} className="btn">
+            Join Lesson
+          </button>
+        </div>
         {myLessons.length ? (
           myLessons.map((lesson, idx) => {
             return (
@@ -57,7 +88,20 @@ export function MyLessons({ userId }: MyLessonsProps) {
             );
           })
         ) : (
-          <div style={{ color: "black" }}>No active lessons</div>
+          <div>
+            <div style={{ color: "black" }}>No active lessons</div>
+            {role == "student" ? (
+              <div>
+                <input
+                  onChange={(e) => setLessonCode(e.target.value)}
+                  type="text"
+                  placeholder="Lesson code"
+                  value={lessonCode}
+                />
+                <button className="btn">Join Lesson</button>
+              </div>
+            ) : null}
+          </div>
         )}
       </div>
       {/* <div>

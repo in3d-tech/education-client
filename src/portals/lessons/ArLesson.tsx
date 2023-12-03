@@ -49,7 +49,11 @@
 //   );
 // };
 
-const ARComponent = () => {
+type ARComponentProps = {
+  isSquare?: boolean;
+};
+
+const ARComponent = ({ isSquare }: ARComponentProps) => {
   if (!navigator.mediaDevices) {
     return (
       <div>
@@ -68,20 +72,36 @@ const ARComponent = () => {
 </head>
 <body style="margin: 0px; overflow: hidden">
   <a-scene embedded arjs>
-    <a-assets>
-      <a-asset-item id="3D-model" src="./assets/models/new-tank/tanky future new.gltf"></a-asset-item>
-    </a-assets>
-    <a-marker preset="hiro">
-      <a-entity gltf-model="#3D-model"
-      scale="0.004 0.004 0.004 position="-3 0.01 -2">
-        <a-animation
-            attribute="rotation"
-            dur="11000"
-            to="0 360 0"
-            repeat="indefinite"
-            easing="linear"
-        ></a-animation>
-      </a-entity>
+  ${
+    !isSquare
+      ? `<a-assets>
+          <a-asset-item id="3D-model" src="./assets/models/new-tank/tanky future new.gltf"></a-asset-item>
+        </a-assets>`
+      : null
+  }
+  <a-marker preset="hiro">
+  ${
+    isSquare
+      ? ` <a-box position="0 0.5 0" material="color: red;">
+  //       <a-animation
+  //         attribute="rotation"
+  //         dur="3000"
+  //         to="360 360 0"
+  //         repeat="indefinite"
+  //         easing="linear"
+  //       ></a-animation>
+  //     </a-box>`
+      : ` <a-entity gltf-model="#3D-model"
+            cale="0.004 0.004 0.004 position="-3 0.01 -2">
+            <a-animation
+              attribute="rotation"
+              dur="11000"
+              to="0 360 0"
+              repeat="indefinite"
+              easing="linear"
+            ></a-animation>
+          </a-entity>`
+  }  
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>

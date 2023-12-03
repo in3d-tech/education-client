@@ -61,9 +61,7 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
               height: "100%",
             }}
           >
-            <h1 style={{ textAlign: "center", color: "black" }}>
-              Create Lesson
-            </h1>
+            <h1 style={{ textAlign: "center", color: "black" }}>הוסף שיעור</h1>
             <CreateLessonForm
               setModalIsOpen={setModalIsOpen}
               userId={user?.userId}
@@ -88,7 +86,7 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
               My Lessons
             </h2>
 
-            <MyLessons userId={user?.userId} />
+            <MyLessons userId={user?.userId} role={user?.role} />
             <div>
               <Link to="/lesson">
                 <button> {"fake click this for camera"}</button>
@@ -170,7 +168,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       <div className="input-container">
         {/* <label htmlFor="headline">Headline: </label> */}
         <input
-          placeholder="Headline"
+          placeholder="כּוֹתֶרֶת"
           {...register("headline")} //, { required: "First Name Required" }
           style={{ color: "black" }}
         />
@@ -178,7 +176,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       <div className="input-container">
         {/* <label htmlFor="description">Description: </label> */}
         <input
-          placeholder="Description"
+          placeholder="תיאור"
           {...register("description")} // , { required: "First Name Required" }
           style={{ color: "black" }}
         />
@@ -186,7 +184,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       <div className="input-container">
         {/* <label htmlFor="instructions">Instructions: </label> */}
         <input
-          placeholder="Instructions"
+          placeholder="הוראות"
           {...register("instructions")} // , { required: "Email Required" }
           style={{ color: "black" }}
         />
@@ -228,7 +226,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       </div>
       <button
         style={{
-          marginTop: "1em",
+          marginTop: "2em",
           color: "black",
           height: "2.5em",
           background: "white",
@@ -237,7 +235,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         type="button"
         onClick={handleAddQr}
       >
-        Add QR and choose 3D model
+        הוסף QR ובחר דגם תלת מימד
       </button>
       <div style={{ width: "50%", marginTop: "1em" }}>
         {list.map((item: any, idx) => (
@@ -254,7 +252,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
             }}
           >
             <label htmlFor={`model${idx}`} style={{ color: "black" }}>
-              Choose Model:
+              לבחור דגם:
             </label>
             <select
               onChange={(e) =>
