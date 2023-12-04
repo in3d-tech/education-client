@@ -17,6 +17,7 @@
     "@mui/types": "^7.2.9",
     "aframe": "^1.5.0",
     "axios": "^1.6.2",
+    "qrcode": "^1.5.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
@@ -24,6 +25,7 @@
     "react-router-dom": "^6.19.0"
   },
   "devDependencies": {
+    "@types/qrcode": "^1.5.5",
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.7",
     "@types/react-modal": "^3.16.3",

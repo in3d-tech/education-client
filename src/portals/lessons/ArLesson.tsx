@@ -79,7 +79,7 @@ const ARComponent = ({ isSquare }: ARComponentProps) => {
         </a-assets>`
       : null
   }
-  <a-marker preset="hiro">
+  <a-marker type='pattern' patternUrl='/markers/pattern-real-query-param.patt'>
   ${
     isSquare
       ? ` <a-box position="0 0.5 0" material="color: red;">

@@ -6,6 +6,7 @@ import { MyLessons } from "./lessons/MyLessons";
 import { Link } from "react-router-dom";
 import { Navbar } from "../navigation/Navbar";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import QRCode from "qrcode";
 
 type TeacherPortalProps = {
   user: User;
@@ -13,6 +14,8 @@ type TeacherPortalProps = {
 
 export function TeacherPortal({ user }: TeacherPortalProps) {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [qrTest, setQrTest] = useState<any>();
+  const [qrErr, setQrErr] = useState<any>();
   const [currentLessonsModal, setCurrentLessonsModal] =
     useState<boolean>(false);
 
@@ -22,6 +25,13 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
 
   const handleCurrentLessonsModal = (prevState: boolean) => {
     setCurrentLessonsModal(!prevState);
+  };
+
+  const generateQr = () => {
+    QRCode.toString("JEREMY", function (err, string) {
+      if (err) setQrErr(err);
+      setQrTest(string);
+    });
   };
 
   return (
@@ -101,6 +111,14 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
 
           {/* Your form or any other content can go here */}
         </Modal>
+        <div style={{ border: "2px solid red" }}>
+          <img src={qrTest}></img>
+          <button type="button" onClick={generateQr}></button>
+          <div>
+            {qrTest}
+            {qrErr}
+          </div>
+        </div>
       </div>
     </div>
   );
