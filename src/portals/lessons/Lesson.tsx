@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, Component } from "react";
 import ARComponent from "./ArLesson";
+import { QrReader } from "react-qr-reader";
 
 export function Lesson() {
   const [scanQr, setScanQr] = useState<boolean>(false);
@@ -23,5 +24,37 @@ export function Lesson() {
 }
 
 function ScanQrForModel() {
-  return <ARComponent isSquare={true} />;
+  return <Test />;
+  // return <ARComponent isSquare={true} />;
+}
+
+class Test extends Component {
+  state = {
+    result: "No result",
+  };
+
+  handleScan = (data: any) => {
+    if (data) {
+      this.setState({ result: data });
+    }
+  };
+
+  handleError = (err: any) => {
+    console.error(err);
+  };
+
+  render() {
+    return (
+      <div>
+        <QrReader
+          scanDelay={300}
+          constraints={{ facingMode: "user" }}
+          // onError={this.handleError}
+          onResult={this.handleScan}
+          videoStyle={{ width: "100%" }}
+        />
+        <p>{this.state.result}</p>
+      </div>
+    );
+  }
 }
