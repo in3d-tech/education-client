@@ -10,3 +10,14 @@ declare module "react" {
     "a-entity"?: any;
   }
 }
+
+declare module "html5-qrcode" {
+  export class Html5QrcodeScanner {
+    constructor(renderId: string, config: any, verbose?: boolean);
+    clear(): Promise<void>;
+    render(
+      onSuccess: (decodedText: string, decodedResult: any) => void,
+      onFailure: (errorMessage: string) => void
+    ): void;
+  }
+}
