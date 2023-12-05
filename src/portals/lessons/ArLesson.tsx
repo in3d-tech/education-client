@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-import jsQR from "jsQR";
+// import jsQR from "jsQR";
+const jsQR = require("jsQR");
 
 type ARComponentProps = {
   isSquare?: boolean;
