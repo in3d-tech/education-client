@@ -10,7 +10,3 @@ declare module "react" {
     "a-entity"?: any;
   }
 }
-
-declare module "jsQR" {
-  export default function (data: ImageData, width: number, height: number): any;
-}
