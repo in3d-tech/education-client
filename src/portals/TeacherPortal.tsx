@@ -6,7 +6,7 @@ import { MyLessons } from "./lessons/MyLessons";
 import { Link } from "react-router-dom";
 import { Navbar } from "../navigation/Navbar";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import QRCode from "qrcode";
+// import QRCode from "qrcode";
 
 type TeacherPortalProps = {
   user: User;
@@ -14,8 +14,8 @@ type TeacherPortalProps = {
 
 export function TeacherPortal({ user }: TeacherPortalProps) {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [qrTest, setQrTest] = useState<any>();
-  const [qrErr, setQrErr] = useState<any>();
+  // const [qrTest, setQrTest] = useState<any>();
+  // const [qrErr, setQrErr] = useState<any>();
   const [currentLessonsModal, setCurrentLessonsModal] =
     useState<boolean>(false);
 
@@ -127,7 +127,7 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           {/* Your form or any other content can go here */}
         </Modal>
         <div style={{ border: "2px solid red", height: "5em", width: "5em" }}>
-          <img src={qrTest}></img>
+          {/* <img src={qrTest}></img> */}
           <button
             style={{ width: "100%", height: "50%" }}
             type="button"
@@ -135,10 +135,6 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           >
             hell oworld
           </button>
-          <div>
-            {qrTest}
-            {qrErr}
-          </div>
         </div>
       </div>
     </div>
