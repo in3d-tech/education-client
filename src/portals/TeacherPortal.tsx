@@ -27,11 +27,26 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
     setCurrentLessonsModal(!prevState);
   };
 
-  const generateQr = () => {
-    QRCode.toString("JEREMY", function (err, string) {
-      if (err) setQrErr(err);
-      setQrTest(string);
-    });
+  const generateQr = async () => {
+    // QRCode.toString("JEREMY", function (err, string) {
+    //   if (err) setQrErr(err);
+    //   setQrTest(string);
+    // });
+    const data = { hello: "world" };
+    try {
+      alert("attempting login");
+      const response = await fetch("http://192.168.1.224:3000/info", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const res = await response.json();
+      console.log({ res });
+    } catch {
+      alert("error with login ");
+      console.log("error with login");
+    }
   };
 
   return (
@@ -111,9 +126,15 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
 
           {/* Your form or any other content can go here */}
         </Modal>
-        <div style={{ border: "2px solid red" }}>
+        <div style={{ border: "2px solid red", height: "5em", width: "5em" }}>
           <img src={qrTest}></img>
-          <button type="button" onClick={generateQr}></button>
+          <button
+            style={{ width: "100%", height: "50%" }}
+            type="button"
+            onClick={generateQr}
+          >
+            hell oworld
+          </button>
           <div>
             {qrTest}
             {qrErr}
