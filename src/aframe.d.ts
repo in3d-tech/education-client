@@ -11,4 +11,6 @@ declare module "react" {
   }
 }
 
-declare module "jsQR";
+declare module "jsQR" {
+  export default function (data: ImageData, width: number, height: number): any;
+}
