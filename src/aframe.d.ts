@@ -10,3 +10,5 @@ declare module "react" {
     "a-entity"?: any;
   }
 }
+
+declare module "jsQR";
