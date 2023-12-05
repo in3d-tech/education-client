@@ -1,7 +1,7 @@
 import { User } from "../App";
 import { capitalizeFirstLetter } from "../common/logic/capitalizeFirstLetter";
 
-type NavbarProps = { user: User; title: string };
+type NavbarProps = { user?: User; title: string };
 
 export function Navbar({ user, title }: NavbarProps) {
   return (
@@ -18,7 +18,9 @@ export function Navbar({ user, title }: NavbarProps) {
       <div className="nav-name">
         <h3
           style={{ color: "black", fontFamily: "gotham", marginRight: "2em" }}
-        >{`היי ${capitalizeFirstLetter(user?.name)}`}</h3>
+        >
+          {user ? `היי ${capitalizeFirstLetter(user?.name)}` : ""}
+        </h3>
       </div>
     </div>
   );

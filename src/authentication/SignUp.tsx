@@ -23,8 +23,9 @@ export function SignUp({ setUser, setUserSignup }: SignupProps) {
           body: JSON.stringify(data),
         });
         const res = await response.json();
+        console.log("got a res back");
+        console.log(res);
         if (res.user) setUser(res.user);
-        return res;
       } catch {
         console.log("error with signup");
       }
@@ -83,9 +84,19 @@ export function SignUp({ setUser, setUserSignup }: SignupProps) {
         <div className="input-container">
           {/* <label htmlFor="code">קוד: </label> */}
           <input
-            placeholder="קוד"
-            {...register("code")} // , { required: "Phone Required" }
+            placeholder="חברה קוד"
+            {...register("orgCode", { required: "org code required" })} // , { required: "Phone Required" }
           />
+        </div>
+
+        <div style={{}} className="input-container">
+          <label htmlFor="role" style={{ color: "black" }}>
+            Role:
+          </label>
+          <select {...register("role")}>
+            <option value="teacher">Teacher</option>
+            <option value="student">Student</option>
+          </select>
         </div>
 
         <input
@@ -119,5 +130,6 @@ type FormData = {
   password: string;
   confirmPassword: string;
   phone: string;
-  code: string;
+  orgCode: string;
+  role: string;
 };
