@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-// import ARComponent from "./ArLesson";
+import ARComponent from "./ArLesson";
 import { Html5QrcodeScanner } from "html5-qrcode";
 
 export function Lesson() {
   const [scanQr, setScanQr] = useState<boolean>(false);
+  const [isArScan, setIsArScan] = useState<boolean>(false);
 
   return scanQr ? (
-    <ScanQrForModel />
+    <ScanQrForModel isArScan={isArScan} setIsArScan={setIsArScan} />
   ) : (
     <div style={{ height: "100vh" }}>
       <div>
@@ -23,12 +24,16 @@ export function Lesson() {
   );
 }
 
-function ScanQrForModel() {
-  return <QRScanner />;
+function ScanQrForModel({ isArScan, setIsArScan }: any) {
+  return isArScan ? (
+    <ARComponent isSquare={true} />
+  ) : (
+    <QRScanner setIsArScan={setIsArScan} />
+  );
   // return <ARComponent isSquare={true} />;
 }
 
-export const QRScanner: React.FC = () => {
+export const QRScanner = ({ setIsArScan }: any) => {
   const scannerRef: any = useRef(null);
   const resultRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,7 +45,10 @@ export const QRScanner: React.FC = () => {
 
     const success = (result: string) => {
       if (resultRef.current) {
-        alert(`${resultRef.current}`);
+        if (result == "4") {
+          alert(`result is somehow equal to 4???`);
+          setIsArScan(true);
+        }
         resultRef.current.innerHTML = `
           <h2>Success!</h2>
           <p><a href="${result}">${result}</a></p>
