@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 // import useFetch from "../common/useFetch";
-import { User } from "../App";
+import { useAppContext } from "../context/appContext";
 
 type SignupProps = {
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  // setUser: React.Dispatch<React.SetStateAction<User | null>>;
   setUserSignup: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export function SignUp({ setUser, setUserSignup }: SignupProps) {
+export function SignUp({ setUserSignup }: SignupProps) {
+  const { setUser } = useAppContext();
   const Form: React.FC = () => {
     const { register, handleSubmit } = useForm<FormData>();
 
@@ -32,7 +33,7 @@ export function SignUp({ setUser, setUserSignup }: SignupProps) {
     };
 
     return (
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="signup-form-wrapper">
         <div className="input-container">
           {/* <label htmlFor="firstName">שם פרטי </label> */}
           <input
@@ -68,7 +69,7 @@ export function SignUp({ setUser, setUserSignup }: SignupProps) {
         <div className="input-container">
           {/* <label htmlFor="confirmPassword">סיסמה confirm </label> */}
           <input
-            placeholder="סיסמה"
+            placeholder="אימות סיסמה"
             {...register("confirmPassword", { required: "Password Required" })} // , { required: "Email Required" }
           />
         </div>
@@ -89,7 +90,7 @@ export function SignUp({ setUser, setUserSignup }: SignupProps) {
           />
         </div>
 
-        <div style={{}} className="input-container">
+        <div style={{}} className="input-container-select">
           <label htmlFor="role" style={{ color: "black" }}>
             Role:
           </label>
@@ -105,14 +106,18 @@ export function SignUp({ setUser, setUserSignup }: SignupProps) {
           className="btn"
           style={{ width: "10em" }}
         />
-        <button
-          onClick={() => setUserSignup(false)}
-          className="btn"
-          type="submit"
-          style={{ width: "10em" }}
-        >
-          Back to login
-        </button>
+
+        <div style={{ color: "black", marginTop: "14px" }}>
+          כבר יש לך חשבון?
+          <button
+            onClick={() => setUserSignup(false)}
+            type="button"
+            style={{ marginRight: "5px", fontSize: "1.1em" }}
+            className="text-button"
+          >
+            התחברות
+          </button>
+        </div>
       </form>
     );
   };

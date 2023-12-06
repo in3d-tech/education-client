@@ -1,11 +1,7 @@
 import { useForm } from "react-hook-form";
-// import useFetch from "../common/useFetch";
-import { User } from "../App";
-// import Box from "@mui/material/Box";
-// import TextField from "@mui/material/TextField";
+import { useAppContext } from "../context/appContext";
 
 type LoginProps = {
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   setUserSignup: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -18,7 +14,9 @@ const tempUser = {
   role: "teacher",
 };
 
-export function Login({ setUser, setUserSignup }: LoginProps) {
+export function Login({ setUserSignup }: LoginProps) {
+  const { setUser } = useAppContext();
+
   const Form: React.FC = () => {
     const { register, handleSubmit } = useForm<FormData>();
 
@@ -79,24 +77,6 @@ export function Login({ setUser, setUserSignup }: LoginProps) {
             Signup
           </button>
         </div>
-
-        {/* <Box>
-          <div>
-            <TextField
-              id="standard-search"
-              label="Search field"
-              type="search"
-              variant="standard"
-            />
-            <TextField
-              id="standard-helperText"
-              label="Helper text"
-              defaultValue="Default Value"
-              helperText="Some important text"
-              variant="standard"
-            />
-          </div>
-        </Box> */}
       </form>
     );
   };
