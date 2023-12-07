@@ -111,7 +111,7 @@ label {
 .input-container {
   position: relative;
   margin-bottom: 25px;
-  width: 100%;
+  width: 90%;
   background: white;
   border-radius: 10px;
   padding: 5px;
@@ -142,6 +142,7 @@ label {
   /* border-bottom: 1px solid #3a3b46; */
 }
 .btn {
+  font-family: SecularOne-Regular;
   color: #fff;
   background-color: #383028;
   outline: none;
@@ -183,11 +184,38 @@ label {
   width: 100%;
 }
 
+.join-lesson-container {
+  width: 90%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .lessons-center {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
+
+.my-lessons-btn {
+  font-family: SecularOne-Regular;
+  color: black;
+  background-color: #fff1e1;
+  outline: none;
+  border: 0;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  margin-top: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
+  height: 3em;
+}
+
+/* this stying needs to be adjusted ----> */
 
 .my-lessons-list {
   /* margin-top: 2em; */
@@ -196,18 +224,34 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #22a94f;
-  background: -webkit-linear-gradient(#d0bcbc, #272625);
-  background: -moz-linear-gradient(#d0bcbc, #272625);
-  background: linear-gradient(#d0bcbc, #272625);
+  justify-content: space-between;
+  background: #a96622;
+  background: -webkit-linear-gradient(#ffffff, #d68f44);
+  background: -moz-linear-gradient(#ffffff, #d68f44);
+  background: linear-gradient(#ffffff, #d68f44);
 }
 
-.my-lesson-wrapper {
-  height: 80%;
+.my-lessons-list-container {
+  width: 96%;
+  background: #a966224f;
+  overflow-y: scroll;
+  /* height: 400px; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  padding: 2px;
+  border-radius: 10px;
+  box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.35);
+  -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.35);
+}
+
+.my-lesson-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 80%; */
   box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
@@ -260,6 +304,28 @@ label {
   width: 60%;
 }
 
+.student-btn {
+  font-family: SecularOne-Regular;
+  /* background-color: #383028; */
+  outline: none;
+  border: 0;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  margin-top: 50px;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  width: 13em;
+  box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
+  height: 13em;
+  background: url("/assets/images/aug-real.jpg") no-repeat center;
+  background-size: cover;
+  font-size: 1.5em;
+}
+
 .text-button {
   background: none;
   color: inherit;
@@ -272,3 +338,59 @@ label {
 }
 
 /* Secular One */
+
+p {
+  font-family: "Reenie Beanie";
+  font-size: 2rem;
+}
+ul,
+li {
+  list-style: none;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+ul li a {
+  text-decoration: none;
+  color: #000;
+  background: #ffc;
+  display: block;
+  height: 10em;
+  width: 10em;
+  padding: 1em;
+  box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+  transform: rotate(-6deg);
+  transition: transform 0.15s linear;
+}
+
+ul li:nth-child(even) a {
+  transform: rotate(4deg);
+  position: relative;
+  top: 5px;
+  background: #cfc;
+}
+ul li:nth-child(3n) a {
+  transform: rotate(-3deg);
+  position: relative;
+  top: -5px;
+  background: #ccf;
+}
+ul li:nth-child(5n) a {
+  transform: rotate(5deg);
+  position: relative;
+  top: -10px;
+}
+
+ul li a:hover,
+ul li a:focus {
+  box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+  transform: scale(1.25);
+  position: relative;
+  z-index: 5;
+}
+
+ul li {
+  margin: 1em;
+}

@@ -44,7 +44,11 @@ export function Login({ setUserSignup }: LoginProps) {
     };
 
     return (
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="signup-form-wrapper"
+        style={{ marginTop: "8em" }}
+      >
         <div className="input-container">
           {/* <label style={{ color: "black" }} htmlFor="email">
             דואר אלקטרוני:
@@ -67,14 +71,14 @@ export function Login({ setUserSignup }: LoginProps) {
         </div>
         <div className="auth-btns-wrapper">
           <button className="btn" type="submit">
-            שלך (x2)
+            שלך (Login)
           </button>
           <button
             onClick={() => setUserSignup(true)}
             className="btn"
             type="submit"
           >
-            Signup
+            To Signup
           </button>
         </div>
       </form>

@@ -29,16 +29,12 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
   return (
     <div
       style={{
-        // height: "100vh",
-        // width: "100vw",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: "2em",
       }}
     >
       <Navbar user={user} title={"פורטל מורים"} />
-      <div>{/* <h1 className="portal-title">פורטל מורים</h1> */}</div>
       <div className="portal-wrapper">
         <button className="btn" onClick={() => handleModel(false)}>
           New Lesson
@@ -55,8 +51,6 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
               WebkitBoxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
             },
           }}
-
-          // className="test"
         >
           <div
             style={{
@@ -68,8 +62,6 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
               setModalIsOpen={setModalIsOpen}
               userId={user?.userId}
             />
-            {/* <button onClick={() => handleModel(modalIsOpen)}>close</button> */}
-            {/* Your form or any other content can go here */}
           </div>
         </Modal>
         <button
@@ -82,26 +74,32 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           isOpen={currentLessonsModal}
           onRequestClose={() => handleCurrentLessonsModal(currentLessonsModal)}
           contentLabel="Create Lesson Modal"
+          style={{
+            content: {
+              padding: 0,
+              overflow: "hidden",
+              boxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
+              WebkitBoxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
+            },
+          }}
         >
-          <div className="form-bg lessons-center">
+          {/* <div className="form-bg lessons-center">
             <h2 className="portal-title" style={{ fontSize: "2em" }}>
               My Lessons
-            </h2>
+            </h2> */}
 
-            <MyLessons userId={user?.userId} role={user?.role} />
-            <div>
-              <Link to="/lesson">
-                <button> {"fake click this for camera"}</button>
-              </Link>
-            </div>
-            <button
-              onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
-            >
-              close
-            </button>
+          <MyLessons userId={user?.userId} role={user?.role} />
+          <div>
+            <Link to="/lesson">
+              <button> {"fake click this for camera"}</button>
+            </Link>
           </div>
-
-          {/* Your form or any other content can go here */}
+          <button
+            onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
+          >
+            close
+          </button>
+          {/* </div> */}
         </Modal>
       </div>
     </div>
