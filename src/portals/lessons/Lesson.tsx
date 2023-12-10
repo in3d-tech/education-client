@@ -144,7 +144,14 @@ function ScanQrForModel({
         marker={marker}
         selectedScan={selectedScan}
       />
-      <button onClick={() => setScanQr(false)}>Close Camera</button>
+      <button
+        onClick={() => {
+          setScanQr(false);
+          setIsArScan(false);
+        }}
+      >
+        Close Camera
+      </button>
     </>
   ) : (
     <QRScanner setIsArScan={setIsArScan} setScannedMarker={setScannedMarker} />
