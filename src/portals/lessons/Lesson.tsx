@@ -134,7 +134,14 @@ function ScanQrForModel({ isArScan, setIsArScan, selectedScan }: any) {
   const marker: string | undefined = markers[scannedMarker] || undefined;
 
   return isArScan ? (
-    <ARComponent isSquare={true} marker={marker} selectedScan={selectedScan} />
+    <>
+      <ARComponent
+        isSquare={true}
+        marker={marker}
+        selectedScan={selectedScan}
+      />
+      <button>Close Camera!</button>
+    </>
   ) : (
     <QRScanner setIsArScan={setIsArScan} setScannedMarker={setScannedMarker} />
   );
