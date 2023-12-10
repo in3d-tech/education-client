@@ -15,7 +15,7 @@ const ARComponent = ({ isSquare, marker }: ARComponentProps) => {
     );
   }
 
-  const isCircleModel = ``;
+  // const isCircleModel = ``;
 
   const iframeHTML = `
 <html>
