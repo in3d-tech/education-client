@@ -77,7 +77,7 @@ const ARComponent = ({ isSquare, marker, selectedScan }: ARComponentProps) => {
   </a-scene>
 </body>
 </html>`;
-
+  return null;
   return (
     <iframe
       srcDoc={iframeHTML}
