@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import ARComponent from "./ArLesson";
 import { Html5QrcodeScanner } from "html5-qrcode";
+import { useAppContext } from "../../context/appContext";
 
 const markers: any = {
   1: "./assets/markers/pattern-1.patt",
@@ -14,18 +15,20 @@ export function Lesson() {
   const [scanQr, setScanQr] = useState<boolean>(false);
   const [isArScan, setIsArScan] = useState<boolean>(false);
 
+  const { activeLesson } = useAppContext();
+
   return scanQr ? (
     <ScanQrForModel isArScan={isArScan} setIsArScan={setIsArScan} />
   ) : (
     <div style={{ height: "100vh" }}>
       <div>
-        <h3 style={{ color: "black" }}>Headline:</h3>
+        <h3 style={{ color: "black" }}>{activeLesson.headline}</h3>
       </div>
       <div>
-        <h3 style={{ color: "black" }}>Description here</h3>
+        <h3 style={{ color: "black" }}>{activeLesson.description}</h3>
       </div>
       <div>
-        <h3 style={{ color: "black" }}>Instructions here</h3>
+        <h3 style={{ color: "black" }}>{activeLesson.instructions}</h3>
       </div>
       <button onClick={() => setScanQr(true)}>Scan QR</button>
     </div>

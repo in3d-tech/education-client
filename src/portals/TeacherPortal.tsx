@@ -87,18 +87,26 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
             <h2 className="portal-title" style={{ fontSize: "2em" }}>
               My Lessons
             </h2> */}
-
-          <MyLessons userId={user?.userId} role={user?.role} />
-          <div>
-            <Link to="/lesson">
-              <button> {"fake click this for camera"}</button>
-            </Link>
-          </div>
-          <button
-            onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
+          <div
+            style={{
+              border: "2px solid black",
+              // height: "500px",
+              // width: "100%",
+            }}
           >
-            close
-          </button>
+            <div>
+              <Link to="/lesson">
+                <button> {"fake click this for camera"}</button>
+              </Link>
+            </div>
+            <button
+              onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
+            >
+              close
+            </button>
+          </div>
+          <MyLessons userId={user?.userId} role={user?.role} />
+
           {/* </div> */}
         </Modal>
       </div>
