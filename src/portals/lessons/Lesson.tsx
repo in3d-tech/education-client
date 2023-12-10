@@ -198,11 +198,11 @@ export const QRScanner = ({ setIsArScan, setScannedMarker }: any) => {
       }}
     >
       <div id="reader" ref={scannerRef} style={{ width: 600 }}></div>
-      {/* <div
+      <div
         id="result"
         ref={resultRef}
-        style={{ textAlign: "center", fontSize: "1.5rem" }}
-      ></div> */}
+        style={{ textAlign: "center", fontSize: "1.5rem", color: "green" }}
+      ></div>
     </main>
   );
 };
