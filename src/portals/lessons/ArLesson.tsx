@@ -30,14 +30,14 @@ const ARComponent = ({ isSquare, marker, selectedScan }: ARComponentProps) => {
 </a-cylinder>`;
 
   const isSquareModel = `<a-box position="0 0.5 0" material="color: red;" shadow="cast: true; receive: true;">
-//       <a-animation
-//         attribute="rotation"
-//         dur="12000"
-//         to="360 360 0"
-//         repeat="indefinite"
-//         easing="linear"
-//       ></a-animation>
-//     </a-box>`;
+      <a-animation
+        attribute="rotation"
+        dur="12000"
+        to="360 360 0"
+        repeat="indefinite"
+        easing="linear"
+      ></a-animation>
+    </a-box>`;
 
   const modelToUse =
     selectedScan.model == "square" ? isSquareModel : isCircleModel;
