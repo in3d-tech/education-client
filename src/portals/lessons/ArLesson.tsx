@@ -24,7 +24,7 @@ const ARComponent = ({ isSquare, marker }: ARComponentProps) => {
 <body style="margin: 0px; overflow: hidden">
   <a-scene embedded arjs>
   ${
-    isSquare
+    !isSquare
       ? `<a-assets>
           <a-asset-item id="3D-model" src="./assets/models/new-tank/tanky future new.gltf"></a-asset-item>
         </a-assets>`
@@ -32,7 +32,7 @@ const ARComponent = ({ isSquare, marker }: ARComponentProps) => {
   }
   <a-marker type='pattern' url='./assets/markers/pattern-4 (2).patt'>
   ${
-    !isSquare
+    isSquare
       ? ` <a-box position="0 0.5 0" material="color: red;">
   //       <a-animation
   //         attribute="rotation"
