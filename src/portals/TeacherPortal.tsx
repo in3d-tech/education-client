@@ -269,8 +269,8 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               }
             >
               // Unique name per model
-              <option value="square">רבוע</option>
-              <option value="circle">עגול</option>
+              <option value="square">ריבוע</option>
+              <option value="circle">עיגול</option>
               {/* <option value="doctor">Doctor</option>
               <option value="tank">Tank</option> */}
             </select>

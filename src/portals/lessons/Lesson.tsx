@@ -13,8 +13,8 @@ const markers: any = {
 };
 
 const translation: any = {
-  square: "רבוע",
-  circle: "עגול",
+  square: "ריבוע",
+  circle: "עיגול",
 };
 
 type QrData = {
