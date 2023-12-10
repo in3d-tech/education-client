@@ -22,13 +22,15 @@ export function Lesson() {
   ) : (
     <div style={{ height: "100vh" }}>
       <div>
-        <h3 style={{ color: "black" }}>{activeLesson.headline}</h3>
+        <h3 style={{ color: "black" }}>
+          {activeLesson?.headline || "headline"}
+        </h3>
       </div>
       <div>
-        <h3 style={{ color: "black" }}>{activeLesson.description}</h3>
+        <h3 style={{ color: "black" }}>{activeLesson?.description}</h3>
       </div>
       <div>
-        <h3 style={{ color: "black" }}>{activeLesson.instructions}</h3>
+        <h3 style={{ color: "black" }}>{activeLesson?.instructions}</h3>
       </div>
       <button onClick={() => setScanQr(true)}>Scan QR</button>
     </div>
