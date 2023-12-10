@@ -91,7 +91,7 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
                     style={{ width: "100%" }}
                     onClick={() => {
                       const activeLesson = myLessons.map(
-                        (lesson2, idx2) => idx == idx2
+                        (__, idx2) => idx == idx2
                       );
                       setActiveLesson(activeLesson);
                     }}
