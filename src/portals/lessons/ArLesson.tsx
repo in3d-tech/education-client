@@ -55,7 +55,7 @@ const ARComponent = ({ isSquare, marker, selectedScan }: ARComponentProps) => {
       ? `<a-assets>
           <a-asset-item id="3D-model" src="./assets/models/new-tank/tanky future new.gltf"></a-asset-item>
         </a-assets>`
-      : null
+      : ""
   }
   <a-marker type='pattern' url='${marker}'>
   ${
@@ -77,15 +77,12 @@ const ARComponent = ({ isSquare, marker, selectedScan }: ARComponentProps) => {
   </a-scene>
 </body>
 </html>`;
-  return iframeHTML ? (
+
+  return (
     <iframe
       srcDoc={iframeHTML}
       style={{ width: "100vw", height: "80vh", border: "none" }}
     ></iframe>
-  ) : (
-    <div>
-      <h1>nothing to show yet</h1>
-    </div>
   );
 };
 
