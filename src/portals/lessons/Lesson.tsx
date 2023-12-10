@@ -44,6 +44,7 @@ export function Lesson() {
       isArScan={isArScan}
       setIsArScan={setIsArScan}
       selectedScan={selectedScan}
+      setScanQr={setScanQr}
     />
   ) : (
     <div
@@ -126,10 +127,13 @@ export function Lesson() {
   );
 }
 
-function ScanQrForModel({ isArScan, setIsArScan, selectedScan }: any) {
+function ScanQrForModel({
+  isArScan,
+  setIsArScan,
+  selectedScan,
+  setScanQr,
+}: any) {
   const [scannedMarker, setScannedMarker] = useState<string | number>("");
-
-  console.log({ selectedScan });
 
   const marker: string | undefined = markers[scannedMarker] || undefined;
 
@@ -140,7 +144,7 @@ function ScanQrForModel({ isArScan, setIsArScan, selectedScan }: any) {
         marker={marker}
         selectedScan={selectedScan}
       />
-      <button>Close Camera!</button>
+      <button onClick={() => setScanQr(false)}>Close Camera</button>
     </>
   ) : (
     <QRScanner setIsArScan={setIsArScan} setScannedMarker={setScannedMarker} />
