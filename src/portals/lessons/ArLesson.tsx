@@ -81,7 +81,7 @@ const ARComponent = ({ isSquare, marker, selectedScan }: ARComponentProps) => {
   return (
     <iframe
       srcDoc={iframeHTML}
-      style={{ width: "100vw", height: "100vh", border: "none" }}
+      style={{ width: "100vw", height: "90vh", border: "none" }}
     >
       <button>Test Button</button>
     </iframe>
