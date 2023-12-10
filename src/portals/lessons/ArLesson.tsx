@@ -19,17 +19,17 @@ const ARComponent = ({ isSquare, marker, selectedScan }: ARComponentProps) => {
     );
   }
 
-  const isCircleModel = `<a-circle position="0 0.5 0" radius="1" color="blue">
+  const isCircleModel = `<a-cylinder position="0 0.5 0" radius="0.5" height="0.5" color="blue" shadow="cast: true; receive: true;">
   <a-animation
     attribute="rotation"
-    dur="12000"
-    to="360 360 0"
+    dur="3000"
+    to="0 360 0"
     repeat="indefinite"
     easing="linear"
   ></a-animation>
-</a-circle>`;
+</a-cylinder>`;
 
-  const isSquareModel = `<a-box position="0 0.5 0" material="color: red;">
+  const isSquareModel = `<a-box position="0 0.5 0" material="color: red; shadow="cast: true; receive: true;">
 //       <a-animation
 //         attribute="rotation"
 //         dur="12000"
