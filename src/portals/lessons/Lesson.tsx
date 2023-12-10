@@ -103,7 +103,8 @@ export function Lesson() {
               </div>
               <div>
                 <button
-                  style={{ color: "black", flex: 1 }}
+                  style={{ flex: 1, width: "100%", marginTop: "1.2em" }}
+                  className="btn"
                   onClick={() => {
                     setSelectedScan({
                       model: qrData.model,
@@ -197,11 +198,11 @@ export const QRScanner = ({ setIsArScan, setScannedMarker }: any) => {
       }}
     >
       <div id="reader" ref={scannerRef} style={{ width: 600 }}></div>
-      <div
+      {/* <div
         id="result"
         ref={resultRef}
         style={{ textAlign: "center", fontSize: "1.5rem" }}
-      ></div>
+      ></div> */}
     </main>
   );
 };
