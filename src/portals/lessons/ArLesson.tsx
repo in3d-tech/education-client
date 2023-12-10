@@ -1,9 +1,13 @@
 type ARComponentProps = {
   isSquare?: boolean;
   marker: string | undefined;
+  selectedScan: any;
 };
+{
+  /* <a-marker type='pattern' url='./assets/markers/pattern-4.patt'> */
+}
 
-const ARComponent = ({ isSquare, marker }: ARComponentProps) => {
+const ARComponent = ({ isSquare, marker, selectedScan }: ARComponentProps) => {
   if (!navigator.mediaDevices) {
     return (
       <div>
@@ -15,7 +19,28 @@ const ARComponent = ({ isSquare, marker }: ARComponentProps) => {
     );
   }
 
-  // const isCircleModel = ``;
+  const isCircleModel = `<a-circle position="0 0.5 0" radius="1" color="blue">
+  <a-animation
+    attribute="rotation"
+    dur="12000"
+    to="360 360 0"
+    repeat="indefinite"
+    easing="linear"
+  ></a-animation>
+</a-circle>`;
+
+  const isSquareModel = `<a-box position="0 0.5 0" material="color: red;">
+//       <a-animation
+//         attribute="rotation"
+//         dur="12000"
+//         to="360 360 0"
+//         repeat="indefinite"
+//         easing="linear"
+//       ></a-animation>
+//     </a-box>`;
+
+  const modelToUse =
+    selectedScan.model == "square" ? isSquareModel : isCircleModel;
 
   const iframeHTML = `
 <html>
@@ -26,24 +51,16 @@ const ARComponent = ({ isSquare, marker }: ARComponentProps) => {
 <body style="margin: 0px; overflow: hidden">
   <a-scene embedded arjs>
   ${
-    isSquare
+    !isSquare
       ? `<a-assets>
           <a-asset-item id="3D-model" src="./assets/models/new-tank/tanky future new.gltf"></a-asset-item>
         </a-assets>`
       : null
   }
-  <a-marker type='pattern' url='./assets/markers/pattern-4.patt'>
+  <a-marker type='pattern' url='${marker}'>
   ${
-    !isSquare
-      ? ` <a-box position="0 0.5 0" material="color: red;">
-  //       <a-animation
-  //         attribute="rotation"
-  //         dur="3000"
-  //         to="360 360 0"
-  //         repeat="indefinite"
-  //         easing="linear"
-  //       ></a-animation>
-  //     </a-box>`
+    isSquare
+      ? modelToUse
       : ` <a-entity gltf-model="#3D-model"
             cale="0.004 0.004 0.004 position="-3 0.01 -2">
             <a-animation

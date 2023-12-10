@@ -59,6 +59,17 @@ export function StudentPortal({ user }: StudentPortalProps) {
         <button className="student-btn" onClick={() => handleModel(false)}>
           My Lessons
         </button>
+
+        <button
+          style={{
+            background: 'url("/assets/images/statistics.jpg") no-repeat center',
+            color: "black",
+            backgroundSize: "cover",
+          }}
+          className="student-btn"
+        >
+          My Statistics
+        </button>
       </div>
     </div>
   );

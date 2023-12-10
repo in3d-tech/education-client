@@ -68,7 +68,16 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
   return (
     <div className="my-lesson-wrapper">
       <div className="my-lessons-list">
-        <span style={{ color: "black" }}>My Lessons</span>
+        <span
+          style={{
+            color: "black",
+            height: ".1em",
+            fontSize: "1.2em",
+            textDecoration: "underline",
+          }}
+        >
+          My Lessons
+        </span>
         <div className="my-lessons-list-container">
           {myLessons.length ? (
             myLessons.map((lesson, idx) => {
@@ -90,7 +99,7 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
                     to="/lesson"
                     style={{ width: "100%" }}
                     onClick={() => {
-                      const activeLesson = myLessons.map(
+                      const activeLesson = myLessons.filter(
                         (__, idx2) => idx == idx2
                       );
                       setActiveLesson(activeLesson);

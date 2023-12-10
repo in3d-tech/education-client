@@ -269,10 +269,10 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               }
             >
               // Unique name per model
-              <option value="square">Square</option>
-              <option value="circle">Circle</option>
-              <option value="doctor">Doctor</option>
-              <option value="tank">Tank</option>
+              <option value="square">רבוע</option>
+              <option value="circle">עגול</option>
+              {/* <option value="doctor">Doctor</option>
+              <option value="tank">Tank</option> */}
             </select>
             <div style={{ color: "black" }}>{`QR id: ${item.uniqueId}`}</div>
             <button

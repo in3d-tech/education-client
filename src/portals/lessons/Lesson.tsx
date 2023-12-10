@@ -11,43 +11,133 @@ const markers: any = {
   5: "./assets/markers/pattern-5.patt",
 };
 
+const translation: any = {
+  square: "רבוע",
+  circle: "עגול",
+};
+
+type QrData = {
+  uniqueId: number | string;
+  model: string;
+};
+
 export function Lesson() {
   const [scanQr, setScanQr] = useState<boolean>(false);
   const [isArScan, setIsArScan] = useState<boolean>(false);
+  const [selectedScan, setSelectedScan] = useState<any>(null);
 
   const { activeLesson } = useAppContext();
 
+  if (!activeLesson)
+    return (
+      <div>
+        <h1>Error Finding Lesson</h1>
+      </div>
+    );
+
+  const currentLesson = activeLesson[0];
+
+  console.log(currentLesson.qrList);
+
   return scanQr ? (
-    <ScanQrForModel isArScan={isArScan} setIsArScan={setIsArScan} />
+    <ScanQrForModel
+      isArScan={isArScan}
+      setIsArScan={setIsArScan}
+      selectedScan={selectedScan}
+    />
   ) : (
-    <div style={{ height: "100vh" }}>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <div>
         <h3 style={{ color: "black" }}>
-          {activeLesson?.headline || "headline"}
+          {currentLesson?.headline || "headline"}
         </h3>
       </div>
       <div>
-        <h3 style={{ color: "black" }}>{activeLesson?.description}</h3>
+        <h3 style={{ color: "black" }}>{currentLesson?.description}</h3>
       </div>
       <div>
-        <h3 style={{ color: "black" }}>{activeLesson?.instructions}</h3>
+        <h3 style={{ color: "black" }}>{currentLesson?.instructions}</h3>
       </div>
-      <button onClick={() => setScanQr(true)}>Scan QR</button>
+      <div
+        style={{
+          width: "96%",
+          // height: "50%",
+        }}
+      >
+        {currentLesson.qrList.length ? (
+          currentLesson.qrList.map((qrData: QrData, idx: number) => (
+            <div
+              key={idx}
+              style={{
+                height: "5em",
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                padding: "0.5em",
+                borderRadius: "4px",
+              }}
+            >
+              <div
+                style={{
+                  color: "black",
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <span>מספר QR:</span>
+                <span style={{ marginRight: "4px", fontWeight: "bold" }}>
+                  {qrData.uniqueId}
+                </span>
+              </div>
+              <div style={{ color: "black", flex: 1 }}>
+                {translation[qrData.model]}
+              </div>
+              <div>
+                <button
+                  style={{ color: "black", flex: 1 }}
+                  onClick={() => {
+                    setSelectedScan({
+                      model: qrData.model,
+                      id: qrData.uniqueId,
+                    });
+                    setScanQr(true);
+                  }}
+                >
+                  Scan QR
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <h2 style={{ color: "black" }}>no qr's added</h2>
+        )}
+      </div>
+
+      {/* <button onClick={() => setScanQr(true)}>Scan QR</button> */}
     </div>
   );
 }
 
-function ScanQrForModel({ isArScan, setIsArScan }: any) {
+function ScanQrForModel({ isArScan, setIsArScan, selectedScan }: any) {
   const [scannedMarker, setScannedMarker] = useState<string | number>("");
+
+  console.log({ selectedScan });
 
   const marker: string | undefined = markers[scannedMarker] || undefined;
 
   return isArScan ? (
-    <ARComponent isSquare={true} marker={marker} />
+    <ARComponent isSquare={true} marker={marker} selectedScan={selectedScan} />
   ) : (
     <QRScanner setIsArScan={setIsArScan} setScannedMarker={setScannedMarker} />
   );
-  // return <ARComponent isSquare={true} />;
 }
 
 export const QRScanner = ({ setIsArScan, setScannedMarker }: any) => {
