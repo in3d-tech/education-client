@@ -15,6 +15,8 @@ const ARComponent = ({ isSquare, marker }: ARComponentProps) => {
     );
   }
 
+  const isCircleModel = ``;
+
   const iframeHTML = `
 <html>
 <head>
@@ -30,7 +32,7 @@ const ARComponent = ({ isSquare, marker }: ARComponentProps) => {
         </a-assets>`
       : null
   }
-  <a-marker type='pattern' url='./assets/markers/pattern-4 (2).patt'>
+  <a-marker type='pattern' url='./assets/markers/pattern-4.patt'>
   ${
     isSquare
       ? ` <a-box position="0 0.5 0" material="color: red;">
