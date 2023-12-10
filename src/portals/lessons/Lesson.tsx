@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import ARComponent from "./ArLesson";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { useAppContext } from "../../context/appContext";
+import { Navbar } from "../../navigation/Navbar";
 
 const markers: any = {
   1: "./assets/markers/pattern-1.patt",
@@ -26,7 +27,7 @@ export function Lesson() {
   const [isArScan, setIsArScan] = useState<boolean>(false);
   const [selectedScan, setSelectedScan] = useState<any>(null);
 
-  const { activeLesson } = useAppContext();
+  const { activeLesson, user } = useAppContext();
 
   if (!activeLesson)
     return (
@@ -47,84 +48,87 @@ export function Lesson() {
       setScanQr={setScanQr}
     />
   ) : (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <div>
-        <h3 style={{ color: "black" }}>
-          {currentLesson?.headline || "headline"}
-        </h3>
-      </div>
-      <div>
-        <h3 style={{ color: "black" }}>{currentLesson?.description}</h3>
-      </div>
-      <div>
-        <h3 style={{ color: "black" }}>{currentLesson?.instructions}</h3>
-      </div>
+    <>
+      <Navbar title="Lesson" user={user} />
       <div
         style={{
-          width: "96%",
-          // height: "50%",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        {currentLesson.qrList.length ? (
-          currentLesson.qrList.map((qrData: QrData, idx: number) => (
-            <div
-              key={idx}
-              style={{
-                height: "5em",
-                display: "flex",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-                padding: "0.5em",
-                borderRadius: "4px",
-              }}
-            >
+        <div>
+          <h3 style={{ color: "black" }}>
+            {currentLesson?.headline || "headline"}
+          </h3>
+        </div>
+        <div>
+          <h3 style={{ color: "black" }}>{currentLesson?.description}</h3>
+        </div>
+        <div>
+          <h3 style={{ color: "black" }}>{currentLesson?.instructions}</h3>
+        </div>
+        <div
+          style={{
+            width: "96%",
+            // height: "50%",
+          }}
+        >
+          {currentLesson.qrList.length ? (
+            currentLesson.qrList.map((qrData: QrData, idx: number) => (
               <div
+                key={idx}
                 style={{
-                  color: "black",
-                  flex: 1,
+                  height: "5em",
                   display: "flex",
-                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  padding: "0.5em",
+                  borderRadius: "4px",
                 }}
               >
-                <span>מספר QR:</span>
-                <span style={{ marginRight: "4px", fontWeight: "bold" }}>
-                  {qrData.uniqueId}
-                </span>
-              </div>
-              <div style={{ color: "black", flex: 1 }}>
-                {translation[qrData.model]}
-              </div>
-              <div>
-                <button
-                  style={{ flex: 1, width: "100%", marginTop: "1.2em" }}
-                  className="btn"
-                  onClick={() => {
-                    setSelectedScan({
-                      model: qrData.model,
-                      id: qrData.uniqueId,
-                    });
-                    setScanQr(true);
+                <div
+                  style={{
+                    color: "black",
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "row",
                   }}
                 >
-                  Scan QR
-                </button>
+                  <span>מספר QR:</span>
+                  <span style={{ marginRight: "4px", fontWeight: "bold" }}>
+                    {qrData.uniqueId}
+                  </span>
+                </div>
+                <div style={{ color: "black", flex: 1 }}>
+                  {translation[qrData.model]}
+                </div>
+                <div>
+                  <button
+                    style={{ flex: 1, width: "100%", marginTop: "1.2em" }}
+                    className="btn"
+                    onClick={() => {
+                      setSelectedScan({
+                        model: qrData.model,
+                        id: qrData.uniqueId,
+                      });
+                      setScanQr(true);
+                    }}
+                  >
+                    Scan QR
+                  </button>
+                </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <h2 style={{ color: "black" }}>no qr's added</h2>
-        )}
-      </div>
+            ))
+          ) : (
+            <h2 style={{ color: "black" }}>no qr's added</h2>
+          )}
+        </div>
 
-      {/* <button onClick={() => setScanQr(true)}>Scan QR</button> */}
-    </div>
+        {/* <button onClick={() => setScanQr(true)}>Scan QR</button> */}
+      </div>
+    </>
   );
 }
 
