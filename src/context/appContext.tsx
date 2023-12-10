@@ -29,7 +29,7 @@ const tempUser2 = {
   // lastName: "marks",
   email: "Pm@pm.com",
   phone: "454545",
-  role: "student",
+  role: "teacher",
 };
 
 export const AppContext = createContext<Context | null>(null);
