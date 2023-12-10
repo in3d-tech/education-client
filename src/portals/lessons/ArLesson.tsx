@@ -1,12 +1,14 @@
 type ARComponentProps = {
   isSquare?: boolean;
+  marker: string | undefined;
 };
 
-const ARComponent = ({ isSquare }: ARComponentProps) => {
+const ARComponent = ({ isSquare, marker }: ARComponentProps) => {
   if (!navigator.mediaDevices) {
     return (
       <div>
         <p>
+          {`${marker}`}
           WebRTC not supported in this browser. Please use a supported browser.
         </p>
       </div>
@@ -22,7 +24,7 @@ const ARComponent = ({ isSquare }: ARComponentProps) => {
 <body style="margin: 0px; overflow: hidden">
   <a-scene embedded arjs>
   ${
-    !isSquare
+    isSquare
       ? `<a-assets>
           <a-asset-item id="3D-model" src="./assets/models/new-tank/tanky future new.gltf"></a-asset-item>
         </a-assets>`
@@ -30,7 +32,7 @@ const ARComponent = ({ isSquare }: ARComponentProps) => {
   }
   <a-marker type='pattern' url='./assets/markers/pattern-4 (2).patt'>
   ${
-    isSquare
+    !isSquare
       ? ` <a-box position="0 0.5 0" material="color: red;">
   //       <a-animation
   //         attribute="rotation"

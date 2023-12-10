@@ -2,6 +2,14 @@ import { useState, useRef, useEffect } from "react";
 import ARComponent from "./ArLesson";
 import { Html5QrcodeScanner } from "html5-qrcode";
 
+const markers: any = {
+  1: "./assets/markers/pattern-1.patt",
+  2: "./assets/markers/pattern-2.patt",
+  3: "./assets/markers/pattern-3.patt",
+  4: "./assets/markers/pattern-4.patt",
+  5: "./assets/markers/pattern-5.patt",
+};
+
 export function Lesson() {
   const [scanQr, setScanQr] = useState<boolean>(false);
   const [isArScan, setIsArScan] = useState<boolean>(false);
@@ -25,15 +33,19 @@ export function Lesson() {
 }
 
 function ScanQrForModel({ isArScan, setIsArScan }: any) {
+  const [scannedMarker, setScannedMarker] = useState<string | number>("");
+
+  const marker: string | undefined = markers[scannedMarker] || undefined;
+
   return isArScan ? (
-    <ARComponent isSquare={true} />
+    <ARComponent isSquare={true} marker={marker} />
   ) : (
-    <QRScanner setIsArScan={setIsArScan} />
+    <QRScanner setIsArScan={setIsArScan} setScannedMarker={setScannedMarker} />
   );
   // return <ARComponent isSquare={true} />;
 }
 
-export const QRScanner = ({ setIsArScan }: any) => {
+export const QRScanner = ({ setIsArScan, setScannedMarker }: any) => {
   const scannerRef: any = useRef(null);
   const resultRef = useRef<HTMLDivElement | null>(null);
 
@@ -45,14 +57,12 @@ export const QRScanner = ({ setIsArScan }: any) => {
 
     const success = (result: string) => {
       if (resultRef.current) {
-        if (result == "4") {
-          alert(`result is somehow equal to 4???`);
-          setIsArScan(true);
-        }
-        resultRef.current.innerHTML = `
-          <h2>Success!</h2>
-          <p><a href="${result}">${result}</a></p>
-        `;
+        setScannedMarker(result);
+        setIsArScan(true);
+        // resultRef.current.innerHTML = `
+        //   <h2>Success!</h2>
+        //   <p><a href="${result}">${result}</a></p>
+        // `;
         scanner.clear();
         if (scannerRef.current) scannerRef.current.remove();
       }

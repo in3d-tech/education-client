@@ -142,6 +142,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   };
 
   const handleAddQr = () => {
+    if (list.length >= 5) return;
     const standardModel = "square";
     setList([...list, { uniqueId, model: standardModel }]);
     // Each time a user added, increment the uniqueId
