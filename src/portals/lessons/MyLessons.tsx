@@ -29,6 +29,31 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
       }
     } catch (error) {
       console.error("Error fetching my lessons:", error);
+      const newLesson: any = [
+        {
+          headline: "View First Models",
+          description: "Scan the right QR codes",
+          instructions: "See which QR to scan, and write down your results!",
+          language: "he",
+          classAgeGroup: "2",
+          qrList: [
+            {
+              uniqueId: 1,
+              model: "square",
+            },
+            {
+              uniqueId: 2,
+              model: "circle",
+            },
+            {
+              uniqueId: 3,
+              model: "square",
+            },
+          ],
+          lessonId: 5,
+        },
+      ];
+      setMyLessons(newLesson);
     }
   };
 
