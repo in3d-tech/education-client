@@ -23,6 +23,6 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
-  "include": ["src"],
+  "include": ["src", "threex", "jsartoolkit5", "js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
