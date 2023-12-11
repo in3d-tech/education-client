@@ -56,6 +56,8 @@ export function StudentPortal({ user }: StudentPortalProps) {
           />
         </Modal>
 
+        <a href="/src/hello-cube.html">Quick jump to camera</a>
+
         <button className="student-btn" onClick={() => handleModel(false)}>
           My Lessons
         </button>
