@@ -119,7 +119,7 @@ function initialize()
 		});
 	
 		let mesh = patternArray[i] == 'letterB' ?  new THREE.Mesh( 
-			new THREE.CylinderGeomtry(1.25,1.25,1.25), 
+			new THREE.CylinderGeometry(1.25,1.25,1.25), 
 			new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}) 
 		) : new THREE.Mesh( 
 			new THREE.CubeGeometry(1.25,1.25,1.25), 
