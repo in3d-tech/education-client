@@ -386,27 +386,6 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   );
 };
 
-export const FileUpload = () => {
-  const [file, setFile] = useState<any>(null);
-
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setFile(event.target.files[0]);
-  };
-
-  const onFileUpload = () => {
-    // const formData = new FormData();
-    // formData.append('myFile', file, file.name);
-    // fetch("http://localhost:8000/upload", formData);
-  };
-
-  return (
-    <div>
-      <input type="file" onChange={onFileChange} />
-      <button onClick={onFileUpload}>Upload!</button>
-    </div>
-  );
-};
-
 type FormData = {
   headline: string;
   description: string;
