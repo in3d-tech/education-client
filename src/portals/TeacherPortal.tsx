@@ -13,8 +13,6 @@ type TeacherPortalProps = {
 
 export function TeacherPortal({ user }: TeacherPortalProps) {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  // const [qrTest, setQrTest] = useState<any>();
-  // const [qrErr, setQrErr] = useState<any>();
   const [currentLessonsModal, setCurrentLessonsModal] =
     useState<boolean>(false);
 
@@ -46,7 +44,7 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           style={{
             content: {
               padding: 0,
-              overflow: "hidden",
+              overflow: "scroll",
               boxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
               WebkitBoxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
             },
@@ -77,7 +75,7 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           style={{
             content: {
               padding: 0,
-              overflow: "hidden",
+              // overflow: "scroll",
               boxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
               WebkitBoxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
             },
@@ -152,7 +150,10 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   const handleAddQr = () => {
     if (list.length >= 5) return;
     const standardModel = "square";
-    setList([...list, { uniqueId, model: standardModel }]);
+    setList([
+      ...list,
+      { uniqueId, model: standardModel, selectedType: "image" },
+    ]);
     // Each time a user added, increment the uniqueId
     setUniqueId(uniqueId + 1);
   };
@@ -172,6 +173,30 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     setList(updatedList);
   };
 
+  // Handle the type selection
+  const handleTypeSelect = (id: any, selectedType: string) => {
+    const updatedList = list.map((item) => {
+      if (item.uniqueId === id) {
+        return { ...item, selectedType };
+      }
+      return item;
+    });
+    setList(updatedList);
+  };
+
+  const handleFileUpload = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: number
+  ) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const qrId = id;
+      if (file && qrId) {
+      }
+      // do something with the file...
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-bg">
       <div className="input-container">
@@ -179,7 +204,6 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         <input
           placeholder="כּוֹתֶרֶת"
           {...register("headline")} //, { required: "First Name Required" }
-          style={{ color: "black" }}
         />
       </div>
       <div className="input-container">
@@ -187,15 +211,13 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         <input
           placeholder="תיאור"
           {...register("description")} // , { required: "First Name Required" }
-          style={{ color: "black" }}
         />
       </div>
-      <div className="input-container">
+      <div className="input-container" style={{ height: "6em" }}>
         {/* <label htmlFor="instructions">Instructions: </label> */}
         <input
           placeholder="הוראות"
           {...register("instructions")} // , { required: "Email Required" }
-          style={{ color: "black" }}
         />
       </div>
       <div
@@ -246,7 +268,26 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       >
         הוסף QR ובחר דגם תלת מימד
       </button>
-      <div style={{ width: "50%", marginTop: "1em" }}>
+      <div style={{ width: "80%", marginTop: "1em" }}>
+        {list.length ? (
+          <div
+            style={{
+              // width: "14em",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: "1em",
+              borderBottom: "1px solid rgba(0, 0, 0, 0.4)",
+              padding: "2px",
+              color: "black",
+            }}
+          >
+            <span>choose type:</span>
+            <span>choose/upload:</span>
+            <span>QR id:</span>
+            <span>Delete</span>
+          </div>
+        ) : null}
         {list.map((item: any, idx) => (
           <div
             key={idx}
@@ -260,36 +301,81 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               padding: "2px",
             }}
           >
-            <label htmlFor={`model${idx}`} style={{ color: "black" }}>
-              לבחור דגם:
-            </label>
-            <select
-              onChange={(e) =>
-                handleSelectChange(item.uniqueId, e.target.value)
-              }
-            >
-              // Unique name per model
-              <option value="square">ריבוע</option>
-              <option value="circle">עיגול</option>
-              {/* <option value="doctor">Doctor</option>
-              <option value="tank">Tank</option> */}
-            </select>
+            <div>
+              <button
+                style={{
+                  backgroundColor:
+                    item.selectedType === "image" ? "black" : "white",
+                  color: item.selectedType === "image" ? "white" : "black",
+                }}
+                onClick={() => handleTypeSelect(item.uniqueId, "image")}
+              >
+                Image
+              </button>
+              <button
+                style={{
+                  backgroundColor:
+                    item.selectedType === "3D Model" ? "black" : "white",
+                  color: item.selectedType === "3D Model" ? "white" : "black",
+                }}
+                onClick={() => handleTypeSelect(item.uniqueId, "3D Model")}
+              >
+                3D Model
+              </button>
+            </div>
+            {/* <div>
+              <label htmlFor={`model${idx}`} style={{ color: "black" }}>
+                לבחור דגם:
+              </label>
+              <select
+                onChange={(e) =>
+                  handleSelectChange(item.uniqueId, e.target.value)
+                }
+              >
+                <option value="square">ריבוע</option>
+                <option value="circle">עיגול</option>
+
+                <option value="square">cone</option>
+                <option value="square">ריבוע</option>
+              </select>
+            </div> */}
+            <div>
+              {item.selectedType === "3D Model" ? (
+                <select
+                  onChange={(e) =>
+                    handleSelectChange(item.uniqueId, e.target.value)
+                  }
+                >
+                  <option value="square">ריבוע</option>
+                  <option value="circle">עיגול</option>
+                  <option value="square">cone</option>
+                  <option value="square">ריבוע</option>
+                </select>
+              ) : (
+                <input
+                  type="file"
+                  onChange={(e) => handleFileUpload(e, item.uniqueId)}
+                />
+              )}
+            </div>
+
             <div style={{ color: "black" }}>{`QR id: ${item.uniqueId}`}</div>
-            <button
-              style={{ all: "unset" }}
-              type="button"
-              onClick={() => handleDeleteQr(item.uniqueId)}
-            >
-              <DeleteForeverIcon sx={{ fontSize: "large", color: "black" }} />
-            </button>
+            <div>
+              <button
+                style={{ all: "unset" }}
+                type="button"
+                onClick={() => handleDeleteQr(item.uniqueId)}
+              >
+                <DeleteForeverIcon sx={{ fontSize: "large", color: "black" }} />
+              </button>
+            </div>
           </div>
         ))}
       </div>
-      <div style={{ marginTop: "2em" }}>
+      {/* <div style={{ marginTop: "2em" }}>
         <label htmlFor="upload"></label>
         <input type="file" />
-      </div>
-      {/* <Temp /> */}
+      </div> */}
       <input
         className="btn"
         style={{ width: "20%" }}
@@ -297,6 +383,27 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         value={"שלח"}
       />
     </form>
+  );
+};
+
+export const FileUpload = () => {
+  const [file, setFile] = useState<any>(null);
+
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // setFile(event.target.files[0]);
+  };
+
+  const onFileUpload = () => {
+    // const formData = new FormData();
+    // formData.append('myFile', file, file.name);
+    // fetch("http://localhost:8000/upload", formData);
+  };
+
+  return (
+    <div>
+      <input type="file" onChange={onFileChange} />
+      <button onClick={onFileUpload}>Upload!</button>
+    </div>
   );
 };
 
@@ -309,47 +416,3 @@ type FormData = {
   userId?: string;
   qrList?: any[];
 };
-
-// const Temp = () => {
-//   return (
-//     <div className="sec-center">
-//       <input
-//         className="dropdown"
-//         type="checkbox"
-//         id="dropdown"
-//         name="dropdown"
-//       />
-//       <label className="for-dropdown" htmlFor="dropdown">
-//         Dropdown Menu <i className="uil uil-arrow-down"></i>
-//       </label>
-//       <div className="section-dropdown">
-//         <a href="#">
-//           Dropdown Link <i className="uil uil-arrow-right"></i>
-//         </a>
-//         <input
-//           className="dropdown-sub"
-//           type="checkbox"
-//           id="dropdown-sub"
-//           name="dropdown-sub"
-//         />
-//         <label className="for-dropdown-sub" htmlFor="dropdown-sub">
-//           Dropdown Sub <i className="uil uil-plus"></i>
-//         </label>
-//         <div className="section-dropdown-sub">
-//           <a href="#">
-//             Dropdown Link <i className="uil uil-arrow-right"></i>
-//           </a>
-//           <a href="#">
-//             Dropdown Link <i className="uil uil-arrow-right"></i>
-//           </a>
-//         </div>
-//         <a href="#">
-//           Dropdown Link <i className="uil uil-arrow-right"></i>
-//         </a>
-//         <a href="#">
-//           Dropdown Link <i className="uil uil-arrow-right"></i>
-//         </a>
-//       </div>
-//     </div>
-//   );
-// };

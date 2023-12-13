@@ -129,22 +129,23 @@ function initialize()
 		let mesh; 
 		if(patternArray[i] == 'letterC') {
 			let imgTexture = new THREE.TextureLoader().load( '/assets/images/aug-real.jpg' );
-			let planeGeo = new THREE.PlaneGeometry(3, 3, 1);
+			let planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
 			let planeMat = new THREE.MeshBasicMaterial({map: imgTexture});
 			mesh =  new THREE.Mesh(planeGeo, planeMat) 
 			mesh.rotation.x = -1.5
+			
 			; // Rotate 90 degrees
 		} else if(patternArray[i] == 'letterB') {
  		mesh =  new THREE.Mesh( 
 			new THREE.CylinderGeometry(1.25,1.25,1.25), 
 			new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}));
 		} else if(patternArray[i] == 'letterF') {
-			const geometry = new THREE.TorusGeometry( 0.000005, 2, 12, 50 ); 
-			const material = new THREE.MeshBasicMaterial( { color: colorArray[i] , transparent: true, opacity:0.5} ); 
+			const geometry = new THREE.IcosahedronGeometry( 0.5, 0 ); 
+			const material = new THREE.MeshBasicMaterial( { color: colorArray[i] , map:texture, transparent: true, opacity:0.5} ); 
 			mesh = new THREE.Mesh( geometry, material );
 		} else if(patternArray[i] == 'letterD') {
 			const geometry = new THREE.ConeGeometry( 0.6, 1.2, 0 ); 
-			const material = new THREE.MeshBasicMaterial( {color: colorArray[i], transparent:true, opacity:0.5} );
+			const material = new THREE.MeshBasicMaterial( {color: colorArray[i], map:texture, transparent:true, opacity:0.5} );
 			mesh = new THREE.Mesh(geometry, material ); 
 		} else {
 			mesh =  new THREE.Mesh( 
@@ -162,7 +163,7 @@ function initialize()
 		// );
 
 
-		mesh.position.y = 1.25/2;
+		mesh.position.y = patternArray[i] == 'letterC' ? 0.1 : 1.25/2;
 		markerRoot.add( mesh );
 	}
 }

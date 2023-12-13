@@ -180,7 +180,7 @@ label {
   background: -webkit-linear-gradient(#ffffff, #d68f44);
   background: -moz-linear-gradient(#ffffff, #d68f44);
   background: linear-gradient(#ffffff, #d68f44);
-  height: 100%;
+  height: inherit;
   width: 100%;
 }
 
