@@ -118,13 +118,50 @@ function initialize()
 			type : 'pattern', patternUrl : "/data/" + patternArray[i] + ".patt",
 		});
 	
-		let mesh = patternArray[i] == 'letterB' ?  new THREE.Mesh( 
+		// let mesh = patternArray[i] == 'letterB' ?  new THREE.Mesh( 
+		// 	new THREE.CylinderGeometry(1.25,1.25,1.25), 
+		// 	new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}) 
+		// ) : new THREE.Mesh( 
+		// 	new THREE.CubeGeometry(1.25,1.25,1.25), 
+		// 	new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}) 
+		// );
+
+		let mesh; 
+		if(patternArray[i] == 'letterC') {
+			let imgTexture = new THREE.TextureLoader().load( '/assets/images/aug-real.jpg' );
+			let planeGeo = new THREE.PlaneGeometry(3, 3, 1);
+			let planeMat = new THREE.MeshBasicMaterial({map: imgTexture});
+			mesh =  new THREE.Mesh(planeGeo, planeMat) 
+			mesh.rotation.x = -1.5
+			; // Rotate 90 degrees
+		} else if(patternArray[i] == 'letterB') {
+ 		mesh =  new THREE.Mesh( 
 			new THREE.CylinderGeometry(1.25,1.25,1.25), 
-			new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}) 
-		) : new THREE.Mesh( 
+			new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}));
+		} else if(patternArray[i] == 'letterF') {
+			const geometry = new THREE.TorusGeometry( 0.000005, 2, 12, 50 ); 
+			const material = new THREE.MeshBasicMaterial( { color: colorArray[i] , transparent: true, opacity:0.5} ); 
+			mesh = new THREE.Mesh( geometry, material );
+		} else if(patternArray[i] == 'letterD') {
+			const geometry = new THREE.ConeGeometry( 0.6, 1.2, 0 ); 
+			const material = new THREE.MeshBasicMaterial( {color: colorArray[i], transparent:true, opacity:0.5} );
+			mesh = new THREE.Mesh(geometry, material ); 
+		} else {
+			mesh =  new THREE.Mesh( 
 			new THREE.CubeGeometry(1.25,1.25,1.25), 
-			new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}) 
-		);
+			new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5})
+		)}
+
+			
+		// let mesh = patternArray[i] == 'letterB' ?  new THREE.Mesh( 
+		// 	new THREE.CylinderGeometry(1.25,1.25,1.25), 
+		// 	new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}) 
+		// ) : new THREE.Mesh( 
+		// 	new THREE.CubeGeometry(1.25,1.25,1.25), 
+		// 	new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}) 
+		// );
+
+
 		mesh.position.y = 1.25/2;
 		markerRoot.add( mesh );
 	}
