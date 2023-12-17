@@ -3,6 +3,7 @@ import { useState } from "react";
 import { User } from "../App";
 import { MyLessons } from "./lessons/MyLessons";
 import { Navbar } from "../navigation/Navbar";
+import { Link } from "react-router-dom";
 // import { MyLessonsModal } from "./lessons/MyLessonsModal";
 
 type StudentPortalProps = {
@@ -62,11 +63,26 @@ export function StudentPortal({ user }: StudentPortalProps) {
           My Lessons
         </button>
 
+        {/* <img src="https://res.cloudinary.com/dxminwnb3/image/upload/v1702805169/fake-user_kwwbfv.png" /> */}
+
+        <Link
+          className="student-btn"
+          onClick={() => handleModel(false)}
+          style={{
+            background: 'url("/assets/images/my-account.jpg") no-repeat center',
+            color: "black",
+            backgroundSize: "contain",
+          }}
+          to="/account"
+        >
+          My Account
+        </Link>
+
         <button
           style={{
             background: 'url("/assets/images/statistics.jpg") no-repeat center',
             color: "black",
-            backgroundSize: "cover",
+            backgroundSize: "contain",
           }}
           className="student-btn"
         >

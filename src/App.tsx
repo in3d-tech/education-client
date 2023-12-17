@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Lesson } from "./portals/lessons/Lesson";
 import Modal from "react-modal";
 import { useAppContext } from "./context/appContext";
+import { MyAccountDetails } from "./portals/MyAccountDetails";
 
 function App() {
   const { user } = useAppContext();
@@ -21,6 +22,7 @@ function App() {
             element={!user ? <Authentification /> : <Homepage user={user} />}
           />
           <Route path="/lesson" element={<Lesson />} />
+          <Route path="/account" element={<MyAccountDetails />} />
         </Routes>
       </Router>
     </>
