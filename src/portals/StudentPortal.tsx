@@ -30,13 +30,6 @@ export function StudentPortal({ user }: StudentPortalProps) {
     >
       <Navbar user={user} title={"פורטל תלמידים"} />
       <div className="portal-wrapper">
-        {/* <MyLessonsModal
-          user={user}
-          role={user?.role}
-          onCloseClick={onCloseClick}
-          handleModel={handleModel}
-          modalIsOpen={modalIsOpen}
-        /> */}
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={() => handleModel(modalIsOpen)}
@@ -58,36 +51,57 @@ export function StudentPortal({ user }: StudentPortalProps) {
         </Modal>
 
         <a href="/hello-cube.html">Quick jump to camera</a>
-
-        <button className="student-btn" onClick={() => handleModel(false)}>
-          My Lessons
-        </button>
-
-        {/* <img src="https://res.cloudinary.com/dxminwnb3/image/upload/v1702805169/fake-user_kwwbfv.png" /> */}
-
-        <Link
-          className="student-btn"
-          onClick={() => handleModel(false)}
+        <Link to="/test">jumpTo module</Link>
+        <div
           style={{
-            background: 'url("/assets/images/my-account.jpg") no-repeat center',
-            color: "black",
-            backgroundSize: "contain",
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gridTemplateRows: "repeat(2, 1fr)",
+            gap: "1em",
           }}
-          to="/account"
         >
-          My Account
-        </Link>
-
-        <button
-          style={{
-            background: 'url("/assets/images/statistics.jpg") no-repeat center',
-            color: "black",
-            backgroundSize: "contain",
-          }}
-          className="student-btn"
-        >
-          My Statistics
-        </button>
+          <button className="student-btn" onClick={() => handleModel(false)}>
+            My Lessons
+          </button>
+          {/* <img src="https://res.cloudinary.com/dxminwnb3/image/upload/v1702805169/fake-user_kwwbfv.png" /> */}
+          {/* https://res.cloudinary.com/dxminwnb3/image/upload/v1702822789/HJNb7FR.md_b6btwm.jpg */}
+          <Link
+            className="student-btn"
+            onClick={() => handleModel(false)}
+            style={{
+              background:
+                'url("/assets/images/my-account.jpg") no-repeat center',
+              color: "black",
+              backgroundSize: "contain",
+            }}
+            to="/account"
+          >
+            My Account
+          </Link>
+          <button
+            style={{
+              background:
+                'url("/assets/images/statistics.jpg") no-repeat center',
+              color: "black",
+              backgroundSize: "contain",
+              opacity: 0.8,
+            }}
+            className="student-btn"
+          >
+            Feature Coming Soon
+          </button>
+          <button
+            style={{
+              background:
+                'url("/assets/images/statistics.jpg") no-repeat center',
+              color: "black",
+              backgroundSize: "contain",
+            }}
+            className="student-btn"
+          >
+            My Statistics
+          </button>
+        </div>
       </div>
     </div>
   );

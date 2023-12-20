@@ -23,13 +23,24 @@ type Context = {
 //   role: "teacher",
 // };
 
-const tempUser2 = {
-  userId: "f1fb123f-f6fc-4a67-aaaf-2499ce2081cc",
-  name: "Paul",
-  // lastName: "marks",
-  email: "Pm@pm.com",
-  phone: "454545",
+// const tempUser2 = {
+//   userId: "f1fb123f-f6fc-4a67-aaaf-2499ce2081cc",
+//   name: "Paul",
+//   // lastName: "marks",
+//   email: "Pm@pm.com",
+//   phone: "454545",
+//   role: "student",
+// };
+
+const tempUser3 = {
+  name: "tom",
+  email: "tomj@yahoo.ca",
+  phone: "0587870292",
   role: "student",
+  userId: "e9a6835d-a0f7-4aed-a72d-5359f0f64bee",
+  orgCode: "1",
+  profilePic:
+    "http://res.cloudinary.com/dxminwnb3/image/upload/v1702977460/llcjzexbkdh90d2w7moh.jpg",
 };
 
 export const AppContext = createContext<Context | null>(null);
@@ -37,7 +48,7 @@ export const AppContext = createContext<Context | null>(null);
 export default function AppContextProvider({
   children,
 }: AppContextProviderProps) {
-  const [user, setUser] = useState<User | null>(tempUser2);
+  const [user, setUser] = useState<User | null>(tempUser3);
   const [myLessons, setMyLessons] = useState<any[]>([]);
   const [activeLesson, setActiveLesson] = useState<any>(null);
 

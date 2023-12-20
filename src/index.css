@@ -45,6 +45,8 @@ body {
   background: -moz-linear-gradient(#ffffff, #d68f44);
   background: linear-gradient(#ffffff, #d68f44);
   overflow: hidden;
+  background: url("/assets/images/class-bg.avif") no-repeat center;
+  background-size: cover;
 }
 
 .auth-btns-wrapper {
@@ -203,14 +205,15 @@ label {
   display: flex; */
   border: 2px solid #f0f0f0;
   font-family: "Helvetica Neue", sans-serif;
-  background-color: #d5a677;
-  color: #333;
+  background-color: #edecebdc;
+  color: #313131;
   display: flex;
   padding: 30px;
   margin: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   justify-content: flex-start;
   align-items: flex-start;
+  opacity: 0.9;
 }
 
 .my-account-deets-row {
@@ -254,6 +257,7 @@ label {
 
 .my-lessons-list-container {
   width: 96%;
+  height: 70%;
   background: #a966224f;
   overflow-y: scroll;
   /* height: 400px; */
@@ -320,6 +324,12 @@ label {
   width: 80vh;
 }
 
+.profile-pic {
+  box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.55);
+  -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.55);
+  -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.55);
+}
+
 .signup-form-wrapper {
   margin-top: 2em;
   width: 60%;
@@ -337,11 +347,11 @@ label {
   border-radius: 20px;
   cursor: pointer;
   position: relative;
-  width: 13em;
+
   box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
-  height: 13em;
+  height: 11em;
   background: url("/assets/images/aug-real.jpg") no-repeat center;
   background-size: cover;
   font-size: 1.5em;

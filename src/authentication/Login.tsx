@@ -33,8 +33,6 @@ export function Login({ setUserSignup }: LoginProps) {
           });
 
           const res = await response.json();
-          alert(res);
-          console.log({ res });
           setUser(res);
         } catch {
           alert("error with login ");
@@ -66,6 +64,7 @@ export function Login({ setUserSignup }: LoginProps) {
           <input
             style={{ color: "black" }}
             placeholder="סיסמה"
+            type="password"
             {...register("password")} // , { required: "First Name Required" }
           />
         </div>

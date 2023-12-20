@@ -6,6 +6,7 @@ import { Lesson } from "./portals/lessons/Lesson";
 import Modal from "react-modal";
 import { useAppContext } from "./context/appContext";
 import { MyAccountDetails } from "./portals/MyAccountDetails";
+import MyComponent from "./common/test";
 
 function App() {
   const { user } = useAppContext();
@@ -23,6 +24,7 @@ function App() {
           />
           <Route path="/lesson" element={<Lesson />} />
           <Route path="/account" element={<MyAccountDetails />} />
+          <Route path="/test" element={<MyComponent />} />
         </Routes>
       </Router>
     </>
@@ -37,4 +39,5 @@ export type User = {
   phone: string;
   role: string;
   userId: string;
+  profilePic?: string;
 } | null;

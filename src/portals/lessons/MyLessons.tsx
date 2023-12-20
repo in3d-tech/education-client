@@ -114,7 +114,6 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
                     marginTop: "2em",
                     margin: 0,
                     width: "96%",
-                    height: "190%",
                     // display: "flex",
                     // justifyContent: "center",
                   }}
@@ -134,7 +133,7 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
                       className="my-lessons-btn"
                       style={{ width: "100%" }}
                     >
-                      {lesson.headline}
+                      {lesson?.headline}
                     </button>
                   </Link>
                   {/* </li> */}

@@ -24,8 +24,6 @@ export function SignUp({ setUserSignup }: SignupProps) {
           body: JSON.stringify(data),
         });
         const res = await response.json();
-        console.log("got a res back");
-        console.log(res);
         if (res.user) setUser(res.user);
       } catch {
         console.log("error with signup");
@@ -70,6 +68,7 @@ export function SignUp({ setUserSignup }: SignupProps) {
           {/* <label htmlFor="confirmPassword">סיסמה confirm </label> */}
           <input
             placeholder="אימות סיסמה"
+            type="password"
             {...register("confirmPassword", { required: "Password Required" })} // , { required: "Email Required" }
           />
         </div>

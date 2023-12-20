@@ -128,6 +128,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     if (list.length) {
       data.qrList = list;
     }
+    confirm("Are you sure you're ready to send?");
     data.userId = userId;
     try {
       const response = await fetch("http://192.168.1.224:3000/create-lesson", {
@@ -136,7 +137,6 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         body: JSON.stringify(data),
       });
       const res = await response.json();
-      console.log({ res });
       if (res.acknowledged == true) {
         setModalIsOpen(false);
       } else {

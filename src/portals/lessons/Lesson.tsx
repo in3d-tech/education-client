@@ -1,31 +1,31 @@
-import { useState, useRef, useEffect } from "react";
-import ARComponent from "./ArLesson";
-import { Html5QrcodeScanner } from "html5-qrcode";
+// import { useState, useRef, useEffect } from "react";
+// import ARComponent from "./ArLesson";
+// import { Html5QrcodeScanner } from "html5-qrcode";
 import { useAppContext } from "../../context/appContext";
 import { Navbar } from "../../navigation/Navbar";
 
-const markers: any = {
-  1: "./assets/markers/pattern-1.patt",
-  2: "./assets/markers/pattern-2.patt",
-  3: "./assets/markers/pattern-3.patt",
-  4: "./assets/markers/pattern-4.patt",
-  5: "./assets/markers/pattern-5.patt",
-};
+// const markers: any = {
+//   1: "./assets/markers/pattern-1.patt",
+//   2: "./assets/markers/pattern-2.patt",
+//   3: "./assets/markers/pattern-3.patt",
+//   4: "./assets/markers/pattern-4.patt",
+//   5: "./assets/markers/pattern-5.patt",
+// };
 
-const translation: any = {
-  square: "ריבוע",
-  circle: "עיגול",
-};
+// const translation: any = {
+//   square: "ריבוע",
+//   circle: "עיגול",
+// };
 
-type QrData = {
-  uniqueId: number | string;
-  model: string;
-};
+// type QrData = {
+//   uniqueId: number | string;
+//   model: string;
+// };
 
 export function Lesson() {
-  const [scanQr, setScanQr] = useState<boolean>(false);
-  const [isArScan, setIsArScan] = useState<boolean>(false);
-  const [selectedScan, setSelectedScan] = useState<any>(null);
+  // const [scanQr, setScanQr] = useState<boolean>(false);
+  // const [isArScan, setIsArScan] = useState<boolean>(false);
+  // const [selectedScan, setSelectedScan] = useState<any>(null);
 
   const { activeLesson, user } = useAppContext();
 
@@ -38,16 +38,15 @@ export function Lesson() {
 
   const currentLesson = activeLesson[0];
 
-  console.log(currentLesson.qrList);
-
-  return scanQr ? (
-    <ScanQrForModel
-      isArScan={isArScan}
-      setIsArScan={setIsArScan}
-      selectedScan={selectedScan}
-      setScanQr={setScanQr}
-    />
-  ) : (
+  // return scanQr ? (
+  //   <ScanQrForModel
+  //     isArScan={isArScan}
+  //     setIsArScan={setIsArScan}
+  //     selectedScan={selectedScan}
+  //     setScanQr={setScanQr}
+  //   />
+  // ) : (
+  return (
     <>
       <Navbar title="Lesson" user={user} />
       <div
@@ -64,6 +63,15 @@ export function Lesson() {
           </h3>
         </div>
         <div>
+          Created by:{" "}
+          <span style={{ color: "black" }}>
+            {currentLesson.createdByInfo?.firstName}{" "}
+            {currentLesson.createdByInfo?.lastName}
+          </span>
+          Class:{" "}
+          <span style={{ color: "black" }}>{currentLesson.classAgeGroup}</span>
+        </div>
+        <div>
           <h3 style={{ color: "black" }}>{currentLesson?.description}</h3>
         </div>
         <div>
@@ -75,7 +83,7 @@ export function Lesson() {
             // height: "50%",
           }}
         >
-          {currentLesson.qrList.length ? (
+          {/* {currentLesson.qrList.length ? (
             currentLesson.qrList.map((qrData: QrData, idx: number) => (
               <div
                 key={idx}
@@ -123,90 +131,98 @@ export function Lesson() {
             ))
           ) : (
             <h2 style={{ color: "black" }}>no qr's added</h2>
-          )}
+          )} */}
+          <a
+            style={{ textAlign: "center", fontSize: "1.6em" }}
+            className="btn"
+            href="/hello-cube.html"
+          >
+            Start Scanning
+          </a>
         </div>
 
         {/* <button onClick={() => setScanQr(true)}>Scan QR</button> */}
       </div>
     </>
   );
+  // );
 }
 
-function ScanQrForModel({
-  isArScan,
-  setIsArScan,
-  selectedScan,
-  setScanQr,
-}: any) {
-  const [scannedMarker, setScannedMarker] = useState<string | number>("");
+// function ScanQrForModel({
+//   isArScan,
+//   setIsArScan,
+//   selectedScan,
+//   setScanQr,
+// }: any) {
+//   const [scannedMarker, setScannedMarker] = useState<string | number>("");
 
-  const marker: string | undefined = markers[scannedMarker] || undefined;
+//   const marker: string | undefined = markers[scannedMarker] || undefined;
 
-  return isArScan ? (
-    <>
-      <ARComponent
-        isSquare={true}
-        marker={marker}
-        selectedScan={selectedScan}
-      />
-      <button
-        onClick={() => {
-          setScanQr(false);
-          setIsArScan(false);
-        }}
-      >
-        Close Camera
-      </button>
-    </>
-  ) : (
-    <QRScanner setIsArScan={setIsArScan} setScannedMarker={setScannedMarker} />
-  );
-}
+//   return isArScan ? (
+//     <>
+//       <ARComponent
+//         isSquare={true}
+//         marker={marker}
+//         selectedScan={selectedScan}
+//       />
+//       <button
+//         onClick={() => {
+//           setScanQr(false);
+//           setIsArScan(false);
+//         }}
+//       >
+//         Close Camera
+//       </button>
+//     </>
+//   ) : (
+//     <QRScanner setIsArScan={setIsArScan} setScannedMarker={setScannedMarker} />
+//   );
+// }
 
-export const QRScanner = ({ setIsArScan, setScannedMarker }: any) => {
-  const scannerRef: any = useRef(null);
-  const resultRef = useRef<HTMLDivElement | null>(null);
+// export const QRScanner = ({ setIsArScan, setScannedMarker }: any) => {
+//   const scannerRef: any = useRef(null);
+//   const resultRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const scanner: any = new Html5QrcodeScanner(scannerRef.current.id, {
-      fps: 20,
-      qrbox: { width: 250, height: 250 },
-    });
+//   useEffect(() => {
+//     const scanner: any = new Html5QrcodeScanner(scannerRef.current.id, {
+//       fps: 20,
+//       qrbox: { width: 250, height: 250 },
+//     });
 
-    const success = (result: string) => {
-      if (resultRef.current) {
-        setScannedMarker(result);
-        setIsArScan(true);
-        // resultRef.current.innerHTML = `
-        //   <h2>Success!</h2>
-        //   <p><a href="${result}">${result}</a></p>
-        // `;
-        scanner.clear();
-        if (scannerRef.current) scannerRef.current.remove();
-      }
-    };
+//     const success = (result: string) => {
+//       if (resultRef.current) {
+//         setScannedMarker(result);
+//         setIsArScan(true);
+//         // resultRef.current.innerHTML = `
+//         //   <h2>Success!</h2>
+//         //   <p><a href="${result}">${result}</a></p>
+//         // `;
+//         scanner.clear();
+//         if (scannerRef.current) scannerRef.current.remove();
+//       }
+//     };
 
-    const error = (err: Error) => {
-      console.error(err);
-    };
+//     const error = (err: Error) => {
+//       console.error(err);
+//     };
 
-    scanner.render(success, error);
-  }, []);
+//     scanner.render(success, error);
+//   }, []);
 
-  return (
-    <main
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div id="reader" ref={scannerRef} style={{ width: 600 }}></div>
-      <div
-        id="result"
-        ref={resultRef}
-        style={{ textAlign: "center", fontSize: "1.5rem", color: "green" }}
-      ></div>
-    </main>
-  );
-};
+//   return (
+//     <main
+//       style={{
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//       }}
+//     >
+//       <div id="reader" ref={scannerRef} style={{ width: 600 }}></div>
+//       <div
+//         id="result"
+//         ref={resultRef}
+//         style={{ textAlign: "center", fontSize: "1.5rem", color: "green" }}
+//       ></div>
+//     </main>
+//   );
+// };
