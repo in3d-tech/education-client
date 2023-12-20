@@ -2,7 +2,6 @@
 
 import React, { useEffect } from "react";
 // import initializeAR from "./ARScript";
-import loadjs from "loadjs";
 import { Link } from "react-router-dom";
 
 const initializeAR = () => {
@@ -148,48 +147,34 @@ const initializeAR = () => {
     render();
   }
 
-  const initializeAR2 = { initialize, update, render, animate, scene, camera };
-  return initializeAR2;
+  return { initialize, update, render, animate, scene, camera };
 };
 
 const MyComponent = () => {
   const arScript = React.useRef(null);
 
   useEffect(() => {
+    // Initialize AR without dynamically loading scripts
     const arScriptInstance = initializeAR();
     arScriptInstance.initialize();
 
+    // Only call animate() in the loop
     const animateLoop = () => {
       if (arScriptInstance) {
         requestAnimationFrame(animateLoop);
-
         arScriptInstance.animate();
       }
     };
 
     animateLoop();
 
+    // Cleanup function
     return () => {
-      // if (arScript.current && arToolkitSource && arToolkitContext) {
-      //   arScript.current = null;
-      //   if (arToolkitSource?.ready !== false)
-      //     arToolkitSource.onSourceCompleted = null;
-      //   if (arToolkitContext?.arController !== null)
-      //     arToolkitContext.arController.dispose();
-      //   renderer.dispose();
-      //   scene.dispose();
-      // }
-      console.log({ scene });
+      // Additional cleanup if needed
     };
   }, []);
 
-  return (
-    <div>
-      <Link to="/lesson" style={{ border: "1px solid red" }}>
-        Your React component content
-      </Link>
-    </div>
-  );
+  return <div>Your React component content</div>;
 };
 
 export default MyComponent;
