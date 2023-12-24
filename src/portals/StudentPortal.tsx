@@ -50,8 +50,8 @@ export function StudentPortal({ user }: StudentPortalProps) {
           />
         </Modal>
 
-        <a href="/hello-cube.html">Quick jump to camera</a>
-        <Link to="/test">jumpTo module</Link>
+        {/* <a href="/hello-cube.html">Quick jump to camera</a>
+        <Link to="/test">jumpTo module</Link> */}
         <div
           style={{
             display: "grid",

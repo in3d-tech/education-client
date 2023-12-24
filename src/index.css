@@ -199,6 +199,21 @@ label {
   flex-direction: column;
 }
 
+.lesson-content-container {
+  width: 100%;
+  padding: 4px;
+  text-align: center;
+  color: black;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.252); */
+}
+
+.lesson-content-font {
+  color: black;
+  font-family: SecularOne-Regular;
+  font-size: 1.3em;
+  margin-right: 5px;
+}
+
 .my-account-details-container {
   /* border: 1px solid black;
   color: black;

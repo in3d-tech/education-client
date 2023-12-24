@@ -24,7 +24,6 @@ function App() {
           />
           <Route path="/lesson" element={<Lesson />} />
           <Route path="/account" element={<MyAccountDetails />} />
-          <Route path="/test" element={<MyComponent />} />
         </Routes>
       </Router>
     </>

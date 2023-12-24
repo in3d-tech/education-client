@@ -1,33 +1,27 @@
-// import { useState, useRef, useEffect } from "react";
-// import ARComponent from "./ArLesson";
-// import { Html5QrcodeScanner } from "html5-qrcode";
+import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import { Navbar } from "../../navigation/Navbar";
+import MyComponent from "./ArLessonNew";
 
-// const markers: any = {
-//   1: "./assets/markers/pattern-1.patt",
-//   2: "./assets/markers/pattern-2.patt",
-//   3: "./assets/markers/pattern-3.patt",
-//   4: "./assets/markers/pattern-4.patt",
-//   5: "./assets/markers/pattern-5.patt",
-// };
-
-// const translation: any = {
-//   square: "ריבוע",
-//   circle: "עיגול",
-// };
-
-// type QrData = {
-//   uniqueId: number | string;
-//   model: string;
-// };
+const classObj: any = {
+  1: "א",
+  2: "ב",
+  3: "ג",
+  4: "ד",
+  5: "ה",
+  6: "ו",
+  7: "ז",
+  8: "ח",
+  9: "ט",
+  10: "י",
+  11: "יא",
+  12: "יב",
+};
 
 export function Lesson() {
-  // const [scanQr, setScanQr] = useState<boolean>(false);
-  // const [isArScan, setIsArScan] = useState<boolean>(false);
-  // const [selectedScan, setSelectedScan] = useState<any>(null);
-
+  const [startScanning, setStartScanning] = useState<boolean>(false);
   const { activeLesson, user } = useAppContext();
+  const [photoDataArray, setPhotoDataArray] = useState([]);
 
   if (!activeLesson)
     return (
@@ -36,193 +30,97 @@ export function Lesson() {
       </div>
     );
 
+  const fetchPhotoDataArray = async () => {
+    try {
+      const response = await fetch("http://192.168.1.224:3000/fetchPhotos");
+      if (response.ok) {
+        const data = await response.json();
+        setPhotoDataArray(data.photos);
+        console.log({ data });
+      } else {
+        console.error("Error fetching photos. Status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error fetching photos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPhotoDataArray();
+  }, []);
+
   const currentLesson = activeLesson[0];
 
-  // return scanQr ? (
-  //   <ScanQrForModel
-  //     isArScan={isArScan}
-  //     setIsArScan={setIsArScan}
-  //     selectedScan={selectedScan}
-  //     setScanQr={setScanQr}
-  //   />
-  // ) : (
   return (
     <>
       <Navbar title="Lesson" user={user} />
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <h3 style={{ color: "black" }}>
-            {currentLesson?.headline || "headline"}
-          </h3>
-        </div>
-        <div>
-          Created by:{" "}
-          <span style={{ color: "black" }}>
-            {currentLesson.createdByInfo?.firstName}{" "}
-            {currentLesson.createdByInfo?.lastName}
-          </span>
-          Class:{" "}
-          <span style={{ color: "black" }}>{currentLesson.classAgeGroup}</span>
-        </div>
-        <div>
-          <h3 style={{ color: "black" }}>{currentLesson?.description}</h3>
-        </div>
-        <div>
-          <h3 style={{ color: "black" }}>{currentLesson?.instructions}</h3>
-        </div>
+      <button onClick={() => setStartScanning(false)}>THIS MIHGT WORK</button>
+      {startScanning ? (
+        <MyComponent
+          setStartScanning={setStartScanning}
+          firstImage={photoDataArray.length > 0 ? photoDataArray[0] : null}
+          secondImage={photoDataArray.length > 1 ? photoDataArray[1] : null}
+        />
+      ) : (
         <div
           style={{
-            width: "96%",
-            // height: "50%",
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          {/* {currentLesson.qrList.length ? (
-            currentLesson.qrList.map((qrData: QrData, idx: number) => (
-              <div
-                key={idx}
-                style={{
-                  height: "5em",
-                  display: "flex",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  padding: "0.5em",
-                  borderRadius: "4px",
-                }}
-              >
-                <div
-                  style={{
-                    color: "black",
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <span>מספר QR:</span>
-                  <span style={{ marginRight: "4px", fontWeight: "bold" }}>
-                    {qrData.uniqueId}
-                  </span>
-                </div>
-                <div style={{ color: "black", flex: 1 }}>
-                  {translation[qrData.model]}
-                </div>
-                <div>
-                  <button
-                    style={{ flex: 1, width: "100%", marginTop: "1.2em" }}
-                    className="btn"
-                    onClick={() => {
-                      setSelectedScan({
-                        model: qrData.model,
-                        id: qrData.uniqueId,
-                      });
-                      setScanQr(true);
-                    }}
-                  >
-                    Scan QR
-                  </button>
-                </div>
-              </div>
-            ))
-          ) : (
-            <h2 style={{ color: "black" }}>no qr's added</h2>
-          )} */}
-          <a
-            style={{ textAlign: "center", fontSize: "1.6em" }}
-            className="btn"
-            href="/hello-cube.html"
+          <div className="lesson-content-container">
+            <h1 style={{ color: "black" }}>
+              {currentLesson?.headline || "headline"}
+            </h1>
+          </div>
+          <div className="lesson-content-container">
+            נוצר על ידי:
+            <span
+              className="lesson-content-font"
+              style={{ marginLeft: "10px" }}
+            >
+              {currentLesson.createdByInfo?.firstName}{" "}
+              {currentLesson.createdByInfo?.lastName}
+            </span>
+            כיתה:{" "}
+            <span className="lesson-content-font">
+              {classObj[currentLesson.classAgeGroup] || "Error"}
+            </span>
+          </div>
+          <div className="lesson-content-container">
+            <h3 style={{ color: "black" }}>{currentLesson?.description}</h3>
+          </div>
+          <div className="lesson-content-container">
+            <span>הוראות: </span>
+            <h3 style={{ color: "black" }}>{currentLesson?.instructions}</h3>
+          </div>
+          <div
+            style={{
+              width: "96%",
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "12em",
+            }}
           >
-            Start Scanning
-          </a>
+            <button
+              style={{ textAlign: "center", fontSize: "1.3em" }}
+              className="btn"
+              onClick={() => setStartScanning(true)}
+              // href="/hello-cube.html"
+            >
+              Start Scanning
+            </button>
+            <img
+              src="https://res.cloudinary.com/dxminwnb3/image/upload/v1702977460/llcjzexbkdh90d2w7moh.jpg" //https://asset.cloudinary.com/dxminwnb3/ea9ce3e5ef002228c8413cd0740053b7"
+              alt="WTF"
+              style={{ width: "300px", height: "300px" }}
+            />
+          </div>
         </div>
-
-        {/* <button onClick={() => setScanQr(true)}>Scan QR</button> */}
-      </div>
+      )}
     </>
   );
   // );
 }
-
-// function ScanQrForModel({
-//   isArScan,
-//   setIsArScan,
-//   selectedScan,
-//   setScanQr,
-// }: any) {
-//   const [scannedMarker, setScannedMarker] = useState<string | number>("");
-
-//   const marker: string | undefined = markers[scannedMarker] || undefined;
-
-//   return isArScan ? (
-//     <>
-//       <ARComponent
-//         isSquare={true}
-//         marker={marker}
-//         selectedScan={selectedScan}
-//       />
-//       <button
-//         onClick={() => {
-//           setScanQr(false);
-//           setIsArScan(false);
-//         }}
-//       >
-//         Close Camera
-//       </button>
-//     </>
-//   ) : (
-//     <QRScanner setIsArScan={setIsArScan} setScannedMarker={setScannedMarker} />
-//   );
-// }
-
-// export const QRScanner = ({ setIsArScan, setScannedMarker }: any) => {
-//   const scannerRef: any = useRef(null);
-//   const resultRef = useRef<HTMLDivElement | null>(null);
-
-//   useEffect(() => {
-//     const scanner: any = new Html5QrcodeScanner(scannerRef.current.id, {
-//       fps: 20,
-//       qrbox: { width: 250, height: 250 },
-//     });
-
-//     const success = (result: string) => {
-//       if (resultRef.current) {
-//         setScannedMarker(result);
-//         setIsArScan(true);
-//         // resultRef.current.innerHTML = `
-//         //   <h2>Success!</h2>
-//         //   <p><a href="${result}">${result}</a></p>
-//         // `;
-//         scanner.clear();
-//         if (scannerRef.current) scannerRef.current.remove();
-//       }
-//     };
-
-//     const error = (err: Error) => {
-//       console.error(err);
-//     };
-
-//     scanner.render(success, error);
-//   }, []);
-
-//   return (
-//     <main
-//       style={{
-//         display: "flex",
-//         justifyContent: "center",
-//         alignItems: "center",
-//       }}
-//     >
-//       <div id="reader" ref={scannerRef} style={{ width: 600 }}></div>
-//       <div
-//         id="result"
-//         ref={resultRef}
-//         style={{ textAlign: "center", fontSize: "1.5rem", color: "green" }}
-//       ></div>
-//     </main>
-//   );
-// };
