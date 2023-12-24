@@ -6,7 +6,6 @@ import { Lesson } from "./portals/lessons/Lesson";
 import Modal from "react-modal";
 import { useAppContext } from "./context/appContext";
 import { MyAccountDetails } from "./portals/MyAccountDetails";
-import MyComponent from "./common/test";
 
 function App() {
   const { user } = useAppContext();
