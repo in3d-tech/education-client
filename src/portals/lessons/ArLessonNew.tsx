@@ -48,8 +48,8 @@ const initializeAR = ({ setStartScanning, firstImage, secondImage }) => {
     totalTime = 0;
     arToolkitSource = new THREEx.ArToolkitSource({
       sourceType: "webcam",
-      sourceHeight: window.innerHeight * 0.5,
-      sourceWidth: window.innerWidth * 0.5,
+      // sourceHeight: window.innerHeight * 0.5,
+      // sourceWidth: window.innerWidth * 0.5,
     });
 
     function onResize() {
