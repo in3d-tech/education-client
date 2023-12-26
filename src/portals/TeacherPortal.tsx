@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { User } from "../App";
@@ -81,15 +81,9 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
             },
           }}
         >
-          {/* <div className="form-bg lessons-center">
-            <h2 className="portal-title" style={{ fontSize: "2em" }}>
-              My Lessons
-            </h2> */}
           <div
             style={{
               border: "2px solid black",
-              // height: "500px",
-              // width: "100%",
             }}
           >
             <div>
@@ -119,22 +113,40 @@ type LessonFormProps = {
 
 const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   const { register, handleSubmit } = useForm<FormData>();
-  // const [modelForm, setModelForm] = useState<any>();
-
+  const [files, setFiles] = useState<any[]>([]);
   const [list, setList] = useState<any[]>([]);
   let [uniqueId, setUniqueId] = useState(1); // To uniquely identify each form
+
+  const formData = new FormData();
 
   const onSubmit = async (data: FormData) => {
     if (list.length) {
       data.qrList = list;
     }
+    console.log({ data });
+
     confirm("Are you sure you're ready to send?");
+    // return;
     data.userId = userId;
+
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        formData.append(key, data[key]);
+      }
+    }
+    if (files.length) {
+      console.log({ lengthPfFiles: files.length });
+      files.forEach((file, index) => {
+        console.log(file, index);
+        formData.append(`file`, file);
+      });
+    }
+
     try {
       const response = await fetch("http://192.168.1.224:3000/create-lesson", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        // headers: { "Content-Type": "multipart/form-data" },
+        body: formData,
       });
       const res = await response.json();
       if (res.acknowledged == true) {
@@ -143,7 +155,15 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         alert("issue creating lesson");
       }
     } catch {
-      console.log("error with signup");
+      console.log("error creating form");
+    }
+  };
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files && event.target.files[0];
+
+    if (selectedFile) {
+      setFiles((prevFiles) => [...prevFiles, selectedFile]);
     }
   };
 
@@ -163,7 +183,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     setList(list.filter((item) => item.uniqueId !== id));
   };
 
-  const handleSelectChange = (id: any, selectedModel: string) => {
+  const handleModelSelect = (id: any, selectedModel: string) => {
     const updatedList = list.map((item) => {
       if (item.uniqueId === id) {
         return { ...item, model: selectedModel };
@@ -184,21 +204,25 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     setList(updatedList);
   };
 
-  const handleFileUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    id: number
-  ) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const qrId = id;
-      if (file && qrId) {
-      }
-      // do something with the file...
-    }
-  };
+  // const handleFileUpload = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   id: number
+  // ) => {
+  //   if (e.target.files) {
+  //     const file = e.target.files[0];
+  //     const qrId = id;
+  //     if (file && qrId) {
+  //     }
+  //     // do something with the file...
+  //   }
+  // };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-bg">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="form-bg"
+      encType="multipart/form-data"
+    >
       <div className="input-container">
         {/* <label htmlFor="headline">Headline: </label> */}
         <input
@@ -323,27 +347,12 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
                 3D Model
               </button>
             </div>
-            {/* <div>
-              <label htmlFor={`model${idx}`} style={{ color: "black" }}>
-                לבחור דגם:
-              </label>
-              <select
-                onChange={(e) =>
-                  handleSelectChange(item.uniqueId, e.target.value)
-                }
-              >
-                <option value="square">ריבוע</option>
-                <option value="circle">עיגול</option>
 
-                <option value="square">cone</option>
-                <option value="square">ריבוע</option>
-              </select>
-            </div> */}
             <div>
               {item.selectedType === "3D Model" ? (
                 <select
                   onChange={(e) =>
-                    handleSelectChange(item.uniqueId, e.target.value)
+                    handleModelSelect(item.uniqueId, e.target.value)
                   }
                 >
                   <option value="square">ריבוע</option>
@@ -354,7 +363,9 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               ) : (
                 <input
                   type="file"
-                  onChange={(e) => handleFileUpload(e, item.uniqueId)}
+                  // onChange={(e) => handleFileUpload(e, item.uniqueId)}
+                  {...register(`photo-${idx}`)}
+                  onChange={(e) => handleFileChange(e)}
                 />
               )}
             </div>
@@ -394,4 +405,5 @@ type FormData = {
   class: string | number;
   userId?: string;
   qrList?: any[];
+  [key: string]: any;
 };

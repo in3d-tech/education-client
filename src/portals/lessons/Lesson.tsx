@@ -54,12 +54,12 @@ export function Lesson() {
   return (
     <>
       <Navbar title="Lesson" user={user} />
-      <button onClick={() => setStartScanning(false)}>THIS MIHGT WORK</button>
       {startScanning ? (
         <MyComponent
           setStartScanning={setStartScanning}
           firstImage={photoDataArray.length > 0 ? photoDataArray[0] : null}
           secondImage={photoDataArray.length > 1 ? photoDataArray[1] : null}
+          images={photoDataArray}
         />
       ) : (
         <div

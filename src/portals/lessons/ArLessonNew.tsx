@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { handleMarkerData } from "./common/getMarkerData";
 
 function cleanMaterial(material) {
   material.dispose();
@@ -16,7 +17,12 @@ function cleanMaterial(material) {
   }
 }
 
-const initializeAR = ({ setStartScanning, firstImage, secondImage }) => {
+const initializeAR = ({
+  setStartScanning,
+  firstImage,
+  secondImage,
+  images,
+}) => {
   if (typeof THREEx === "undefined") {
     throw new Error("THREE is not defined. Make sure three.js is loaded.");
   }
@@ -48,8 +54,9 @@ const initializeAR = ({ setStartScanning, firstImage, secondImage }) => {
     totalTime = 0;
     arToolkitSource = new THREEx.ArToolkitSource({
       sourceType: "webcam",
-      // sourceHeight: window.innerHeight * 0.5,
-      // sourceWidth: window.innerWidth * 0.5,
+      // ---------------------------------------------------------------- >>> note to uncomment and test these for layout/sizes
+      sourceHeight: window.innerHeight * 0.5,
+      sourceWidth: window.innerWidth * 0.5,
     });
 
     function onResize() {
@@ -97,6 +104,7 @@ const initializeAR = ({ setStartScanning, firstImage, secondImage }) => {
     let colorArray = [
       16711680, 16753920, 16776960, 52480, 255, 13434879, 13434828,
     ];
+    let mesh;
 
     for (let i = 0; i < 7; i++) {
       if (arToolkitContext) {
@@ -107,104 +115,29 @@ const initializeAR = ({ setStartScanning, firstImage, secondImage }) => {
           markerRoot,
           { type: "pattern", patternUrl: "/data/" + patternArray[i] + ".patt" }
         );
-        let mesh;
-        if (patternArray[i] == "letterC") {
-          //   let imgTexture = new THREE.TextureLoader().load(
-          //     "/assets/images/aug-real.jpg"
-          //   );
-          //   let planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-          //   let planeMat = new THREE.MeshBasicMaterial({ map: imgTexture });
-          //   mesh = new THREE.Mesh(planeGeo, planeMat);
-          //   mesh.rotation.x = -1.5;
-          // } else if (patternArray[i] == "letterB") {
-          //   mesh = new THREE.Mesh(
-          //     new THREE.CylinderGeometry(1.25, 1.25, 1.25),
-          //     new THREE.MeshBasicMaterial({
-          //       color: colorArray[i],
-          //       map: texture,
-          //       transparent: true,
-          //       opacity: 0.5,
-          //     })
-          //   );
-          if (firstImage) {
-            // Create a Blob from the base64 image data
-            const byteCharacters = atob(firstImage.data);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let j = 0; j < byteCharacters.length; j++) {
-              byteNumbers[j] = byteCharacters.charCodeAt(j);
+        // if (patternArray[i] == "letterC") {
+
+        const belt = images.map((img, idx) => console.log(idx, img));
+
+        if (images.length > 0) {
+          const test = images.map((img, imagesArrIndex) => {
+            if (imagesArrIndex == i) {
+              handleMarkerData({
+                mesh,
+                markerRoot,
+                image: img,
+                marker: patternArray[i],
+              });
             }
-            const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray], { type: "image/jpeg" });
-
-            // Create a texture from the Blob
-            const texture = new THREE.TextureLoader().load(
-              URL.createObjectURL(blob)
-            );
-
-            let planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-            let planeMat = new THREE.MeshBasicMaterial({ map: texture });
-            mesh = new THREE.Mesh(planeGeo, planeMat);
-            mesh.rotation.x = -1.5;
-            mesh.position.y = 0.1;
-            markerRoot.add(mesh);
-          } else {
-            let imgTexture = new THREE.TextureLoader().load(
-              "/assets/images/aug-real.jpg"
-            );
-            let planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-            let planeMat = new THREE.MeshBasicMaterial({ map: imgTexture });
-            mesh = new THREE.Mesh(planeGeo, planeMat);
-            mesh.rotation.x = -1.5;
-          }
-        } else if (patternArray[i] == "letterB") {
-          if (secondImage) {
-            // Create a Blob from the base64 image data
-            const byteCharacters = atob(secondImage.data);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let j = 0; j < byteCharacters.length; j++) {
-              byteNumbers[j] = byteCharacters.charCodeAt(j);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray], { type: "image/jpeg" });
-
-            // Create a texture from the Blob
-            const texture = new THREE.TextureLoader().load(
-              URL.createObjectURL(blob)
-            );
-
-            let planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-            let planeMat = new THREE.MeshBasicMaterial({ map: texture });
-            mesh = new THREE.Mesh(planeGeo, planeMat);
-            mesh.rotation.x = -1.5;
-            mesh.position.y = 0.1;
-            markerRoot.add(mesh);
-          } else {
-            let imgTexture = new THREE.TextureLoader().load(
-              "/assets/images/aug-real.jpg"
-            );
-            let planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-            let planeMat = new THREE.MeshBasicMaterial({ map: imgTexture });
-            mesh = new THREE.Mesh(planeGeo, planeMat);
-            mesh.rotation.x = -1.5;
-          }
-        } else if (patternArray[i] == "letterF") {
-          const geometry = new THREE.IcosahedronGeometry(0.5, 0);
-          const material = new THREE.MeshBasicMaterial({
-            color: colorArray[i],
-            map: texture,
-            transparent: true,
-            opacity: 0.5,
           });
-          mesh = new THREE.Mesh(geometry, material);
-        } else if (patternArray[i] == "letterD") {
-          const geometry = new THREE.ConeGeometry(0.6, 1.2, 0);
-          const material = new THREE.MeshBasicMaterial({
-            color: colorArray[i],
-            map: texture,
-            transparent: true,
-            opacity: 0.5,
-          });
-          mesh = new THREE.Mesh(geometry, material);
+
+          // if (firstImage) {
+          // handleMarkerData({
+          //   mesh,
+          //   markerRoot,
+          //   image: firstImage,
+          //   marker: patternArray[i],
+          // });
         } else {
           mesh = new THREE.Mesh(
             new THREE.CubeGeometry(1.25, 1.25, 1.25),
@@ -216,10 +149,14 @@ const initializeAR = ({ setStartScanning, firstImage, secondImage }) => {
             })
           );
         }
-        mesh.position.y =
-          patternArray[i] == "letterC" || patternArray[i] == "letterB"
-            ? 0.1
-            : 1.25 / 2;
+        // if (!mesh) {
+        //   console.log("no mesh found in LESSON");
+        //   return;
+        // }
+        // mesh.position.y =
+        //   patternArray[i] == "letterC" || patternArray[i] == "letterB"
+        //     ? 0.1
+        //     : 1.25 / 2;
         markerRoot.add(mesh);
       }
     }
@@ -287,7 +224,7 @@ const initializeAR = ({ setStartScanning, firstImage, secondImage }) => {
   return { initialize, update, render, animate, scene, camera, stop };
 };
 
-const MyComponent = ({ setStartScanning, firstImage, secondImage }) => {
+const MyComponent = ({ setStartScanning, firstImage, secondImage, images }) => {
   const arScript = React.useRef(null);
 
   useEffect(() => {
@@ -295,6 +232,7 @@ const MyComponent = ({ setStartScanning, firstImage, secondImage }) => {
       setStartScanning,
       firstImage,
       secondImage,
+      images,
     });
     arScriptInstance.initialize();
 
