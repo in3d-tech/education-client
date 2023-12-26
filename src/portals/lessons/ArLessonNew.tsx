@@ -84,6 +84,7 @@ const initializeAR = ({
     arToolkitContext = new THREEx.ArToolkitContext({
       cameraParametersUrl: "/data/camera_para.dat",
       detectionMode: "mono",
+      maxDetectionRate: 60,
     });
     arToolkitContext.init(function onCompleted() {
       if (arToolkitContext) {
@@ -148,6 +149,7 @@ const initializeAR = ({
               opacity: 0.5,
             })
           );
+          mesh.position.y = 1.25 / 2;
         }
         // if (!mesh) {
         //   console.log("no mesh found in LESSON");
@@ -257,7 +259,7 @@ const MyComponent = ({ setStartScanning, firstImage, secondImage, images }) => {
   return (
     <div>
       <button
-        style={{ position: "absolute", zIndex: 500000000000 }}
+        style={{ position: "absolute", zIndex: 1 }}
         onClick={() => {
           setStartScanning(false);
         }}

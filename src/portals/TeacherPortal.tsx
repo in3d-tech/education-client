@@ -43,6 +43,8 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           contentLabel="Create Lesson Modal"
           style={{
             content: {
+              background: "black",
+              opacity: 0.8,
               padding: 0,
               overflow: "scroll",
               boxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
@@ -55,7 +57,7 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
               height: "100%",
             }}
           >
-            <h1 style={{ textAlign: "center", color: "black" }}>הוסף שיעור</h1>
+            <h1 style={{ textAlign: "center", color: "white" }}>הוסף שיעור</h1>
             <CreateLessonForm
               setModalIsOpen={setModalIsOpen}
               userId={user?.userId}
@@ -204,19 +206,6 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     setList(updatedList);
   };
 
-  // const handleFileUpload = (
-  //   e: React.ChangeEvent<HTMLInputElement>,
-  //   id: number
-  // ) => {
-  //   if (e.target.files) {
-  //     const file = e.target.files[0];
-  //     const qrId = id;
-  //     if (file && qrId) {
-  //     }
-  //     // do something with the file...
-  //   }
-  // };
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -301,7 +290,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               justifyContent: "space-between",
               alignItems: "center",
               marginTop: "1em",
-              borderBottom: "1px solid rgba(0, 0, 0, 0.4)",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.4)",
               padding: "2px",
               color: "black",
             }}
@@ -321,7 +310,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               justifyContent: "space-between",
               alignItems: "center",
               marginTop: "1em",
-              borderBottom: "1px solid rgba(0, 0, 0, 0.4)",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.4)",
               padding: "2px",
             }}
           >
@@ -370,14 +359,14 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               )}
             </div>
 
-            <div style={{ color: "black" }}>{`QR id: ${item.uniqueId}`}</div>
+            <div style={{ color: "white" }}>{`QR id: ${item.uniqueId}`}</div>
             <div>
               <button
                 style={{ all: "unset" }}
                 type="button"
                 onClick={() => handleDeleteQr(item.uniqueId)}
               >
-                <DeleteForeverIcon sx={{ fontSize: "large", color: "black" }} />
+                <DeleteForeverIcon sx={{ fontSize: "large", color: "white" }} />
               </button>
             </div>
           </div>
@@ -393,6 +382,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
         type="submit"
         value={"שלח"}
       />
+      <div style={{ height: "30px" }}></div>
     </form>
   );
 };

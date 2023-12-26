@@ -178,12 +178,14 @@ label {
 }
 
 .form-bg {
-  background: #a96622;
+  /* background: #a96622;
   background: -webkit-linear-gradient(#ffffff, #d68f44);
   background: -moz-linear-gradient(#ffffff, #d68f44);
-  background: linear-gradient(#ffffff, #d68f44);
+  background: linear-gradient(#ffffff, #d68f44); */
+  /* background: black; */
   height: inherit;
-  width: 100%;
+  /* width: 100%; */
+  opacity: 0.8;
 }
 
 .join-lesson-container {
