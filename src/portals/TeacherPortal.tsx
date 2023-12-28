@@ -137,7 +137,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       }
     }
     if (files.length) {
-      files.forEach((file, index) => {
+      files.forEach((file) => {
         formData.append(`file`, file);
       });
     }
