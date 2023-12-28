@@ -259,12 +259,13 @@ const MyComponent = ({ setStartScanning, firstImage, secondImage, images }) => {
   return (
     <div>
       <button
-        style={{ position: "absolute", zIndex: 1 }}
+        className="btn"
+        style={{ position: "absolute", zIndex: 1, width: "7em" }}
         onClick={() => {
           setStartScanning(false);
         }}
       >
-        HELLO World
+        Back
       </button>
     </div>
   );

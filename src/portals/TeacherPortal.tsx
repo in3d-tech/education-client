@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { User } from "../App";
@@ -6,6 +6,7 @@ import { MyLessons } from "./lessons/MyLessons";
 import { Link } from "react-router-dom";
 import { Navbar } from "../navigation/Navbar";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { MyDropzone } from "../common/components/Dropzone";
 
 type TeacherPortalProps = {
   user: User;
@@ -125,7 +126,6 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     if (list.length) {
       data.qrList = list;
     }
-    console.log({ data });
 
     confirm("Are you sure you're ready to send?");
     // return;
@@ -137,9 +137,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       }
     }
     if (files.length) {
-      console.log({ lengthPfFiles: files.length });
       files.forEach((file, index) => {
-        console.log(file, index);
         formData.append(`file`, file);
       });
     }
@@ -161,8 +159,8 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     }
   };
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files && event.target.files[0];
+  const handleFileChange = (files: any) => {
+    const selectedFile = files.length && files[0];
 
     if (selectedFile) {
       setFiles((prevFiles) => [...prevFiles, selectedFile]);
@@ -196,7 +194,8 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   };
 
   // Handle the type selection
-  const handleTypeSelect = (id: any, selectedType: string) => {
+  const handleTypeSelect = (event: any, id: any, selectedType: string) => {
+    event.preventDefault();
     const updatedList = list.map((item) => {
       if (item.uniqueId === id) {
         return { ...item, selectedType };
@@ -312,6 +311,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
               marginTop: "1em",
               borderBottom: "1px solid rgba(255, 255, 255, 0.4)",
               padding: "2px",
+              height: "3em",
             }}
           >
             <div>
@@ -321,7 +321,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
                     item.selectedType === "image" ? "black" : "white",
                   color: item.selectedType === "image" ? "white" : "black",
                 }}
-                onClick={() => handleTypeSelect(item.uniqueId, "image")}
+                onClick={(e) => handleTypeSelect(e, item.uniqueId, "image")}
               >
                 Image
               </button>
@@ -331,7 +331,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
                     item.selectedType === "3D Model" ? "black" : "white",
                   color: item.selectedType === "3D Model" ? "white" : "black",
                 }}
-                onClick={() => handleTypeSelect(item.uniqueId, "3D Model")}
+                onClick={(e) => handleTypeSelect(e, item.uniqueId, "3D Model")}
               >
                 3D Model
               </button>
@@ -350,16 +350,25 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
                   <option value="square">ריבוע</option>
                 </select>
               ) : (
-                <input
-                  type="file"
-                  // onChange={(e) => handleFileUpload(e, item.uniqueId)}
-                  {...register(`photo-${idx}`)}
-                  onChange={(e) => handleFileChange(e)}
+                // <input
+                //   type="file"
+                //   // onChange={(e) => handleFileUpload(e, item.uniqueId)}
+                //   {...register(`photo-${idx}`)}
+                //   onChange={(e) => handleFileChange(e)}
+                // />
+                <MyDropzone
+                  register={{ ...register(`photo-${idx}`) }}
+                  handleFileChange={handleFileChange}
                 />
               )}
             </div>
 
-            <div style={{ color: "white" }}>{`QR id: ${item.uniqueId}`}</div>
+            {/* <div style={{ color: "white" }}>{`QR id: ${item.uniqueId}`}</div> */}
+            <div style={{ display: "flex" }}>
+              <div style={{ color: "white" }}>{`מס' QR: `} </div>
+              <span style={{ marginRight: "4px" }}>{idx + 1}</span>
+            </div>
+
             <div>
               <button
                 style={{ all: "unset" }}

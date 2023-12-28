@@ -101,7 +101,7 @@ export function Lesson() {
               width: "96%",
               display: "flex",
               justifyContent: "center",
-              marginTop: "12em",
+              marginTop: "4em",
             }}
           >
             <button
@@ -112,11 +112,11 @@ export function Lesson() {
             >
               Start Scanning
             </button>
-            <img
+            {/* <img
               src="https://res.cloudinary.com/dxminwnb3/image/upload/v1702977460/llcjzexbkdh90d2w7moh.jpg" //https://asset.cloudinary.com/dxminwnb3/ea9ce3e5ef002228c8413cd0740053b7"
               alt="WTF"
               style={{ width: "300px", height: "300px" }}
-            />
+            /> */}
           </div>
         </div>
       )}

@@ -83,7 +83,8 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
       });
 
       const res = await response.json();
-      alert(res);
+
+      alert(res ? "Successfully joined!" : "error joining lesson");
     } catch {
       alert("error with login ");
       console.log("error with login");
@@ -114,11 +115,8 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
                     marginTop: "2em",
                     margin: 0,
                     width: "96%",
-                    // display: "flex",
-                    // justifyContent: "center",
                   }}
                 >
-                  {/* <li> */}
                   <Link
                     to="/lesson"
                     style={{ width: "100%" }}
@@ -133,10 +131,22 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
                       className="my-lessons-btn"
                       style={{ width: "100%" }}
                     >
-                      {lesson?.headline}
+                      <span className="my-lessons-created-by-headline">
+                        {lesson?.headline}
+                      </span>
+                      <span className="my-lessons-created-by-name">
+                        {lesson?.createdByInfo?.firstName}{" "}
+                        {lesson?.createdByInfo?.lastName}
+                        {lesson?.createdByInfo?.profilePic ? (
+                          <img
+                            className="my-lessons-created-by-pic"
+                            src={lesson.createdByInfo.profilePic}
+                            alt="prfl"
+                          />
+                        ) : null}
+                      </span>
                     </button>
                   </Link>
-                  {/* </li> */}
                 </div>
               );
             })
