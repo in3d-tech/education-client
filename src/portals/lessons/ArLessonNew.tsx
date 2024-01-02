@@ -37,6 +37,10 @@ const initializeAR = ({
 
   function initialize() {
     scene = new THREE.Scene();
+    if (!scene) {
+      console.log("no scene!@!!@@!@!!");
+      return;
+    }
     let ambientLight = new THREE.AmbientLight(5242880, 0.5);
     scene.add(ambientLight);
     camera = new THREE.Camera();
@@ -99,15 +103,17 @@ const initializeAR = ({
       "letterC",
       "letterD",
       "letterF",
+      "number1",
       "kanji",
       "hiro",
     ];
     let colorArray = [
-      16711680, 16753920, 16776960, 52480, 255, 13434879, 13434828,
+      16711680, 16753920, 16776960, 52480, 255, 13434879, 13434828, 16776960,
     ];
     let mesh;
+    let mesh0;
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 8; i++) {
       if (arToolkitContext) {
         let markerRoot = new THREE.Group();
         scene.add(markerRoot);
@@ -118,7 +124,10 @@ const initializeAR = ({
         );
         // if (patternArray[i] == "letterC") {
 
-        const belt = images.map((img, idx) => console.log(idx, img));
+        // const belt = images.map((img, idx) => console.log(idx, img));
+
+        // ----------------------------------------------------------------
+        // regular photo
 
         if (images.length > 0) {
           const test = images.map((img, imagesArrIndex) => {
@@ -128,17 +137,10 @@ const initializeAR = ({
                 markerRoot,
                 image: img,
                 marker: patternArray[i],
+                mesh0,
               });
             }
           });
-
-          // if (firstImage) {
-          // handleMarkerData({
-          //   mesh,
-          //   markerRoot,
-          //   image: firstImage,
-          //   marker: patternArray[i],
-          // });
         } else {
           mesh = new THREE.Mesh(
             new THREE.CubeGeometry(1.25, 1.25, 1.25),

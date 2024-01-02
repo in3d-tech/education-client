@@ -34,7 +34,6 @@ export function MyAccountDetails() {
 
       if (response.ok) {
         const accountData = await response.json();
-        console.log({ accountData });
         setAccountDetails(accountData);
         setIsFetching(false);
       } else {
@@ -86,7 +85,7 @@ export function MyAccountDetails() {
   return (
     <>
       <Navbar title="My Account" />
-      {isFetching ? null : (
+      {!accountDetails ? null : (
         <div style={{ display: "flex", flexDirection: "row-reverse" }}>
           <div
             style={{
@@ -151,12 +150,14 @@ export function MyAccountDetails() {
           ) : (
             <div style={{ color: "black" }}>Loading details...</div>
           )}
-          <button
-            style={{ position: "absolute", bottom: "16em", right: "30%" }}
-            className="btn"
-          >
-            Edit
-          </button>
+          {accountDetails ? (
+            <button
+              style={{ position: "absolute", bottom: "16em", right: "30%" }}
+              className="btn"
+            >
+              Edit
+            </button>
+          ) : null}
         </div>
       )}
     </>

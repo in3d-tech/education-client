@@ -8,7 +8,13 @@ export const markerData = {
   letterF: {},
 };
 
-export const handleMarkerData = ({ mesh, image, marker, markerRoot }) => {
+export const handleMarkerData = ({
+  mesh,
+  image,
+  marker,
+  markerRoot,
+  mesh0,
+}) => {
   //   let imgTexture = new THREE.TextureLoader().load(
   //     "/assets/images/aug-real.jpg"
   //   );
@@ -28,6 +34,62 @@ export const handleMarkerData = ({ mesh, image, marker, markerRoot }) => {
   //   );
   let planeGeo;
   let planeMat;
+  // if (marker == "letterJ") {
+  //   console.log("THERE IS AN G");
+  // }
+  // if (marker == "letterZ") {
+  //   planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
+  //   const loader1 = new THREE.TextureLoader();
+  //   planeMat = new THREE.MeshBasicMaterial({
+  //     color: 0x00ff00,
+  //     opacity: 0.5,
+  //   });
+  //   mesh = new THREE.Mesh(planeGeo, planeMat);
+  //   mesh.rotation.x = -1.5;
+  //   mesh.position.y = 0.1;
+  //   markerRoot.add(mesh);
+  //   function onProgress(xhr) {
+  //     console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+  //   }
+  //   function onError(xhr) {
+  //     console.log("An error happened");
+  //   }
+
+  //   new THREE.MTLLoader()
+  //     .setPath("/assets/models/")
+  //     .load("fish-2.mtl", function (materials) {
+  //       materials.preload();
+  //       new THREE.OBJLoader()
+  //         .setMaterials(materials)
+  //         .setPath("/assets/models/")
+  //         .load(
+  //           "fish-2.obj",
+  //           function (group) {
+  //             mesh0 = group.children[0];
+  //             mesh0.material.side = THREE.DoubleSide;
+  //             mesh0.position.y = 0.2;
+  //             mesh0.scale.set(0.5, 0.5, 0.5);
+  //             markerRoot.add(mesh0);
+  //           },
+  //           onProgress,
+  //           onError
+  //         );
+  //     });
+
+  // let geometry1 = new THREE.PlaneBufferGeometry(2,2, 4,4);
+
+  // let video = document.getElementById( 'video' );
+  // let texture = new THREE.VideoTexture( video );
+  // texture.minFilter = THREE.LinearFilter;
+  // texture.magFilter = THREE.LinearFilter;
+  // texture.format = THREE.RGBFormat;
+  // let material1 = new THREE.MeshBasicMaterial( { map: texture } );
+
+  // mesh1 = new THREE.Mesh( geometry1, material1 );
+  // mesh1.rotation.x = -Math.PI/2;
+
+  // markerRoot1.add( mesh1 );
+  // } else {
   if (image) {
     // Create a Blob from the base64 image data
     const byteCharacters = atob(image.data);
@@ -47,7 +109,6 @@ export const handleMarkerData = ({ mesh, image, marker, markerRoot }) => {
     mesh.rotation.x = -1.5;
     mesh.position.y = 0.1;
     markerRoot.add(mesh);
-    console.log("ABABA 1");
   } else {
     let imgTexture = new THREE.TextureLoader().load(
       "/assets/images/aug-real.jpg"
@@ -56,7 +117,6 @@ export const handleMarkerData = ({ mesh, image, marker, markerRoot }) => {
     planeMat = new THREE.MeshBasicMaterial({ map: imgTexture });
     mesh = new THREE.Mesh(planeGeo, planeMat);
     mesh.rotation.x = -1.5;
-    console.log("PAPAPAAP 2");
   }
 
   //   switch (marker) {
@@ -73,13 +133,14 @@ export const handleMarkerData = ({ mesh, image, marker, markerRoot }) => {
   //     case "letterF":
   //       break;
   //   }
+  // }
 };
 
 // for (let i = 0; i < 7; i++) {
 //     if (arToolkitContext) {
 //       let markerRoot = new THREE.Group();
 //       scene.add(markerRoot);
-//       let markerControls = new THREEx.ArMarkerControls(
+//       let markerControls = new THREEx.ArMarkerControls(z
 //         arToolkitContext,
 //         markerRoot,
 //         { type: "pattern", patternUrl: "/data/" + patternArray[i] + ".patt" }

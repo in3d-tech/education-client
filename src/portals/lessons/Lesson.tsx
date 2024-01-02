@@ -36,7 +36,6 @@ export function Lesson() {
       if (response.ok) {
         const data = await response.json();
         setPhotoDataArray(data.photos);
-        console.log({ data });
       } else {
         console.error("Error fetching photos. Status:", response.status);
       }

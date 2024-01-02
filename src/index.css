@@ -243,7 +243,8 @@ label {
 }
 
 .my-lessons-created-by-headline {
-  flex: 1;
+  flex: 2;
+  font-size: 1.3em;
 }
 
 .my-lessons-created-by-name {
@@ -261,6 +262,10 @@ label {
   margin-right: 10px;
 }
 
+.my-lessons-created-at-date {
+  flex: 1;
+}
+
 .my-lessons-btn {
   font-family: SecularOne-Regular;
   color: black;
@@ -276,7 +281,7 @@ label {
   box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
-  height: 3.8em;
+  height: 5em;
   display: flex;
   align-items: center;
 }
@@ -322,6 +327,7 @@ label {
   box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
+  overflow: scroll;
 }
 
 .nav-left-corner {

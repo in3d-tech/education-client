@@ -11,7 +11,6 @@ export function MyDropzone({ register, handleFileChange }: MyDropzoneProps) {
   const [fileName, setFileName] = useState<string>("");
 
   const onDrop = useCallback((acceptedFiles: any) => {
-    console.log({ acceptedFiles });
     if (acceptedFiles.length) {
       handleFileChange(acceptedFiles);
       setFileName(acceptedFiles[0].name);

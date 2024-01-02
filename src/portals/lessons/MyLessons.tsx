@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
+import { formatDate } from "../../common/logic/formatDate";
 
 type MyLessonsProps = {
   userId: string | undefined;
@@ -106,50 +107,55 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
         </span>
         <div className="my-lessons-list-container">
           {myLessons.length ? (
-            myLessons.map((lesson, idx) => {
-              return (
-                <div
-                  key={idx}
-                  style={{
-                    color: "black",
-                    marginTop: "2em",
-                    margin: 0,
-                    width: "96%",
-                  }}
-                >
-                  <Link
-                    to="/lesson"
-                    style={{ width: "100%" }}
-                    onClick={() => {
-                      const activeLesson = myLessons.filter(
-                        (__, idx2) => idx == idx2
-                      );
-                      setActiveLesson(activeLesson);
+            myLessons
+              .map((lesson, idx) => {
+                return (
+                  <div
+                    key={idx}
+                    style={{
+                      color: "black",
+                      marginTop: "2em",
+                      margin: 0,
+                      width: "96%",
                     }}
                   >
-                    <button
-                      className="my-lessons-btn"
+                    <Link
+                      to="/lesson"
                       style={{ width: "100%" }}
+                      onClick={() => {
+                        const activeLesson = myLessons.filter(
+                          (__, idx2) => idx == idx2
+                        );
+                        setActiveLesson(activeLesson);
+                      }}
                     >
-                      <span className="my-lessons-created-by-headline">
-                        {lesson?.headline}
-                      </span>
-                      <span className="my-lessons-created-by-name">
-                        {lesson?.createdByInfo?.firstName}{" "}
-                        {lesson?.createdByInfo?.lastName}
-                        {lesson?.createdByInfo?.profilePic ? (
-                          <img
-                            className="my-lessons-created-by-pic"
-                            src={lesson.createdByInfo.profilePic}
-                            alt="prfl"
-                          />
-                        ) : null}
-                      </span>
-                    </button>
-                  </Link>
-                </div>
-              );
-            })
+                      <button
+                        className="my-lessons-btn"
+                        style={{ width: "100%" }}
+                      >
+                        <span className="my-lessons-created-by-headline">
+                          {lesson?.headline}
+                        </span>
+                        <span className="my-lessons-created-by-name">
+                          {lesson?.createdByInfo?.firstName}{" "}
+                          {lesson?.createdByInfo?.lastName}
+                          {lesson?.createdByInfo?.profilePic ? (
+                            <img
+                              className="my-lessons-created-by-pic"
+                              src={lesson.createdByInfo.profilePic}
+                              alt="prfl"
+                            />
+                          ) : null}
+                        </span>
+                        <span className="my-lessons-created-at-date">
+                          {formatDate(lesson.createdAt)}
+                        </span>
+                      </button>
+                    </Link>
+                  </div>
+                );
+              })
+              .reverse()
           ) : (
             <div>
               <div style={{ color: "black" }}>No active lessons</div>
