@@ -42,6 +42,7 @@ export function MyAccountDetails() {
     } catch (error) {
       setIsFetching(false);
       console.error("Error fetching my lessons:", error);
+      console.log(isFetching);
     }
   };
 
