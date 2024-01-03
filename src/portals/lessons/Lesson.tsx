@@ -32,7 +32,11 @@ export function Lesson() {
 
   const fetchPhotoDataArray = async () => {
     try {
-      const response = await fetch("http://192.168.1.224:3000/fetchPhotos");
+      const response = await fetch(
+        "https://edu-server-ke5y.onrender.com/fetchPhotos"
+      );
+      // const response = await fetch("http://192.168.1.224:3000/fetchPhotos");
+
       if (response.ok) {
         const data = await response.json();
         setPhotoDataArray(data.photos);

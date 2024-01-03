@@ -24,6 +24,8 @@ export function MyAccountDetails() {
     try {
       setIsFetching(true);
       const response = await fetch("http://192.168.1.224:3000/account", {
+        // const response = await fetch("http://192.168.1.224:3000/account", {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -68,10 +70,15 @@ export function MyAccountDetails() {
       formData.append("file", file!);
       formData.append("userId", user?.userId!);
 
-      const response = await fetch("http://192.168.1.224:3000/upload", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://edu-server-ke5y.onrender.com/upload",
+        {
+          // const response = await fetch("http://192.168.1.224:3000/upload", {
+
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         console.log("File uploaded successfully");

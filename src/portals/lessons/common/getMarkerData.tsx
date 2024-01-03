@@ -37,58 +37,7 @@ export const handleMarkerData = ({
   // if (marker == "letterJ") {
   //   console.log("THERE IS AN G");
   // }
-  // if (marker == "letterZ") {
-  //   planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-  //   const loader1 = new THREE.TextureLoader();
-  //   planeMat = new THREE.MeshBasicMaterial({
-  //     color: 0x00ff00,
-  //     opacity: 0.5,
-  //   });
-  //   mesh = new THREE.Mesh(planeGeo, planeMat);
-  //   mesh.rotation.x = -1.5;
-  //   mesh.position.y = 0.1;
-  //   markerRoot.add(mesh);
-  //   function onProgress(xhr) {
-  //     console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-  //   }
-  //   function onError(xhr) {
-  //     console.log("An error happened");
-  //   }
 
-  //   new THREE.MTLLoader()
-  //     .setPath("/assets/models/")
-  //     .load("fish-2.mtl", function (materials) {
-  //       materials.preload();
-  //       new THREE.OBJLoader()
-  //         .setMaterials(materials)
-  //         .setPath("/assets/models/")
-  //         .load(
-  //           "fish-2.obj",
-  //           function (group) {
-  //             mesh0 = group.children[0];
-  //             mesh0.material.side = THREE.DoubleSide;
-  //             mesh0.position.y = 0.2;
-  //             mesh0.scale.set(0.5, 0.5, 0.5);
-  //             markerRoot.add(mesh0);
-  //           },
-  //           onProgress,
-  //           onError
-  //         );
-  //     });
-
-  // let geometry1 = new THREE.PlaneBufferGeometry(2,2, 4,4);
-
-  // let video = document.getElementById( 'video' );
-  // let texture = new THREE.VideoTexture( video );
-  // texture.minFilter = THREE.LinearFilter;
-  // texture.magFilter = THREE.LinearFilter;
-  // texture.format = THREE.RGBFormat;
-  // let material1 = new THREE.MeshBasicMaterial( { map: texture } );
-
-  // mesh1 = new THREE.Mesh( geometry1, material1 );
-  // mesh1.rotation.x = -Math.PI/2;
-
-  // markerRoot1.add( mesh1 );
   // } else {
   if (image) {
     // Create a Blob from the base64 image data
@@ -103,7 +52,9 @@ export const handleMarkerData = ({
     // Create a texture from the Blob
     const texture = new THREE.TextureLoader().load(URL.createObjectURL(blob));
 
-    planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
+    // planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
+    planeGeo = new THREE.PlaneGeometry(3.6, 3.6, 1);
+
     planeMat = new THREE.MeshBasicMaterial({ map: texture });
     mesh = new THREE.Mesh(planeGeo, planeMat);
     mesh.rotation.x = -1.5;
@@ -118,22 +69,6 @@ export const handleMarkerData = ({
     mesh = new THREE.Mesh(planeGeo, planeMat);
     mesh.rotation.x = -1.5;
   }
-
-  //   switch (marker) {
-  //     case "letterA":
-  //       break;
-  //     case "letterB":
-  //       break;
-  //     case "letterC":
-  //       break;
-  //     case "letterD":
-  //       break;
-  //     case "letterE":
-  //       break;
-  //     case "letterF":
-  //       break;
-  //   }
-  // }
 };
 
 // for (let i = 0; i < 7; i++) {
@@ -262,3 +197,60 @@ export const handleMarkerData = ({
 //     }
 //   }
 // }
+
+// ----------------------------------------------------------------
+// this is for loading 3D models with mtl/obj loader
+// ---  reminder - if getting back to this  --- look into downloading three package, and using built in loaders
+
+// if (marker == "letterZ") {
+//   planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
+//   const loader1 = new THREE.TextureLoader();
+//   planeMat = new THREE.MeshBasicMaterial({
+//     color: 0x00ff00,
+//     opacity: 0.5,
+//   });
+//   mesh = new THREE.Mesh(planeGeo, planeMat);
+//   mesh.rotation.x = -1.5;
+//   mesh.position.y = 0.1;
+//   markerRoot.add(mesh);
+//   function onProgress(xhr) {
+//     console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+//   }
+//   function onError(xhr) {
+//     console.log("An error happened");
+//   }
+
+//   new THREE.MTLLoader()
+//     .setPath("/assets/models/")
+//     .load("fish-2.mtl", function (materials) {
+//       materials.preload();
+//       new THREE.OBJLoader()
+//         .setMaterials(materials)
+//         .setPath("/assets/models/")
+//         .load(
+//           "fish-2.obj",
+//           function (group) {
+//             mesh0 = group.children[0];
+//             mesh0.material.side = THREE.DoubleSide;
+//             mesh0.position.y = 0.2;
+//             mesh0.scale.set(0.5, 0.5, 0.5);
+//             markerRoot.add(mesh0);
+//           },
+//           onProgress,
+//           onError
+//         );
+//     });
+
+// let geometry1 = new THREE.PlaneBufferGeometry(2,2, 4,4);
+
+// let video = document.getElementById( 'video' );
+// let texture = new THREE.VideoTexture( video );
+// texture.minFilter = THREE.LinearFilter;
+// texture.magFilter = THREE.LinearFilter;
+// texture.format = THREE.RGBFormat;
+// let material1 = new THREE.MeshBasicMaterial( { map: texture } );
+
+// mesh1 = new THREE.Mesh( geometry1, material1 );
+// mesh1.rotation.x = -Math.PI/2;
+
+// markerRoot1.add( mesh1 );

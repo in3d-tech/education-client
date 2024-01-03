@@ -143,11 +143,16 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     }
 
     try {
-      const response = await fetch("http://192.168.1.224:3000/create-lesson", {
-        method: "POST",
-        // headers: { "Content-Type": "multipart/form-data" },
-        body: formData,
-      });
+      const response = await fetch(
+        "https://edu-server-ke5y.onrender.com/create-lesson",
+        {
+          // const response = await fetch("http://192.168.1.224:3000/create-lesson", {
+
+          method: "POST",
+          // headers: { "Content-Type": "multipart/form-data" },
+          body: formData,
+        }
+      );
       const res = await response.json();
       if (res.acknowledged == true) {
         setModalIsOpen(false);

@@ -16,11 +16,16 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
 
   const fetchMyLessons = async () => {
     try {
-      const response = await fetch("http://192.168.1.224:3000/active-lessons", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
-      });
+      const response = await fetch(
+        "https://edu-server-ke5y.onrender.com/active-lessons",
+        {
+          // const response = await fetch("http://192.168.1.224:3000/active-lessons", {
+
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        }
+      );
 
       if (response.ok) {
         const myLessonsData = await response.json();
@@ -77,11 +82,16 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
         }
       }
 
-      const response = await fetch("http://192.168.1.224:3000/join-lesson", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://edu-server-ke5y.onrender.com/join-lesson",
+        {
+          // const response = await fetch("http://192.168.1.224:3000/join-lesson", {
+
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
 
       const res = await response.json();
 

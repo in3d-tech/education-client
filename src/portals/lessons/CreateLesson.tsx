@@ -20,11 +20,16 @@ const Form: React.FC = () => {
     // try {
 
     try {
-      const response = await fetch("http://192.168.1.224:3000/create-lesson", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://edu-server-ke5y.onrender.com/create-lesson",
+        {
+          // const response = await fetch("http://192.168.1.224:3000/create-lesson", {
+
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
       const res = await response.json();
       return res;
     } catch {
