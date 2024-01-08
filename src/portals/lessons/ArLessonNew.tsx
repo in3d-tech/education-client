@@ -49,11 +49,17 @@ const initializeAR = ({
     scene.add(camera);
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setClearColor(new THREE.Color("lightgrey"), 0);
-    renderer.setSize(screenHeight, screenWidth); //(640, 480);
+    renderer.setSize(screenWidth, screenHeight); //(640, 480);
     renderer.domElement.style.position = "absolute";
-    renderer.domElement.style.top = "0px";
-    renderer.domElement.style.left = "0px";
+    renderer.domElement.style.top = "0";
+    renderer.domElement.style.left = `${screenWidth}px`;
+    // renderer.domElement.style.right = "0px";
+    // renderer.domElement.style.bottom = "0px";
+    renderer.domElement.style.overflow = "hidden";
+    // document.body.style.margin = "0";
     document.body.appendChild(renderer.domElement);
+    // console.log({ renderer });
+
     clock = new THREE.Clock();
 
     deltaTime = 0;
@@ -69,6 +75,8 @@ const initializeAR = ({
       if (arToolkitSource) {
         arToolkitSource.onResizeElement();
         arToolkitSource.copyElementSizeTo(renderer.domElement);
+        const aspectRatio = window.innerWidth / window.innerHeight;
+        renderer.setSize(window.innerWidth, window.innerHeight);
       }
 
       if (arToolkitContext?.arController !== null) {
@@ -270,7 +278,7 @@ const ArLessonNew = ({
   }, []);
 
   return (
-    <div>
+    <div style={{ border: "2px solid yellow", height: "100%" }}>
       <button
         className="btn"
         style={{ position: "absolute", zIndex: 1, width: "7em" }}

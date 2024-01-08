@@ -66,6 +66,8 @@ export function Lesson() {
 
   const currentLesson = activeLesson[0];
 
+  console.log({ height, width });
+
   return (
     <>
       <Navbar title="Lesson" user={user} />
