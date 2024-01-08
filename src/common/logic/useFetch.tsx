@@ -6,7 +6,7 @@ type FetchObj = {
   body?: any;
 };
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://edu-server-ke5y.onrender.com"; // "http://localhost:3000";
 
 export const useFetch = (
   endpoint: string,
