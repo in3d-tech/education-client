@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 // import useFetch from "../common/useFetch";
 import { useAppContext } from "../context/appContext";
+import { useFetch } from "../common/logic/useFetch";
+import { useEffect } from "react";
 
 type SignupProps = {
   // setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -13,25 +15,28 @@ export function SignUp({ setUserSignup }: SignupProps) {
     const { register, handleSubmit } = useForm<FormData>();
 
     const onSubmit = async (data: FormData) => {
-      if (data.password !== data.confirmPassword) {
+      if (
+        data &&
+        data.password &&
+        data.confirmPassword &&
+        data.password !== data.confirmPassword
+      ) {
         alert("passwords don't match");
         return;
       }
       try {
-        const response = await fetch(
-          "https://edu-server-ke5y.onrender.com/signup",
-          {
-            // const response = await fetch("http://192.168.1.224:3000/signup", {
-
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          }
-        );
+        // const response = await fetch(
+        // "https://edu-server-ke5y.onrender.com/signup",
+        // {
+        const response = await fetch("http://192.168.1.224:3000/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
         const res = await response.json();
         if (res.user) setUser(res.user);
-      } catch {
-        console.log("error with signup");
+      } catch (err) {
+        console.log("error with signup", err);
       }
     };
 

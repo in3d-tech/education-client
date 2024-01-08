@@ -1,52 +1,83 @@
-// import { useEffect, useState } from "react";
-// // import { ApiSearchRequest } from "@/types/api/request";
-// // import { ApiSearchResponse } from "@/types/api/response";
-// // import { DC_API_SEARCH_URL } from "@/lib/endpoints";
-// // import { UserFacets } from "@/types/search-context";
-// // import { buildQuery } from "@/lib/queries/builder";
+import { useEffect, useState } from "react";
 
-// type ApiData = Response | null;
-// type ApiError = string | null;
-// type Response = {
-//   data: ApiData;
-//   error: ApiError;
-//   loading: boolean;
-// };
+type FetchObj = {
+  method: string | undefined;
+  headers: { [key: string]: string };
+  body?: any;
+};
 
-// const urlString = "http://localhost:3000";
+const baseUrl = "http://localhost:3000";
 
-// function useFetch(url: string) {
-//   const [data, setData] = useState<ApiData>(null);
-//   const [loading, setLoading] = useState<null | boolean | string>(null);
-//   const [error, setError] = useState<null | string>(null);
+export const useFetch = (
+  endpoint: string,
+  body?: any,
+  method: string | null = "POST",
+  contentType: string = "application/json"
+) => {
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const url = `${baseUrl}${endpoint}`;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const fetchObj: FetchObj = {
+          method,
+          headers: { "Content-Type": contentType },
+          body: body,
+        };
+        const res = await fetch(url, fetchObj);
+        const data = await res.json();
+        setResponse(data);
+        setIsLoading(false);
+      } catch (error: any) {
+        setError(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url, method, contentType, body]); // dependency array
+
+  return { response, error, isLoading };
+};
+
+// export const useFetch = (
+//   endpoint: string,
+//   body: any,
+//   method?: string | null,
+//   contentType?: string | null
+// ) => {
+//   const [response, setResponse] = useState(null);
+//   const [error, setError] = useState(null);
+//   const url = `${baseUrl}${endpoint}`;
+
+//   const fetchObj: FetchObj = {
+//     method: method || "POST",
+//     headers: {
+//       "Content-Type": contentType || "application/json",
+//     },
+//   };
+//   if (body) {
+//     fetchObj.body = body;
+//   }
 
 //   useEffect(() => {
-//     setLoading("loading...");
-//     setData(null);
-//     setError(null);
-//     //   const source = axios.CancelToken.source();
-//     // console.log("before the fetch", `${urlString}${url}`);
-//     fetch(`${urlString}${url}`)
-//       .then((res: any) => {
-//         setLoading(false);
-//         console.log("inside the fetch");
-//         // console.log(res);
-//         //checking for multiple responses for more flexibility
-//         //with the url we send in.
-//         res.data.content && setData(res.data.content);
-//         res.content && setData(res.content);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         setLoading(false);
-//         setError("An error occurred. Awkward..");
-//       });
-//     return () => {
-//       //   source.cancel();
+//     const fetchData = async () => {
+//       try {
+//         const res = await fetch(url, fetchObj);
+//         const data = await res.json();
+//         setResponse(data);
+//       } catch (error: any) {
+//         setError(error);
+//       }
 //     };
+
+//     fetchData();
 //   }, [url]);
 
-//   return { data, loading, error };
-// }
-
-// export default useFetch;
+//   return { response, error };
+// };

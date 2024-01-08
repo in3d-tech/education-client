@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "../navigation/Navbar";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { MyDropzone } from "../common/components/Dropzone";
+import { useFetch } from "../common/logic/useFetch";
 
 type TeacherPortalProps = {
   user: User;
@@ -143,21 +144,17 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
     }
 
     try {
-      const response = await fetch(
-        "https://edu-server-ke5y.onrender.com/create-lesson",
-        {
-          // const response = await fetch("http://192.168.1.224:3000/create-lesson", {
-
-          method: "POST",
-          // headers: { "Content-Type": "multipart/form-data" },
-          body: formData,
-        }
+      const { response, error } = useFetch(
+        "/create-lesson",
+        formData,
+        null,
+        "multipart/form-data"
       );
-      const res = await response.json();
-      if (res.acknowledged == true) {
+
+      if (response) {
         setModalIsOpen(false);
       } else {
-        alert("issue creating lesson");
+        console.log("issue creating lesson", error);
       }
     } catch {
       console.log("error creating form");
@@ -184,7 +181,6 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
   };
 
   const handleDeleteQr = (id: any) => {
-    console.log(id);
     setList(list.filter((item) => item.uniqueId !== id));
   };
 

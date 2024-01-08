@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import { Navbar } from "../../navigation/Navbar";
-import MyComponent from "./ArLessonNew";
+import ArLessonNew from "./ArLessonNew";
+import { useFetch } from "../../common/logic/useFetch";
+import useWindowDimensions from "../../common/logic/getViewport";
 
 const classObj: any = {
   1: "א",
@@ -30,27 +32,37 @@ export function Lesson() {
       </div>
     );
 
-  const fetchPhotoDataArray = async () => {
-    try {
-      const response = await fetch(
-        "https://edu-server-ke5y.onrender.com/fetchPhotos"
-      );
-      // const response = await fetch("http://192.168.1.224:3000/fetchPhotos");
+  const { height, width } = useWindowDimensions();
 
-      if (response.ok) {
-        const data = await response.json();
-        setPhotoDataArray(data.photos);
-      } else {
-        console.error("Error fetching photos. Status:", response.status);
-      }
-    } catch (error) {
-      console.error("Error fetching photos:", error);
-    }
-  };
+  // const fetchPhotoDataArray = async () => {
+  //   try {
+  //     const { error, response }: any = useFetch("/fetchPhotos", null, "GET");
+  //     if (response && response.data) {
+  //       setPhotoDataArray(response.data);
+  //     }
+  //     if (error) {
+  //       console.log(error);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching photos:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchPhotoDataArray();
+  // }, []);
+
+  const { error, response }: any = useFetch("/fetchPhotos", null, "GET");
+  // const [photoDataArray, setPhotoDataArray] = useState([]);
 
   useEffect(() => {
-    fetchPhotoDataArray();
-  }, []);
+    if (response && response.data) {
+      setPhotoDataArray(response.data);
+    }
+    if (error) {
+      console.log(error);
+    }
+  }, [response, error]);
 
   const currentLesson = activeLesson[0];
 
@@ -58,11 +70,13 @@ export function Lesson() {
     <>
       <Navbar title="Lesson" user={user} />
       {startScanning ? (
-        <MyComponent
+        <ArLessonNew
           setStartScanning={setStartScanning}
           firstImage={photoDataArray.length > 0 ? photoDataArray[0] : null}
           secondImage={photoDataArray.length > 1 ? photoDataArray[1] : null}
           images={photoDataArray}
+          screenHeight={height}
+          screenWidth={width}
         />
       ) : (
         <div

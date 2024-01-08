@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 import { Navbar } from "../navigation/Navbar";
+import { useFetch } from "../common/logic/useFetch";
 
 type AccountDetails = {
   firstName: string;
@@ -16,41 +17,29 @@ const defaultUserPic =
 export function MyAccountDetails() {
   const [accountDetails, setAccountDetails] = useState<AccountDetails>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const { user } = useAppContext();
 
-  const getUserData = async () => {
-    try {
-      setIsFetching(true);
-      const response = await fetch("http://192.168.1.224:3000/account", {
-        // const response = await fetch("http://192.168.1.224:3000/account", {
+  try {
+    const { error, response } = useFetch(
+      "/account",
+      JSON.stringify({
+        userId: user?.userId,
+        method: "getAccountDetails",
+      })
+    );
 
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: user?.userId,
-          method: "getAccountDetails",
-        }),
-      });
-
-      if (response.ok) {
-        const accountData = await response.json();
-        setAccountDetails(accountData);
-        setIsFetching(false);
-      } else {
-        console.error("Error fetching my lessons. Status:", response.status);
+    useEffect(() => {
+      if (response) {
+        setAccountDetails(response);
       }
-    } catch (error) {
-      setIsFetching(false);
-      console.error("Error fetching my lessons:", error);
-      console.log(isFetching);
-    }
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
+      if (error) {
+        console.error("Error fetching my lessons:", error);
+      }
+    }, [response, error]);
+  } catch (error) {
+    console.error("Error fetching my lessons:", error);
+  }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files && event.target.files[0];
@@ -70,20 +59,10 @@ export function MyAccountDetails() {
       formData.append("file", file!);
       formData.append("userId", user?.userId!);
 
-      const response = await fetch(
-        "https://edu-server-ke5y.onrender.com/upload",
-        {
-          // const response = await fetch("http://192.168.1.224:3000/upload", {
-
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      if (response.ok) {
-        console.log("File uploaded successfully");
-      } else {
-        console.error("Error uploading file. Status:", response.status);
+      const { error }: any = useFetch("/upload", formData);
+      // add something if uploaded correctly
+      if (error) {
+        console.log(error);
       }
     } catch (error) {
       console.error("Error uploading file:", error);

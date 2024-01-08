@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
 import { formatDate } from "../../common/logic/formatDate";
+import { useFetch } from "../../common/logic/useFetch";
 
 type MyLessonsProps = {
   userId: string | undefined;
@@ -13,59 +14,24 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
   const [lessonCode, setLessonCode] = useState<string>("");
 
   const { myLessons, setMyLessons, setActiveLesson } = useAppContext();
+  try {
+    const { error, response } = useFetch(
+      "/active-lessons",
+      JSON.stringify({ userId })
+    );
 
-  const fetchMyLessons = async () => {
-    try {
-      const response = await fetch(
-        "https://edu-server-ke5y.onrender.com/active-lessons",
-        {
-          // const response = await fetch("http://192.168.1.224:3000/active-lessons", {
-
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId }),
-        }
-      );
-
-      if (response.ok) {
-        const myLessonsData = await response.json();
-        setMyLessons(myLessonsData);
-      } else {
-        console.error("Error fetching my lessons. Status:", response.status);
+    // useEffect which updates myLessons when response is updated
+    useEffect(() => {
+      if (response) {
+        setMyLessons(response);
       }
-    } catch (error) {
-      console.error("Error fetching my lessons:", error);
-      const newLesson: any = [
-        {
-          headline: "View First Models",
-          description: "Scan the right QR codes",
-          instructions: "See which QR to scan, and write down your results!",
-          language: "he",
-          classAgeGroup: "2",
-          qrList: [
-            {
-              uniqueId: 1,
-              model: "square",
-            },
-            {
-              uniqueId: 2,
-              model: "circle",
-            },
-            {
-              uniqueId: 3,
-              model: "square",
-            },
-          ],
-          lessonId: 5,
-        },
-      ];
-      setMyLessons(newLesson);
-    }
-  };
-
-  useEffect(() => {
-    fetchMyLessons();
-  }, []);
+      if (error) {
+        console.error("Error fetching my lessons:", error);
+      }
+    }, [response, error]);
+  } catch (err) {
+    console.error(err);
+  }
 
   const joinLesson = async () => {
     try {
@@ -82,20 +48,15 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
         }
       }
 
-      const response = await fetch(
-        "https://edu-server-ke5y.onrender.com/join-lesson",
-        {
-          // const response = await fetch("http://192.168.1.224:3000/join-lesson", {
-
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
+      const { error, response } = useFetch(
+        "/join-lesson",
+        JSON.stringify(data)
       );
 
-      const res = await response.json();
-
-      alert(res ? "Successfully joined!" : "error joining lesson");
+      if (error) {
+        console.log(error);
+      }
+      // do something with response
     } catch {
       alert("error with login ");
       console.log("error with login");

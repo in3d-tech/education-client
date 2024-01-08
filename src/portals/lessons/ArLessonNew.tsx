@@ -22,6 +22,8 @@ const initializeAR = ({
   firstImage,
   secondImage,
   images,
+  screenHeight,
+  screenWidth,
 }) => {
   if (typeof THREEx === "undefined") {
     throw new Error("THREE is not defined. Make sure three.js is loaded.");
@@ -47,7 +49,7 @@ const initializeAR = ({
     scene.add(camera);
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setClearColor(new THREE.Color("lightgrey"), 0);
-    renderer.setSize(640, 480);
+    renderer.setSize(screenHeight, screenWidth); //(640, 480);
     renderer.domElement.style.position = "absolute";
     renderer.domElement.style.top = "0px";
     renderer.domElement.style.left = "0px";
@@ -228,7 +230,14 @@ const initializeAR = ({
   return { initialize, update, render, animate, scene, camera, stop };
 };
 
-const MyComponent = ({ setStartScanning, firstImage, secondImage, images }) => {
+const ArLessonNew = ({
+  setStartScanning,
+  firstImage,
+  secondImage,
+  images,
+  screenHeight,
+  screenWidth,
+}) => {
   const arScript = React.useRef(null);
 
   useEffect(() => {
@@ -237,6 +246,8 @@ const MyComponent = ({ setStartScanning, firstImage, secondImage, images }) => {
       firstImage,
       secondImage,
       images,
+      screenHeight,
+      screenWidth,
     });
     arScriptInstance.initialize();
 
@@ -273,4 +284,4 @@ const MyComponent = ({ setStartScanning, firstImage, secondImage, images }) => {
   );
 };
 
-export default MyComponent;
+export default ArLessonNew;
