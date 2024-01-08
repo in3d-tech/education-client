@@ -11,7 +11,7 @@ const baseUrl = "http://localhost:3000";
 export const useFetch = (
   endpoint: string,
   body?: any,
-  method: string | null = "POST",
+  method: string = "POST",
   contentType: string = "application/json"
 ) => {
   const [response, setResponse] = useState(null);
