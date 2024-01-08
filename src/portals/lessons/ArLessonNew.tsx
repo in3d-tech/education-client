@@ -59,7 +59,6 @@ const initializeAR = ({
     // document.body.style.margin = "0";
     document.body.appendChild(renderer.domElement);
     // console.log({ renderer });
-
     clock = new THREE.Clock();
 
     deltaTime = 0;
@@ -278,7 +277,7 @@ const ArLessonNew = ({
   }, []);
 
   return (
-    <div style={{ border: "2px solid yellow", height: "100%" }}>
+    <div>
       <button
         className="btn"
         style={{ position: "absolute", zIndex: 1, width: "7em" }}
