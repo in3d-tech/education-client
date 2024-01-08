@@ -48,10 +48,7 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
         }
       }
 
-      const { error, response } = useFetch(
-        "/join-lesson",
-        JSON.stringify(data)
-      );
+      const { error } = useFetch("/join-lesson", JSON.stringify(data));
 
       if (error) {
         console.log(error);

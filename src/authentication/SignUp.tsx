@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 // import useFetch from "../common/useFetch";
 import { useAppContext } from "../context/appContext";
-import { useFetch } from "../common/logic/useFetch";
-import { useEffect } from "react";
+// import { useFetch } from "../common/logic/useFetch";
+// import { useEffect } from "react";
 
 type SignupProps = {
   // setUser: React.Dispatch<React.SetStateAction<User | null>>;

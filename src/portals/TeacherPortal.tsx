@@ -147,7 +147,7 @@ const CreateLessonForm = ({ setModalIsOpen, userId }: LessonFormProps) => {
       const { response, error } = useFetch(
         "/create-lesson",
         formData,
-        null,
+        "",
         "multipart/form-data"
       );
 
