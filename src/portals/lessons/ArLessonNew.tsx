@@ -67,8 +67,8 @@ const initializeAR = ({
     arToolkitSource = new THREEx.ArToolkitSource({
       sourceType: "webcam",
       // ---------------------------------------------------------------- >>> note to uncomment and test these for layout/sizes
-      sourceHeight: window.innerHeight, // * 0.5,
-      sourceWidth: window.innerWidth, // * 0.5,
+      // sourceHeight: window.innerHeight, // * 0.5,
+      // sourceWidth: window.innerWidth, // * 0.5,
     });
 
     function onResize() {
@@ -98,7 +98,7 @@ const initializeAR = ({
     arToolkitContext = new THREEx.ArToolkitContext({
       cameraParametersUrl: "/data/camera_para.dat",
       detectionMode: "mono",
-      maxDetectionRate: 60,
+      // maxDetectionRate: 60,
     });
 
     arToolkitContext.init(function onCompleted() {
