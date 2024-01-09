@@ -17,6 +17,10 @@ function cleanMaterial(material) {
   }
 }
 
+// tablet showed 1037 height and 753 width
+
+// my iphone 669 height and 390 width
+
 const initializeAR = ({
   setStartScanning,
   firstImage,
@@ -52,10 +56,10 @@ const initializeAR = ({
     renderer.setSize(screenWidth, screenHeight); //(640, 480);
     renderer.domElement.style.position = "absolute";
     renderer.domElement.style.top = "0";
-    renderer.domElement.style.left = `${screenWidth}px`;
+    renderer.domElement.style.left = "0";
     // renderer.domElement.style.right = "0px";
     // renderer.domElement.style.bottom = "0px";
-    renderer.domElement.style.overflow = "hidden";
+    // renderer.domElement.style.overflow = "hidden";
     // document.body.style.margin = "0";
     document.body.appendChild(renderer.domElement);
     // console.log({ renderer });
@@ -112,17 +116,23 @@ const initializeAR = ({
       "letterC",
       "letterD",
       "letterF",
-      "number1",
+      //"number1",
       "kanji",
       "hiro",
     ];
     let colorArray = [
-      16711680, 16753920, 16776960, 52480, 255, 13434879, 13434828, 16776960,
+      16711680,
+      16753920,
+      16776960,
+      52480,
+      255,
+      13434879,
+      13434828, // 16776960,
     ];
     let mesh;
     let mesh0;
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 7; i++) {
       if (arToolkitContext) {
         let markerRoot = new THREE.Group();
         scene.add(markerRoot);
@@ -131,6 +141,7 @@ const initializeAR = ({
           markerRoot,
           { type: "pattern", patternUrl: "/data/" + patternArray[i] + ".patt" }
         );
+        console.log(patternArray[i]);
         // if (patternArray[i] == "letterC") {
 
         // const belt = images.map((img, idx) => console.log(idx, img));
@@ -138,7 +149,7 @@ const initializeAR = ({
         // ----------------------------------------------------------------
         // regular photo
 
-        if (images.length > 0) {
+        if (images.length > 15) {
           const test = images.map((img, imagesArrIndex) => {
             if (imagesArrIndex == i) {
               handleMarkerData({
@@ -160,6 +171,7 @@ const initializeAR = ({
               opacity: 0.5,
             })
           );
+          console.log(mesh);
           mesh.position.y = 1.25 / 2;
         }
         // if (!mesh) {
@@ -269,7 +281,6 @@ const ArLessonNew = ({
 
     return () => {
       if (arScriptInstance) {
-        console.log("Cleaning up AR component");
         arScriptInstance.stop();
         arScriptInstance.scene = null;
       }

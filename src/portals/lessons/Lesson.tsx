@@ -20,7 +20,7 @@ const classObj: any = {
   12: "יב",
 };
 
-export function Lesson() {
+function Lesson() {
   const [startScanning, setStartScanning] = useState<boolean>(false);
   const { activeLesson, user } = useAppContext();
   const [photoDataArray, setPhotoDataArray] = useState([]);
@@ -66,8 +66,10 @@ export function Lesson() {
 
   const currentLesson = activeLesson[0];
 
-  console.log({ height, width });
-  confirm(`${height} and ${width}`);
+  // console.log({ height, width });
+  // confirm(`${height} and ${width}`);
+
+  // tablet showed 1037 and 753
 
   return (
     <>
@@ -144,3 +146,5 @@ export function Lesson() {
   );
   // );
 }
+
+export default Lesson;

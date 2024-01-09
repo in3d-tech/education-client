@@ -14,7 +14,7 @@ type AccountDetails = {
 const defaultUserPic =
   "https://res.cloudinary.com/dxminwnb3/image/upload/v1702805169/fake-user_kwwbfv.png";
 
-export function MyAccountDetails() {
+function MyAccountDetails() {
   const [accountDetails, setAccountDetails] = useState<AccountDetails>(null);
   const [file, setFile] = useState<File | null>(null);
 
@@ -150,3 +150,5 @@ export function MyAccountDetails() {
     </>
   );
 }
+
+export default MyAccountDetails;
