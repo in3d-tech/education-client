@@ -58,10 +58,6 @@ const initializeAR = ({
     renderer.domElement.style.position = "absolute";
     renderer.domElement.style.top = "0";
     renderer.domElement.style.left = "0";
-    // renderer.domElement.style.right = "0px";
-    // renderer.domElement.style.bottom = "0px";
-    // renderer.domElement.style.overflow = "hidden";
-    // document.body.style.margin = "0";
     document.body.appendChild(renderer.domElement);
     // console.log({ renderer });
     clock = new THREE.Clock();
@@ -71,8 +67,8 @@ const initializeAR = ({
     arToolkitSource = new THREEx.ArToolkitSource({
       sourceType: "webcam",
       // ---------------------------------------------------------------- >>> note to uncomment and test these for layout/sizes
-      sourceHeight: window.innerHeight * 0.5,
-      sourceWidth: window.innerWidth * 0.5,
+      sourceHeight: window.innerHeight, // * 0.5,
+      sourceWidth: window.innerWidth, // * 0.5,
     });
 
     function onResize() {
