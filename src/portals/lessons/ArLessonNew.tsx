@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { handleMarkerData } from "./common/getMarkerData";
+import * as THREE from "three";
 
 function cleanMaterial(material) {
   material.dispose();
@@ -103,6 +104,7 @@ const initializeAR = ({
       detectionMode: "mono",
       maxDetectionRate: 60,
     });
+
     arToolkitContext.init(function onCompleted() {
       if (arToolkitContext) {
         camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
@@ -163,7 +165,7 @@ const initializeAR = ({
           });
         } else {
           mesh = new THREE.Mesh(
-            new THREE.CubeGeometry(1.25, 1.25, 1.25),
+            new THREE.BoxGeometry(1.25, 1.25, 1.25),
             new THREE.MeshBasicMaterial({
               color: colorArray[i],
               map: texture,
@@ -171,8 +173,9 @@ const initializeAR = ({
               opacity: 0.5,
             })
           );
-          console.log(mesh);
+          // console.log(mesh);
           mesh.position.y = 1.25 / 2;
+          // mesh.position.x = 2;
         }
         // if (!mesh) {
         //   console.log("no mesh found in LESSON");
@@ -183,6 +186,7 @@ const initializeAR = ({
         //     ? 0.1
         //     : 1.25 / 2;
         markerRoot.add(mesh);
+        console.log(mesh?.name, mesh.position);
       }
     }
   }
