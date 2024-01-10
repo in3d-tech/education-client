@@ -347,10 +347,11 @@ ARjs.Source.prototype.onResizeElement = function () {
 
   // if screenAspect < sourceAspect, then change the width, else change the height
   if (screenAspect < sourceAspect) {
+    console.log("in here for the source-ASPECT");
     // compute newWidth and set .width/.marginLeft
     var newWidth = sourceAspect * screenHeight;
     this.domElement.style.width = newWidth + "px";
-    this.domElement.style.marginLeft = -(newWidth - screenWidth) / 2 + "px"; // "0px"; MARGIN 0
+    this.domElement.style.marginLeft = "0px"; //-(newWidth - screenWidth) / 2 + "px"; //  MARGIN 0
 
     // init style.height/.marginTop to normal value
     this.domElement.style.height = screenHeight + "px";
@@ -389,8 +390,8 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
     otherElement.style.height = this.domElement.style.height;
     otherElement.style.width =
       (parseInt(otherElement.style.height) * 4) / 3 + "px";
-    otherElement.style.marginLeft =
-      (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px"; // this.domElement.style.marginLeft;
+    otherElement.style.marginLeft = "0px";
+    // (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px"; // this.domElement.style.marginLeft;
     console.log({ marginLeft: this.domElement.style.marginLeft });
     // (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
     otherElement.style.marginTop = 0;
