@@ -100,7 +100,7 @@ function Lesson() {
 
   return (
     <>
-      <Navbar title="Lesson" user={user} />
+      <Navbar title="Lesson - temp" user={user} />
       {startScanning ? (
         <ArLessonNew
           setStartScanning={setStartScanning}
