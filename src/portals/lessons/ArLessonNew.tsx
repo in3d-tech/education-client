@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { handleMarkerData } from "./common/getMarkerData";
-import * as THREE from "three";
 
 function cleanMaterial(material) {
   material.dispose();
@@ -54,7 +53,7 @@ const initializeAR = ({
     scene.add(camera);
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setClearColor(new THREE.Color("lightgrey"), 0);
-    renderer.setSize(screenWidth, screenHeight); //(640, 480);
+    renderer.setSize(640, 480); //(screenWidth, screenHeight); //(640, 480);
     renderer.domElement.style.position = "absolute";
     renderer.domElement.style.top = "0";
     renderer.domElement.style.left = "0";
@@ -73,18 +72,25 @@ const initializeAR = ({
 
     function onResize() {
       if (arToolkitSource) {
-        arToolkitSource.onResizeElement();
-        arToolkitSource.copyElementSizeTo(renderer.domElement);
-        const aspectRatio = window.innerWidth / window.innerHeight;
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        // arToolkitSource.onResizeElement();
+        arToolkitSource.onResize();
+
+        // arToolkitSource.copyElementSizeTo(renderer.domElement);
+        // const aspectRatio = window.innerWidth / window.innerHeight;
+        // renderer.setSize(window.innerWidth, window.innerHeight);
       }
 
-      if (arToolkitContext?.arController !== null) {
-        if (arToolkitSource && arToolkitContext) {
-          arToolkitSource.copyElementSizeTo(
-            arToolkitContext.arController.canvas
-          );
-        }
+      // if (arToolkitContext?.arController !== null) {
+      //   if (arToolkitSource && arToolkitContext) {
+      //     arToolkitSource.copyElementSizeTo(
+      //       arToolkitContext.arController.canvas
+      //     );
+      //   }
+      // }
+      // arToolkitSource.onResize();
+      arToolkitSource.copySizeTo(renderer.domElement);
+      if (arToolkitContext.arController !== null) {
+        arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
       }
     }
 
@@ -259,15 +265,16 @@ const ArLessonNew = ({
 }) => {
   const arScript = React.useRef(null);
 
+  const arScriptInstance = initializeAR({
+    setStartScanning,
+    firstImage,
+    secondImage,
+    images,
+    screenHeight,
+    screenWidth,
+  });
+
   useEffect(() => {
-    const arScriptInstance = initializeAR({
-      setStartScanning,
-      firstImage,
-      secondImage,
-      images,
-      screenHeight,
-      screenWidth,
-    });
     arScriptInstance.initialize();
 
     const animateLoop = () => {
