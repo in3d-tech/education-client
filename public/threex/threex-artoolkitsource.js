@@ -377,6 +377,7 @@ ARjs.Source.prototype.copyElementSizeTo = function(otherElement){
 
 ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
   if (window.innerWidth > window.innerHeight) {
+    console.log(" INTHE LANDSCAPE");
     //landscape
     otherElement.style.width = this.domElement.style.width;
     otherElement.style.height = this.domElement.style.height;
@@ -384,11 +385,12 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
     otherElement.style.marginTop = this.domElement.style.marginTop;
   } else {
     //portrait
+    console.log("IN THE PORTRAIT");
     otherElement.style.height = this.domElement.style.height;
     otherElement.style.width =
       (parseInt(otherElement.style.height) * 4) / 3 + "px";
-    otherElement.style.marginLeft =
-      (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
+    otherElement.style.marginLeft = this.domElement.style.marginLeft;
+    // (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
     otherElement.style.marginTop = 0;
   }
 };
