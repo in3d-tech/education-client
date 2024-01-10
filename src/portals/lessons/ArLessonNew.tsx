@@ -42,11 +42,9 @@ const initializeAR = ({
     arToolkitContext;
 
   function initialize() {
+    // if (scene) return;
     scene = new THREE.Scene();
-    if (!scene) {
-      console.log("no scene!@!!@@!@!!");
-      return;
-    }
+
     let ambientLight = new THREE.AmbientLight(5242880, 0.5);
     scene.add(ambientLight);
     camera = new THREE.Camera();
@@ -71,15 +69,12 @@ const initializeAR = ({
     });
 
     function onResize() {
-      if (arToolkitSource) {
-        // arToolkitSource.onResizeElement();
-        arToolkitSource.onResize();
-
-        // arToolkitSource.copyElementSizeTo(renderer.domElement);
-        // const aspectRatio = window.innerWidth / window.innerHeight;
-        // renderer.setSize(window.innerWidth, window.innerHeight);
-      }
-
+      // if (arToolkitSource) {
+      //   arToolkitSource.onResizeElement();
+      //   arToolkitSource.copyElementSizeTo(renderer.domElement);
+      //   const aspectRatio = window.innerWidth / window.innerHeight;
+      //   renderer.setSize(window.innerWidth, window.innerHeight);
+      // }
       // if (arToolkitContext?.arController !== null) {
       //   if (arToolkitSource && arToolkitContext) {
       //     arToolkitSource.copyElementSizeTo(
@@ -87,11 +82,6 @@ const initializeAR = ({
       //     );
       //   }
       // }
-      // arToolkitSource.onResize();
-      arToolkitSource.copySizeTo(renderer.domElement);
-      if (arToolkitContext.arController !== null) {
-        arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
-      }
     }
 
     arToolkitSource.init(function onReady() {
@@ -101,20 +91,17 @@ const initializeAR = ({
       onResize();
     });
 
-    if (!arToolkitContext) {
-      arToolkitContext = new THREEx.ArToolkitContext({
-        cameraParametersUrl: "/data/camera_para.dat",
-        detectionMode: "mono",
-        // maxDetectionRate: 60,
-      });
+    arToolkitContext = new THREEx.ArToolkitContext({
+      cameraParametersUrl: "/data/camera_para.dat",
+      detectionMode: "mono",
+      // maxDetectionRate: 60,
+    });
 
-      arToolkitContext.init(function onCompleted() {
-        if (arToolkitContext) {
-          camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-        }
-      });
-    }
-
+    arToolkitContext.init(function onCompleted() {
+      if (arToolkitContext) {
+        camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+      }
+    });
     let loader = new THREE.TextureLoader();
     let texture = loader.load("/assets/images/border.png");
     let patternArray = [
@@ -268,16 +255,16 @@ const ArLessonNew = ({
 }) => {
   const arScript = React.useRef(null);
 
-  const arScriptInstance = initializeAR({
-    setStartScanning,
-    firstImage,
-    secondImage,
-    images,
-    screenHeight,
-    screenWidth,
-  });
-
   useEffect(() => {
+    const arScriptInstance = initializeAR({
+      setStartScanning,
+      firstImage,
+      secondImage,
+      images,
+      screenHeight,
+      screenWidth,
+    });
+
     arScriptInstance.initialize();
 
     const animateLoop = () => {
