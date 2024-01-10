@@ -350,7 +350,7 @@ ARjs.Source.prototype.onResizeElement = function () {
     // compute newWidth and set .width/.marginLeft
     var newWidth = sourceAspect * screenHeight;
     this.domElement.style.width = newWidth + "px";
-    this.domElement.style.marginLeft = "0px"; //-(newWidth - screenWidth) / 2 + "px";
+    this.domElement.style.marginLeft = -(newWidth - screenWidth) / 2 + "px"; // "0px"; MARGIN 0
 
     // init style.height/.marginTop to normal value
     this.domElement.style.height = screenHeight + "px";
