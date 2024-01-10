@@ -56,7 +56,6 @@ const initializeAR = ({
     renderer.domElement.style.top = "0";
     renderer.domElement.style.left = "0";
     document.body.appendChild(renderer.domElement);
-    // console.log({ renderer });
     clock = new THREE.Clock();
 
     deltaTime = 0;
@@ -67,21 +66,20 @@ const initializeAR = ({
       // sourceHeight: window.innerHeight, // * 0.5,
       // sourceWidth: window.innerWidth, // * 0.5,
     });
-
     function onResize() {
-      // if (arToolkitSource) {
-      //   arToolkitSource.onResizeElement();
-      //   arToolkitSource.copyElementSizeTo(renderer.domElement);
-      //   const aspectRatio = window.innerWidth / window.innerHeight;
-      //   renderer.setSize(window.innerWidth, window.innerHeight);
-      // }
-      // if (arToolkitContext?.arController !== null) {
-      //   if (arToolkitSource && arToolkitContext) {
-      //     arToolkitSource.copyElementSizeTo(
-      //       arToolkitContext.arController.canvas
-      //     );
-      //   }
-      // }
+      if (arToolkitSource) {
+        arToolkitSource.onResizeElement();
+        arToolkitSource.copyElementSizeTo(renderer.domElement);
+        // const aspectRatio = window.innerWidth / window.innerHeight;
+        // renderer.setSize(window.innerWidth, window.innerHeight);
+        // }
+        // if (arToolkitContext?.arController !== null) {
+        if (arToolkitSource && arToolkitContext) {
+          arToolkitSource.copyElementSizeTo(
+            arToolkitContext.arController.canvas
+          );
+        }
+      }
     }
 
     arToolkitSource.init(function onReady() {
@@ -135,7 +133,6 @@ const initializeAR = ({
           markerRoot,
           { type: "pattern", patternUrl: "/data/" + patternArray[i] + ".patt" }
         );
-        console.log(patternArray[i]);
         // if (patternArray[i] == "letterC") {
 
         // const belt = images.map((img, idx) => console.log(idx, img));
@@ -165,12 +162,10 @@ const initializeAR = ({
               opacity: 0.5,
             })
           );
-          // console.log(mesh);
           mesh.position.y = 1.25 / 2;
           // mesh.position.x = 2;
         }
         // if (!mesh) {
-        //   console.log("no mesh found in LESSON");
         //   return;
         // }
         // mesh.position.y =
@@ -178,7 +173,6 @@ const initializeAR = ({
         //     ? 0.1
         //     : 1.25 / 2;
         markerRoot.add(mesh);
-        console.log(mesh?.name, mesh.position);
       }
     }
   }
@@ -192,7 +186,7 @@ const initializeAR = ({
     }
 
     const videoElements = document.querySelectorAll("video");
-    videoElements.forEach((videoElement) => {
+    videoElements.forEach((videoElement, idx) => {
       videoElement.pause();
       videoElement.srcObject = null;
       document.body.removeChild(videoElement);

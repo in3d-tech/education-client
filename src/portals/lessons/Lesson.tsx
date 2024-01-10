@@ -54,16 +54,33 @@ function Lesson() {
   //   fetchPhotoDataArray();
   // }, []);
 
-  const { error, response }: any = useFetch("/fetchPhotos", null, "GET");
   // const [photoDataArray, setPhotoDataArray] = useState([]);
+  const { error, response }: any = useFetch("/fetchPhotos", null, "GET");
+
+  // useEffect(() => {
+  //   if (response && response.data) {
+  //     setPhotoDataArray(response.data);
+  //   }
+  //   if (error) {
+  //     console.log(error);
+  //   }
+  // }, [activeLesson, photoDataArray]);
 
   useEffect(() => {
-    if (response && response.data) {
-      setPhotoDataArray(response.data);
-    }
-    if (error) {
-      console.log(error);
-    }
+    const fetchPhotoDataArray = async () => {
+      try {
+        if (response && response.data) {
+          setPhotoDataArray(response.data);
+        }
+        if (error) {
+          console.log(error);
+        }
+      } catch (error) {
+        console.error("Error fetching photos:", error);
+      }
+    };
+
+    fetchPhotoDataArray();
   }, [response, error]);
 
   const currentLesson = activeLesson[0];
@@ -72,6 +89,14 @@ function Lesson() {
   // confirm(`${height} and ${width}`);
 
   // tablet showed 1037 and 753
+
+  {
+    /* <video autoplay="" muted="" playsinline="" style="width: 933.333px; 
+    height: 700px; position: absolute; top: 0px; left: 0px; z-index: -2; 
+    margin-left: -124.667px; margin-top: 0px;"></video> */
+  }
+
+  // console.log(currentLesson);
 
   return (
     <>
