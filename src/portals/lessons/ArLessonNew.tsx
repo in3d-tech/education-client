@@ -101,17 +101,20 @@ const initializeAR = ({
       onResize();
     });
 
-    arToolkitContext = new THREEx.ArToolkitContext({
-      cameraParametersUrl: "/data/camera_para.dat",
-      detectionMode: "mono",
-      // maxDetectionRate: 60,
-    });
+    if (!arToolkitContext) {
+      arToolkitContext = new THREEx.ArToolkitContext({
+        cameraParametersUrl: "/data/camera_para.dat",
+        detectionMode: "mono",
+        // maxDetectionRate: 60,
+      });
 
-    arToolkitContext.init(function onCompleted() {
-      if (arToolkitContext) {
-        camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-      }
-    });
+      arToolkitContext.init(function onCompleted() {
+        if (arToolkitContext) {
+          camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+        }
+      });
+    }
+
     let loader = new THREE.TextureLoader();
     let texture = loader.load("/assets/images/border.png");
     let patternArray = [

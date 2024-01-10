@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
-// import { Navbar } from "../../navigation/Navbar";
+import { Navbar } from "../../navigation/Navbar";
 import ArLessonNew from "./ArLessonNew";
 import { useFetch } from "../../common/logic/useFetch";
 import useWindowDimensions from "../../common/logic/getViewport";
@@ -75,7 +75,7 @@ function Lesson() {
 
   return (
     <>
-      {/* <Navbar title="Lesson" user={user} /> */}
+      <Navbar title="Lesson" user={user} />
       {startScanning ? (
         <ArLessonNew
           setStartScanning={setStartScanning}
