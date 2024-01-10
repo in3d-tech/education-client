@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
-import { Navbar } from "../../navigation/Navbar";
+// import { Navbar } from "../../navigation/Navbar";
 import ArLessonNew from "./ArLessonNew";
 import { useFetch } from "../../common/logic/useFetch";
 import useWindowDimensions from "../../common/logic/getViewport";
@@ -25,12 +25,14 @@ function Lesson() {
   const { activeLesson, user } = useAppContext();
   const [photoDataArray, setPhotoDataArray] = useState([]);
 
-  if (!activeLesson)
+  if (!activeLesson) {
+    console.log(user);
     return (
       <div>
         <h1>Error Finding Lesson</h1>
       </div>
     );
+  }
 
   const { height, width } = useWindowDimensions();
 
