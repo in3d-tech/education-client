@@ -289,6 +289,15 @@ const ArLessonNew = ({
       >
         Back
       </button>
+      <div
+        style={{
+          border: "2px solid yellow",
+          position: "absolute",
+          bottom: "50%",
+          width: "30%",
+          left: "409px",
+        }}
+      ></div>
     </div>
   );
 };
