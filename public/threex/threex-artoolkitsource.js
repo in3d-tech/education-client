@@ -393,6 +393,10 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
     otherElement.style.marginLeft = this.domElement.style.marginLeft; // "0px";
     // (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px"; // this.domElement.style.marginLeft;
     console.log({ marginLeft: this.domElement.style.marginLeft });
+    console.log({
+      theMarginLeftWeAreTryingToProduce:
+        (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px",
+    });
     // (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
     otherElement.style.marginTop = 0;
   }
