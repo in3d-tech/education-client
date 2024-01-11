@@ -408,6 +408,7 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
       domWidth: (parseInt(otherElement.style.height) * 4) / 3 + "px",
       domHeight: this.domElement.style.height,
       domMarginTop: this.domElement.style.marginTop,
+      domStyleMLeft: this.domElement.style.marginLeft,
     });
     otherElement.style.height = this.domElement.style.height;
     otherElement.style.width =
