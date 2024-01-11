@@ -351,7 +351,7 @@ ARjs.Source.prototype.onResizeElement = function () {
   }
 
   // compute sourceAspect
-  var sourceAspect = sourceWidth / sourceHeight;
+  var sourceAspect = sourceHeight / sourceWidth; // first reversing this one!
   // compute screenAspect
   var screenAspect = screenWidth / screenHeight;
 
