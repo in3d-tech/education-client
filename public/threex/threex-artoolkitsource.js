@@ -340,8 +340,8 @@ ARjs.Source.prototype.onResizeElement = function () {
     var sourceWidth = this.domElement.naturalWidth;
     var sourceHeight = this.domElement.naturalHeight;
   } else if (this.domElement.nodeName === "VIDEO") {
-    var sourceWidth = this.domElement.videoHeight;
-    var sourceHeight = this.domElement.videoWidth;
+    var sourceWidth = this.domElement.videoWidth;
+    var sourceHeight = this.domElement.videoHeight;
     console.log("something abotu audio/video source (now reversed)", {
       sourceWidth,
       sourceHeight,
