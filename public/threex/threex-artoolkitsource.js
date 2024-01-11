@@ -350,6 +350,11 @@ ARjs.Source.prototype.onResizeElement = function () {
     this.domElement.style.width = newWidth + "px";
     this.domElement.style.marginLeft = -(newWidth - screenWidth) / 2 + "px";
 
+    console.log("aspect if line 348: (left)", {
+      left: -(newWidth - screenWidth) / 2 + "px",
+      width: newWidth,
+    });
+
     // init style.height/.marginTop to normal value
     this.domElement.style.height = screenHeight + "px";
     this.domElement.style.marginTop = "0px";
@@ -362,6 +367,10 @@ ARjs.Source.prototype.onResizeElement = function () {
     // init style.width/.marginLeft to normal value
     this.domElement.style.width = screenWidth + "px";
     this.domElement.style.marginLeft = "0px";
+    console.log("aspect if line 360: (height) ", {
+      height: newHeight,
+      marginTop: -(newHeight - screenHeight) / 2 + "px",
+    });
   }
 };
 /*
@@ -380,6 +389,11 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
     otherElement.style.height = this.domElement.style.height;
     otherElement.style.marginLeft = this.domElement.style.marginLeft;
     otherElement.style.marginTop = this.domElement.style.marginTop;
+    console.log("suuposed LANDSCAPE: ", {
+      left: this.domElement.style.marginLeft,
+      width: this.domElement.style.width,
+      height: this.domElement.style.height,
+    });
   } else {
     //portrait
     otherElement.style.height = this.domElement.style.height;
@@ -389,6 +403,11 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
       (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
     otherElement.style.marginTop = 0;
   }
+  console.log("orr PORTRAIT !@ : ", {
+    height: this.domElement.style.height,
+    width: (parseInt(otherElement.style.height) * 4) / 3 + "px",
+    left: (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px",
+  });
 };
 
 //////////////////////////////////////////////////////////////////////////////
