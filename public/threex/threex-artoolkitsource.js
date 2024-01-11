@@ -168,6 +168,10 @@ ARjs.Source.prototype._initSourceWebcam = function (onReady, onError) {
   domElement.setAttribute("autoplay", "");
   domElement.setAttribute("muted", "");
   domElement.setAttribute("playsinline", "");
+  console.log("LINE 171 display width/height", {
+    width: this.parameters.displayWidth + "px",
+    height: this.parameters.displayHeight + "px",
+  });
   domElement.style.width = this.parameters.displayWidth + "px";
   domElement.style.height = this.parameters.displayHeight + "px";
 
@@ -326,6 +330,8 @@ ARjs.Source.prototype.onResizeElement = function () {
   var screenWidth = window.innerWidth;
   var screenHeight = window.innerHeight;
 
+  console.log("SCREEN SIZES LINE 329", { screenWidth, screenHeight });
+
   // sanity check
   console.assert(arguments.length === 0);
 
@@ -336,6 +342,10 @@ ARjs.Source.prototype.onResizeElement = function () {
   } else if (this.domElement.nodeName === "VIDEO") {
     var sourceWidth = this.domElement.videoWidth;
     var sourceHeight = this.domElement.videoHeight;
+    console.log("something abotu audio/video source", {
+      sourceWidth,
+      sourceHeight,
+    });
   } else {
     console.assert(false);
   }
@@ -357,6 +367,7 @@ ARjs.Source.prototype.onResizeElement = function () {
     this.domElement.style.height = screenHeight + "px";
     this.domElement.style.marginTop = "0px";
   } else {
+    console.log("in HERE FOR THE SECOND source aspect!@!@!");
     // compute newHeight and set .height/.marginTop
     var newHeight = 1 / (sourceAspect / screenWidth);
     this.domElement.style.height = newHeight + "px";
@@ -378,7 +389,12 @@ ARjs.Source.prototype.copyElementSizeTo = function(otherElement){
 
 ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
   if (window.innerWidth > window.innerHeight) {
-    console.log(" INTHE LANDSCAPE");
+    console.log(" INTHE LANDSCAPE", {
+      domMarginLEft: this.domElement.style.marginLeft,
+      domWidth: this.domElement.style.width,
+      domHeight: this.domElement.style.height,
+      domMarginTop: this.domElement.style.marginTop,
+    });
     //landscape
     otherElement.style.width = this.domElement.style.width;
     otherElement.style.height = this.domElement.style.height;
@@ -386,17 +402,19 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
     otherElement.style.marginTop = this.domElement.style.marginTop;
   } else {
     //portrait
-    console.log("IN THE PORTRAIT");
+    console.log("IN THE PORTRAIT", {
+      domMarginLEft:
+        (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px",
+      domWidth: (parseInt(otherElement.style.height) * 4) / 3 + "px",
+      domHeight: this.domElement.style.height,
+      domMarginTop: this.domElement.style.marginTop,
+    });
     otherElement.style.height = this.domElement.style.height;
     otherElement.style.width =
       (parseInt(otherElement.style.height) * 4) / 3 + "px";
     otherElement.style.marginLeft = this.domElement.style.marginLeft; // "0px";
     // (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px"; // this.domElement.style.marginLeft;
-    console.log({ marginLeft: this.domElement.style.marginLeft });
-    console.log({
-      theMarginLeftWeAreTryingToProduce:
-        (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px",
-    });
+    //
     // (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
     otherElement.style.marginTop = 0;
   }
