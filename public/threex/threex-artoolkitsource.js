@@ -313,12 +313,12 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
       console.log(error);
     });
 };
-
+// reveresed these height/width
 ARjs.Source.prototype.domElementWidth = function () {
-  return parseInt(this.domElement.style.width);
+  return parseInt(this.domElement.style.height);
 };
 ARjs.Source.prototype.domElementHeight = function () {
-  return parseInt(this.domElement.style.height);
+  return parseInt(this.domElement.style.width);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -361,7 +361,7 @@ ARjs.Source.prototype.onResizeElement = function () {
   if (screenAspect < sourceAspect) {
     console.log("in here for the source-ASPECT");
     // compute newWidth and set .width/.marginLeft
-    var newWidth = sourceAspect / screenHeight;
+    var newWidth = sourceAspect * screenHeight;
     this.domElement.style.width = newWidth + "px";
     this.domElement.style.marginLeft = "0px"; //-(newWidth - screenWidth) / 2 + "px"; //  MARGIN 0
 
