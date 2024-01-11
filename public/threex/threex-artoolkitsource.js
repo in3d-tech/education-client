@@ -355,11 +355,13 @@ ARjs.Source.prototype.onResizeElement = function () {
   // compute screenAspect
   var screenAspect = screenWidth / screenHeight;
 
+  console.log("the ASPECT RATIOS ", { sourceAspect, screenAspect });
+
   // if screenAspect < sourceAspect, then change the width, else change the height
   if (screenAspect < sourceAspect) {
     console.log("in here for the source-ASPECT");
     // compute newWidth and set .width/.marginLeft
-    var newWidth = sourceAspect * screenHeight;
+    var newWidth = sourceAspect / screenHeight;
     this.domElement.style.width = newWidth + "px";
     this.domElement.style.marginLeft = "0px"; //-(newWidth - screenWidth) / 2 + "px"; //  MARGIN 0
 
