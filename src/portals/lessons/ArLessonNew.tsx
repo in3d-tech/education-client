@@ -49,12 +49,15 @@ const initializeAR = ({
     scene.add(ambientLight);
     camera = new THREE.Camera();
     scene.add(camera);
+    console.log({ scene });
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setClearColor(new THREE.Color("lightgrey"), 0);
     renderer.setSize(640, 480); //(screenWidth, screenHeight); //(640, 480);
     renderer.domElement.style.position = "absolute";
     renderer.domElement.style.top = "0";
     renderer.domElement.style.left = "0";
+    renderer.domElement.style.margin = "0";
+
     document.body.appendChild(renderer.domElement);
     clock = new THREE.Clock();
 
@@ -232,7 +235,7 @@ const initializeAR = ({
     requestAnimationFrame(animate);
     deltaTime = clock?.getDelta();
     totalTime += deltaTime;
-    update();
+    // update();
     render();
   }
 
@@ -289,15 +292,6 @@ const ArLessonNew = ({
       >
         Back
       </button>
-      <div
-        style={{
-          border: "2px solid yellow",
-          position: "absolute",
-          bottom: "50%",
-          width: "30%",
-          left: "409px",
-        }}
-      ></div>
     </div>
   );
 };
