@@ -332,8 +332,9 @@ ARjs.Source.prototype.onResizeElement = function () {
     var sourceWidth = this.domElement.naturalWidth;
     var sourceHeight = this.domElement.naturalHeight;
   } else if (this.domElement.nodeName === "VIDEO") {
-    var sourceWidth = this.domElement.videoWidth;
-    var sourceHeight = this.domElement.videoHeight;
+    var sourceHeight = this.domElement.videoWidth;
+    var sourceWidth = this.domElement.videoHeight;
+    console.log({ videoWidth: sourceWidth, videoHeight: sourceHeight });
   } else {
     console.assert(false);
   }
