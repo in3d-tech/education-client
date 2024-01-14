@@ -61,8 +61,8 @@ const initializeAR = ({
     arToolkitSource = new THREEx.ArToolkitSource({
       sourceType: "webcam",
       // ---------------------------------------------------------------- >>> note to uncomment and test these for layout/sizes
-      sourceHeight: window.innerHeight * 0.5,
-      sourceWidth: window.innerWidth * 0.5,
+      // sourceHeight: window.innerHeight * 0.5,
+      // sourceWidth: window.innerWidth * 0.5,
     });
     function onResize() {
       // if (arToolkitSource) {
@@ -79,13 +79,15 @@ const initializeAR = ({
       //   }
       // }
       if (arToolkitSource) {
-        arToolkitSource.onResize();
-        arToolkitSource.copySizeTo(renderer.domElement);
+        arToolkitSource.onResizeElement();
+        arToolkitSource.copyElementSizeTo(renderer.domElement);
       }
 
       if (arToolkitContext?.arController !== null) {
         if (arToolkitSource && arToolkitContext) {
-          arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
+          arToolkitSource.copyElementSizeTo(
+            arToolkitContext.arController.canvas
+          );
         }
       }
     }

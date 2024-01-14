@@ -348,7 +348,7 @@ ARjs.Source.prototype.onResizeElement = function () {
     // compute newWidth and set .width/.marginLeft
     var newWidth = sourceAspect * screenHeight;
     this.domElement.style.width = newWidth + "px";
-    this.domElement.style.marginLeft = -(newWidth - screenWidth) / 2 + "px";
+    this.domElement.style.marginLeft = 0; // -(newWidth - screenWidth) / 2 + "px";
 
     console.log("aspect if line 348: (left)", {
       left: -(newWidth - screenWidth) / 2 + "px",
@@ -403,8 +403,8 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
     otherElement.style.height = this.domElement.style.height;
     otherElement.style.width =
       (parseInt(otherElement.style.height) * 4) / 3 + "px";
-    otherElement.style.marginLeft =
-      (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
+    otherElement.style.marginLeft = 0;
+    // (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
     otherElement.style.marginTop = 0;
   }
   console.log("orr PORTRAIT !@ : ", {
