@@ -42,22 +42,17 @@ const initializeAR = ({
     arToolkitContext;
 
   function initialize() {
-    // if (scene) return;
     scene = new THREE.Scene();
-
     let ambientLight = new THREE.AmbientLight(5242880, 0.5);
     scene.add(ambientLight);
     camera = new THREE.Camera();
     scene.add(camera);
-    console.log({ scene });
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setClearColor(new THREE.Color("lightgrey"), 0);
     renderer.setSize(640, 480); //(screenWidth, screenHeight); //(640, 480);
     renderer.domElement.style.position = "absolute";
     renderer.domElement.style.top = "0";
     renderer.domElement.style.left = "0";
-    renderer.domElement.style.margin = "0";
-
     document.body.appendChild(renderer.domElement);
     clock = new THREE.Clock();
 
@@ -66,17 +61,29 @@ const initializeAR = ({
     arToolkitSource = new THREEx.ArToolkitSource({
       sourceType: "webcam",
       // ---------------------------------------------------------------- >>> note to uncomment and test these for layout/sizes
-      // sourceHeight: window.innerHeight, // * 0.5,
-      // sourceWidth: window.innerWidth, // * 0.5,
+      sourceHeight: window.innerHeight * 0.5,
+      sourceWidth: window.innerWidth * 0.5,
     });
     function onResize() {
+      // if (arToolkitSource) {
+      //   arToolkitSource.onResizeElement();
+      //   arToolkitSource.copyElementSizeTo(renderer.domElement);
+      //   const aspectRatio = window.innerWidth / window.innerHeight;
+      //   renderer.setSize(window.innerWidth, window.innerHeight);
+      // }
+      // if (arToolkitContext?.arController !== null) {
+      //   if (arToolkitSource && arToolkitContext) {
+      //     arToolkitSource.copyElementSizeTo(
+      //       arToolkitContext.arController.canvas
+      //     );
+      //   }
+      // }
       if (arToolkitSource) {
         arToolkitSource.onResizeElement();
         arToolkitSource.copyElementSizeTo(renderer.domElement);
-        // const aspectRatio = window.innerWidth / window.innerHeight;
-        // renderer.setSize(window.innerWidth, window.innerHeight);
-        // }
-        // if (arToolkitContext?.arController !== null) {
+      }
+
+      if (arToolkitContext?.arController !== null) {
         if (arToolkitSource && arToolkitContext) {
           arToolkitSource.copyElementSizeTo(
             arToolkitContext.arController.canvas
@@ -95,7 +102,7 @@ const initializeAR = ({
     arToolkitContext = new THREEx.ArToolkitContext({
       cameraParametersUrl: "/data/camera_para.dat",
       detectionMode: "mono",
-      // maxDetectionRate: 60,
+      maxDetectionRate: 60,
     });
 
     arToolkitContext.init(function onCompleted() {
@@ -116,13 +123,7 @@ const initializeAR = ({
       "hiro",
     ];
     let colorArray = [
-      16711680,
-      16753920,
-      16776960,
-      52480,
-      255,
-      13434879,
-      13434828, // 16776960,
+      16711680, 16753920, 16776960, 52480, 255, 13434879, 13434828,
     ];
     let mesh;
     let mesh0;
@@ -156,8 +157,9 @@ const initializeAR = ({
             }
           });
         } else {
+          console.log("in here");
           mesh = new THREE.Mesh(
-            new THREE.BoxGeometry(1.25, 1.25, 1.25),
+            new THREE.CubeGeometry(1.25, 1.25, 1.25),
             new THREE.MeshBasicMaterial({
               color: colorArray[i],
               map: texture,
@@ -212,6 +214,7 @@ const initializeAR = ({
     }
 
     if (renderer) {
+      // console.log("in the renderer if: ", renderer.domElement);
       renderer.forceContextLoss();
       renderer.context = null;
       renderer.domElement = null;
@@ -235,7 +238,7 @@ const initializeAR = ({
     requestAnimationFrame(animate);
     deltaTime = clock?.getDelta();
     totalTime += deltaTime;
-    // update();
+    update();
     render();
   }
 
