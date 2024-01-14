@@ -79,15 +79,13 @@ const initializeAR = ({
       //   }
       // }
       if (arToolkitSource) {
-        arToolkitSource.onResizeElement();
-        arToolkitSource.copyElementSizeTo(renderer.domElement);
+        arToolkitSource.onResize();
+        arToolkitSource.copySizeTo(renderer.domElement);
       }
 
       if (arToolkitContext?.arController !== null) {
         if (arToolkitSource && arToolkitContext) {
-          arToolkitSource.copyElementSizeTo(
-            arToolkitContext.arController.canvas
-          );
+          arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
         }
       }
     }
