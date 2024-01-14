@@ -119,6 +119,7 @@ ARjs.Context.createDefaultCamera = function (trackingBackend) {
       100
     );
   } else console.assert(false);
+  console.log("inside the CONTEXXXXT ", { trackingBackend });
   return camera;
 };
 
@@ -229,9 +230,14 @@ ARjs.Context.prototype._initArtoolkit = function (onCompleted) {
     _this.parameters.cameraParametersUrl,
     function () {
       // init controller
-      var arController = new ARController(
+      console.log(
+        "WE JERE IOMNIT ",
         _this.parameters.canvasWidth,
+        _this.parameters.canvasHeight
+      );
+      var arController = new ARController(
         _this.parameters.canvasHeight,
+        _this.parameters.canvasWidth,
         cameraParameters
       );
       _this.arController = arController;
