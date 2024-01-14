@@ -4,6 +4,8 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { handleMarkerData } from "./common/getMarkerData";
 
+const images = [];
+
 function cleanMaterial(material) {
   material.dispose();
 
@@ -21,14 +23,7 @@ function cleanMaterial(material) {
 
 // my iphone 669 height and 390 width
 
-const initializeAR = ({
-  setStartScanning,
-  firstImage,
-  secondImage,
-  images,
-  screenHeight,
-  screenWidth,
-}) => {
+const initializeAR = () => {
   if (typeof THREEx === "undefined") {
     throw new Error("THREE is not defined. Make sure three.js is loaded.");
   }
@@ -151,18 +146,18 @@ const initializeAR = ({
         // ----------------------------------------------------------------
         // regular photo
 
-        if (images.length > 15) {
-          const test = images.map((img, imagesArrIndex) => {
-            if (imagesArrIndex == i) {
-              handleMarkerData({
-                mesh,
-                markerRoot,
-                image: img,
-                marker: patternArray[i],
-                mesh0,
-              });
-            }
-          });
+        if (images && images.length && images?.length > 15) {
+          //   const test = images.map((img, imagesArrIndex) => {
+          //     if (imagesArrIndex == i) {
+          //       handleMarkerData({
+          //         mesh,
+          //         markerRoot,
+          //         image: img,
+          //         marker: patternArray[i],
+          //         mesh0,
+          //       });
+          //     }
+          //   });
         } else {
           mesh = new THREE.Mesh(
             new THREE.BoxGeometry(1.25, 1.25, 1.25),
@@ -251,25 +246,11 @@ const initializeAR = ({
   return { initialize, update, render, animate, scene, camera, stop };
 };
 
-const ArLessonNew = ({
-  setStartScanning,
-  firstImage,
-  secondImage,
-  images,
-  screenHeight,
-  screenWidth,
-}) => {
+const LessonNew = () => {
   const arScript = React.useRef(null);
 
   useEffect(() => {
-    const arScriptInstance = initializeAR({
-      setStartScanning,
-      firstImage,
-      secondImage,
-      images,
-      screenHeight,
-      screenWidth,
-    });
+    const arScriptInstance = initializeAR();
 
     arScriptInstance.initialize();
 
@@ -296,7 +277,7 @@ const ArLessonNew = ({
         className="btn"
         style={{ position: "absolute", zIndex: 1, width: "7em" }}
         onClick={() => {
-          setStartScanning(false);
+          //   setStartScanning(false);
         }}
       >
         Back
@@ -305,4 +286,4 @@ const ArLessonNew = ({
   );
 };
 
-export default ArLessonNew;
+export default LessonNew;

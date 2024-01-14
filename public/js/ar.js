@@ -1039,7 +1039,7 @@ var Qb=[Ik,Zh,_h,Qj,Qi,Pi,Ri,Ag,sg,qg,rg,yg,kh,jh,Oi,Mj];var Rb=[Jk,ki,ji,gi];va
 			var scale = this.canvas.height / this.canvas.width;
 			var scaledHeight = this.canvas.width*scale;
 			var scaledWidth = this.canvas.height*scale;
-			var marginLeft = ( this.canvas.width - scaledWidth)/2;
+			var marginLeft = 0;
 			this.ctx.drawImage(image, marginLeft, 0, scaledWidth, scaledHeight); // draw video
 		}
 
@@ -6109,7 +6109,7 @@ ARjs.Source.prototype.onResizeElement = function(){
 		// compute newWidth and set .width/.marginLeft
 		var newWidth = sourceAspect * screenHeight
 		this.domElement.style.width = newWidth+'px'
-		this.domElement.style.marginLeft = -(newWidth-screenWidth)/2+'px'
+		this.domElement.style.marginLeft = '0px'
 		
 		// init style.height/.marginTop to normal value
 		this.domElement.style.height = screenHeight+'px'
@@ -6148,7 +6148,7 @@ ARjs.Source.prototype.copyElementSizeTo = function(otherElement){
 		//portrait
 		otherElement.style.height = this.domElement.style.height
 		otherElement.style.width = (parseInt(otherElement.style.height) * 4/3)+"px";
-		otherElement.style.marginLeft = ((window.innerWidth- parseInt(otherElement.style.width))/2)+"px";
+		otherElement.style.marginLeft = "0px";
 		otherElement.style.marginTop = 0;
 	}
 

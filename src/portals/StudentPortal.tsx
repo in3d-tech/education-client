@@ -52,6 +52,24 @@ export function StudentPortal({ user }: StudentPortalProps) {
 
         {/* <a href="/hello-cube.html">Quick jump to camera</a>
         <Link to="/test">jumpTo module</Link> */}
+        <div>
+          HEloo world!
+          <div>
+            <Link
+              className="student-btn"
+              onClick={() => handleModel(false)}
+              style={{
+                background:
+                  'url("/assets/images/my-account.jpg") no-repeat center',
+                color: "black",
+                backgroundSize: "contain",
+              }}
+              to="/testLesson"
+            >
+              TO TEST LESSON
+            </Link>
+          </div>
+        </div>
         <div
           style={{
             display: "grid",

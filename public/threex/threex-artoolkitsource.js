@@ -334,7 +334,6 @@ ARjs.Source.prototype.onResizeElement = function () {
   } else if (this.domElement.nodeName === "VIDEO") {
     var sourceWidth = this.domElement.videoWidth;
     var sourceHeight = this.domElement.videoHeight;
-    console.log({ videoWidth: sourceWidth, videoHeight: sourceHeight });
   } else {
     console.assert(false);
   }
@@ -349,16 +348,7 @@ ARjs.Source.prototype.onResizeElement = function () {
     // compute newWidth and set .width/.marginLeft
     var newWidth = sourceAspect * screenHeight;
     this.domElement.style.width = newWidth + "px";
-    this.domElement.style.marginLeft = -(newWidth - screenWidth) / 2 + "px";
-
-    console.log("aspect if line 348: (left)", {
-      left: -(newWidth - screenWidth) / 2 + "px",
-      width: newWidth,
-      sourceWidth,
-      sourceHeight,
-      screenWidth,
-      screenHeight,
-    });
+    this.domElement.style.marginLeft = 0;
 
     // init style.height/.marginTop to normal value
     this.domElement.style.height = screenHeight + "px";
@@ -372,10 +362,6 @@ ARjs.Source.prototype.onResizeElement = function () {
     // init style.width/.marginLeft to normal value
     this.domElement.style.width = screenWidth + "px";
     this.domElement.style.marginLeft = "0px";
-    console.log("aspect if line 360: (height) ", {
-      height: newHeight,
-      marginTop: -(newHeight - screenHeight) / 2 + "px",
-    });
   }
 };
 /*
@@ -392,27 +378,16 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
     //landscape
     otherElement.style.width = this.domElement.style.width;
     otherElement.style.height = this.domElement.style.height;
-    otherElement.style.marginLeft = 0;
+    otherElement.style.marginLeft = this.domElement.style.marginLeft;
     otherElement.style.marginTop = this.domElement.style.marginTop;
-    console.log("suuposed LANDSCAPE: ", {
-      left: this.domElement.style.marginLeft,
-      width: this.domElement.style.width,
-      height: this.domElement.style.height,
-    });
   } else {
     //portrait
     otherElement.style.height = this.domElement.style.height;
     otherElement.style.width =
       (parseInt(otherElement.style.height) * 4) / 3 + "px";
-    otherElement.style.marginLeft = 0;
-    // (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
+    otherElement.style.marginLeft = "0px";
     otherElement.style.marginTop = 0;
   }
-  console.log("orr PORTRAIT !@ : ", {
-    height: this.domElement.style.height,
-    width: (parseInt(otherElement.style.height) * 4) / 3 + "px",
-    left: (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px",
-  });
 };
 
 //////////////////////////////////////////////////////////////////////////////

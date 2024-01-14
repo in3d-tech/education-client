@@ -31,7 +31,7 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
 
     // enable image smoothing or not for canvas copy - default to true
     // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled
-    imageSmoothingEnabled: true,
+    imageSmoothingEnabled: false,
   };
   // parameters sanity check
   console.assert(
