@@ -353,6 +353,10 @@ ARjs.Source.prototype.onResizeElement = function () {
     console.log("aspect if line 348: (left)", {
       left: -(newWidth - screenWidth) / 2 + "px",
       width: newWidth,
+      sourceWidth,
+      sourceHeight,
+      screenWidth,
+      screenHeight,
     });
 
     // init style.height/.marginTop to normal value
