@@ -49,7 +49,7 @@ const initializeAR = ({
     scene.add(camera);
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setClearColor(new THREE.Color("lightgrey"), 0);
-    renderer.setSize(640, 480); //(screenWidth, screenHeight); //(640, 480);
+    renderer.setSize(480, 640); //(screenWidth, screenHeight); //(640, 480);
     renderer.domElement.style.position = "absolute";
     renderer.domElement.style.top = "0";
     renderer.domElement.style.left = "0";
