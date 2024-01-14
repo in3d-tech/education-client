@@ -349,7 +349,7 @@ ARjs.Source.prototype.onResizeElement = function () {
     // compute newWidth and set .width/.marginLeft
     var newWidth = sourceAspect * screenHeight;
     this.domElement.style.width = newWidth + "px";
-    this.domElement.style.marginLeft = 0; // -(newWidth - screenWidth) / 2 + "px";
+    this.domElement.style.marginLeft = -(newWidth - screenWidth) / 2 + "px";
 
     console.log("aspect if line 348: (left)", {
       left: -(newWidth - screenWidth) / 2 + "px",
@@ -392,7 +392,7 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
     //landscape
     otherElement.style.width = this.domElement.style.width;
     otherElement.style.height = this.domElement.style.height;
-    otherElement.style.marginLeft = this.domElement.style.marginLeft;
+    otherElement.style.marginLeft = 0;
     otherElement.style.marginTop = this.domElement.style.marginTop;
     console.log("suuposed LANDSCAPE: ", {
       left: this.domElement.style.marginLeft,
