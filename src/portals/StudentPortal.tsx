@@ -13,8 +13,6 @@ type StudentPortalProps = {
 export function StudentPortal({ user }: StudentPortalProps) {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
-  console.log("WE ARE INSIDE THE STUDENT PORTAL");
-
   const handleModel = (prevState: boolean) => {
     setModalIsOpen(!prevState);
   };

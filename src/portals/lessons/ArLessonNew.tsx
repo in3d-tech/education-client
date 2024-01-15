@@ -186,6 +186,14 @@ const initializeAR = ({
         markerRoot.add(mesh);
       }
     }
+
+    // console.log({ scene });
+    console.log("RESNDERER Thing Style: ");
+    console.log("canvasHeight: ", renderer?.domElement?.style?.height);
+    console.log("canvasLeft: ", renderer?.domElement?.style?.left);
+    console.log("canvasMarginLeft: ", renderer?.domElement?.style?.marginLeft);
+    console.log("canvasMarginTop: ", renderer?.domElement?.style?.marginTop);
+    console.log("canvasWidth: ", renderer?.domElement?.style?.width);
   }
 
   function stop() {
@@ -197,6 +205,8 @@ const initializeAR = ({
     }
 
     const videoElements = document.querySelectorAll("video");
+    console.log("THIS IS A VIDEO ELEMENT!");
+    console.log(videoElements?.length);
     videoElements.forEach((videoElement, idx) => {
       videoElement.pause();
       videoElement.srcObject = null;
