@@ -206,8 +206,11 @@ const initializeAR = ({
 
     const videoElements = document.querySelectorAll("video");
     console.log("THIS IS A VIDEO ELEMENT!");
-    console.log(videoElements?.length);
     videoElements.forEach((videoElement, idx) => {
+      console.log("vid height: ", videoElement.style.height);
+      console.log("vid width: ", videoElement.style.width);
+      console.log("vid left: ", videoElement.style.left);
+      console.log("vid marginLeft: ", videoElement.style.marginLeft);
       videoElement.pause();
       videoElement.srcObject = null;
       document.body.removeChild(videoElement);
