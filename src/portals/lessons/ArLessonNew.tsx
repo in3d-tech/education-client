@@ -97,7 +97,7 @@ const initializeAR = ({
       // onResize();
       setTimeout(function () {
         onResize(); // Call onResize after a short delay
-      }, 1000); // Adjust the delay as needed
+      }, 200); // Adjust the delay as needed
     });
     window.addEventListener("resize", async function () {
       onResize();
