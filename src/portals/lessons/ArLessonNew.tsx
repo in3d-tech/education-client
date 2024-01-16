@@ -77,7 +77,7 @@ const initializeAR = ({
       // sourceHeight: window.innerHeight, // * 0.5,
       // sourceWidth: window.innerWidth, // * 0.5,
     });
-    async function onResize() {
+    function onResize() {
       if (arToolkitSource) {
         arToolkitSource.onResizeElement();
         arToolkitSource.copyElementSizeTo(renderer.domElement);
@@ -93,8 +93,11 @@ const initializeAR = ({
       }
     }
 
-    arToolkitSource.init(async function onReady() {
-      await onResize();
+    arToolkitSource.init(function onReady() {
+      // onResize();
+      setTimeout(function () {
+        onResize(); // Call onResize after a short delay
+      }, 1000); // Adjust the delay as needed
     });
     window.addEventListener("resize", async function () {
       onResize();
