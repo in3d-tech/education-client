@@ -77,7 +77,7 @@ const initializeAR = ({
       // sourceHeight: window.innerHeight, // * 0.5,
       // sourceWidth: window.innerWidth, // * 0.5,
     });
-    function onResize() {
+    async function onResize() {
       if (arToolkitSource) {
         arToolkitSource.onResizeElement();
         arToolkitSource.copyElementSizeTo(renderer.domElement);
@@ -93,10 +93,10 @@ const initializeAR = ({
       }
     }
 
-    arToolkitSource.init(function onReady() {
-      onResize();
+    arToolkitSource.init(async function onReady() {
+      await onResize();
     });
-    window.addEventListener("resize", function () {
+    window.addEventListener("resize", async function () {
       onResize();
     });
 
@@ -164,16 +164,65 @@ const initializeAR = ({
             }
           });
         } else {
-          mesh = new THREE.Mesh(
-            new THREE.BoxGeometry(1.25, 1.25, 1.25),
-            new THREE.MeshBasicMaterial({
-              color: colorArray[i],
-              map: texture,
-              transparent: true,
+          if (patternArray[i] == "letterZ") {
+            planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
+            const loader1 = new THREE.TextureLoader();
+            planeMat = new THREE.MeshBasicMaterial({
+              color: 0x00ff00,
               opacity: 0.5,
-            })
-          );
-          mesh.position.y = 1.25 / 2;
+            });
+            mesh = new THREE.Mesh(planeGeo, planeMat);
+            mesh.rotation.x = -1.5;
+            mesh.position.y = 0.1;
+            markerRoot.add(mesh);
+            function onProgress(xhr) {
+              console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+            }
+            function onError(xhr) {
+              console.log("An error happened");
+            }
+            new THREE.MTLLoader()
+              .setPath("/assets/models/")
+              .load("fish-2.mtl", function (materials) {
+                materials.preload();
+                new THREE.OBJLoader()
+                  .setMaterials(materials)
+                  .setPath("/assets/models/")
+                  .load(
+                    "fish-2.obj",
+                    function (group) {
+                      mesh0 = group.children[0];
+                      mesh0.material.side = THREE.DoubleSide;
+                      mesh0.position.y = 0.2;
+                      mesh0.scale.set(0.5, 0.5, 0.5);
+                      markerRoot.add(mesh0);
+                    },
+                    onProgress,
+                    onError
+                  );
+              });
+            let geometry1 = new THREE.PlaneBufferGeometry(2, 2, 4, 4);
+            let video = document.getElementById("video");
+            let texture = new THREE.VideoTexture(video);
+            texture.minFilter = THREE.LinearFilter;
+            texture.magFilter = THREE.LinearFilter;
+            texture.format = THREE.RGBFormat;
+            let material1 = new THREE.MeshBasicMaterial({ map: texture });
+            mesh1 = new THREE.Mesh(geometry1, material1);
+            mesh1.rotation.x = -Math.PI / 2;
+            markerRoot1.add(mesh1);
+          } else {
+            mesh = new THREE.Mesh(
+              new THREE.BoxGeometry(1.25, 1.25, 1.25),
+              new THREE.MeshBasicMaterial({
+                color: colorArray[i],
+                map: texture,
+                transparent: true,
+                opacity: 0.5,
+              })
+            );
+            mesh.position.y = 1.25 / 2;
+          }
           // mesh.position.x = 2;
         }
         // if (!mesh) {
