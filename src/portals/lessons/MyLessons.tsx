@@ -116,7 +116,7 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
                           ) : null}
                         </span>
                         <span className="my-lessons-created-at-date">
-                          {formatDate(lesson.createdAt)}
+                          {formatDate(lesson?.createdAt)}
                         </span>
                       </button>
                     </Link>

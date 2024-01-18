@@ -69,8 +69,8 @@ function Lesson() {
   useEffect(() => {
     const fetchPhotoDataArray = async () => {
       try {
-        if (response && response.data) {
-          setPhotoDataArray(response.data);
+        if (response && response.photos) {
+          setPhotoDataArray(response.photos);
         }
         if (error) {
           console.log(error);

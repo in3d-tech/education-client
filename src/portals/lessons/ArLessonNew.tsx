@@ -39,13 +39,17 @@ const initializeAR = ({
     deltaTime,
     totalTime,
     arToolkitSource,
-    arToolkitContext;
+    arToolkitContext,
+    planeGeo,
+    planeMat,
+    mesh1,
+    mesh0;
 
   function initialize() {
     // if (scene) return;
     scene = new THREE.Scene();
 
-    let ambientLight = new THREE.AmbientLight(5242880, 0.5);
+    let ambientLight = new THREE.DirectionalLight(); //(5242880, 0.5);
     scene.add(ambientLight);
     camera = new THREE.Camera();
     scene.add(camera);
@@ -71,6 +75,7 @@ const initializeAR = ({
 
     deltaTime = 0;
     totalTime = 0;
+
     arToolkitSource = new THREEx.ArToolkitSource({
       sourceType: "webcam",
       // ---------------------------------------------------------------- >>> note to uncomment and test these for layout/sizes
@@ -122,23 +127,17 @@ const initializeAR = ({
       "letterC",
       "letterD",
       "letterF",
-      //"number1",
       "kanji",
       "hiro",
+      "pattern1",
     ];
     let colorArray = [
-      16711680,
-      16753920,
-      16776960,
-      52480,
-      255,
-      13434879,
-      13434828, // 16776960,
+      16711680, 16753920, 16776960, 52480, 255, 13434879, 13434828, 16711680,
     ];
     let mesh;
     let mesh0;
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 8; i++) {
       if (arToolkitContext) {
         let markerRoot = new THREE.Group();
         scene.add(markerRoot);
@@ -154,7 +153,7 @@ const initializeAR = ({
         // ----------------------------------------------------------------
         // regular photo
 
-        if (images.length > 15) {
+        if (images.length > 10) {
           const test = images.map((img, imagesArrIndex) => {
             if (imagesArrIndex == i) {
               handleMarkerData({
@@ -168,55 +167,54 @@ const initializeAR = ({
           });
         } else {
           if (patternArray[i] == "letterZ") {
-            planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-            const loader1 = new THREE.TextureLoader();
-            planeMat = new THREE.MeshBasicMaterial({
-              color: 0x00ff00,
-              opacity: 0.5,
-            });
-            mesh = new THREE.Mesh(planeGeo, planeMat);
-            mesh.rotation.x = -1.5;
-            mesh.position.y = 0.1;
-            markerRoot.add(mesh);
-            function onProgress(xhr) {
-              console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-            }
-            function onError(xhr) {
-              console.log("An error happened");
-            }
-            new THREE.MTLLoader()
-              .setPath("/assets/models/")
-              .load("fish-2.mtl", function (materials) {
-                materials.preload();
-                new THREE.OBJLoader()
-                  .setMaterials(materials)
-                  .setPath("/assets/models/")
-                  .load(
-                    "fish-2.obj",
-                    function (group) {
-                      mesh0 = group.children[0];
-                      mesh0.material.side = THREE.DoubleSide;
-                      mesh0.position.y = 0.2;
-                      mesh0.scale.set(0.5, 0.5, 0.5);
-                      markerRoot.add(mesh0);
-                    },
-                    onProgress,
-                    onError
-                  );
-              });
-            let geometry1 = new THREE.PlaneBufferGeometry(2, 2, 4, 4);
-            let video = document.getElementById("video");
-            let texture = new THREE.VideoTexture(video);
-            texture.minFilter = THREE.LinearFilter;
-            texture.magFilter = THREE.LinearFilter;
-            texture.format = THREE.RGBFormat;
-            let material1 = new THREE.MeshBasicMaterial({ map: texture });
-            mesh1 = new THREE.Mesh(geometry1, material1);
-            mesh1.rotation.x = -Math.PI / 2;
-            markerRoot1.add(mesh1);
+            // let geometry1 = new THREE.PlaneBufferGeometry(2, 2, 4, 4);
+            // let loader = new THREE.TextureLoader();
+            // // let texture = loader.load( 'images/earth.jpg', render );
+            // let material1 = new THREE.MeshBasicMaterial({
+            //   // color: 0x0000ff,
+            //   opacity: 1,
+            // });
+            // mesh1 = new THREE.Mesh(geometry1, material1);
+            // mesh1.rotation.x = -Math.PI / 2;
+            // markerRoot.add(mesh1);
+            // function onProgress(xhr) {
+            //   console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+            // }
+            // function onError(xhr) {
+            //   console.log("An error happened");
+            // }
+            // new THREE.MTLLoader()
+            //   .setPath("/assets/models/")
+            //   .load("Soldier_Statue.mtl", function (materials) {
+            //     materials.preload();
+            //     new THREE.OBJLoader()
+            //       .setMaterials(materials)
+            //       .setPath("/assets/models/")
+            //       .load(
+            //         "Soldier_Statue.obj",
+            //         function (group) {
+            //           group.children.forEach((child, index) => {
+            //             // Access and add each part to the markerRoot
+            //             mesh0 = child;
+            //             mesh0.material = new THREE.MeshPhongMaterial({
+            //               // color: 0x0000ff,
+            //               // opacity: 0.8,
+            //             });
+            //             mesh0.scale.set(0.02, 0.02, 0.02);
+            //             // mesh0.rotation.x = -Math.PI / 2;
+            //             // mesh.position.y = 1.25 / 2;
+            //             markerRoot.add(mesh0);
+            //           });
+            //         },
+            //         onProgress,
+            //         onError
+            //       );
+            //   });
           } else {
             mesh = new THREE.Mesh(
-              new THREE.BoxGeometry(1.25, 1.25, 1.25),
+              patternArray[i] == "pattern1"
+                ? new THREE.BoxGeometry(3.25, 3.25, 3.25)
+                : new THREE.BoxGeometry(1.25, 1.25, 1.25),
               new THREE.MeshBasicMaterial({
                 color: colorArray[i],
                 map: texture,
@@ -238,14 +236,6 @@ const initializeAR = ({
         markerRoot.add(mesh);
       }
     }
-
-    // console.log({ scene });
-    console.log("RESNDERER Thing Style: ");
-    console.log("canvasHeight: ", renderer?.domElement?.style?.height);
-    console.log("canvasLeft: ", renderer?.domElement?.style?.left);
-    console.log("canvasMarginLeft: ", renderer?.domElement?.style?.marginLeft);
-    console.log("canvasMarginTop: ", renderer?.domElement?.style?.marginTop);
-    console.log("canvasWidth: ", renderer?.domElement?.style?.width);
   }
 
   function stop() {
@@ -257,12 +247,7 @@ const initializeAR = ({
     }
 
     const videoElements = document.querySelectorAll("video");
-    console.log("THIS IS A VIDEO ELEMENT!");
     videoElements.forEach((videoElement, idx) => {
-      console.log("vid height: ", videoElement.style.height);
-      console.log("vid width: ", videoElement.style.width);
-      console.log("vid left: ", videoElement.style.left);
-      console.log("vid marginLeft: ", videoElement.style.marginLeft);
       videoElement.pause();
       videoElement.srcObject = null;
       document.body.removeChild(videoElement);
@@ -285,7 +270,6 @@ const initializeAR = ({
     }
 
     if (renderer) {
-      // console.log("in the renderer if: ", renderer.domElement);
       renderer.forceContextLoss();
       renderer.context = null;
       renderer.domElement = null;

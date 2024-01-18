@@ -3,11 +3,10 @@ import { useDropzone } from "react-dropzone";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 
 type MyDropzoneProps = {
-  register: any;
   handleFileChange: any;
 };
 
-export function MyDropzone({ register, handleFileChange }: MyDropzoneProps) {
+export function MyDropzone({ handleFileChange }: MyDropzoneProps) {
   const [fileName, setFileName] = useState<string>("");
 
   const onDrop = useCallback((acceptedFiles: any) => {
@@ -20,7 +19,7 @@ export function MyDropzone({ register, handleFileChange }: MyDropzoneProps) {
 
   return (
     <div {...getRootProps()}>
-      <input {...getInputProps()} {...register} />
+      <input {...getInputProps()} />
       {isDragActive ? (
         <p>Drop the files here ...</p>
       ) : (
