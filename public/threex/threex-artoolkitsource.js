@@ -345,11 +345,6 @@ ARjs.Source.prototype.onResizeElement = function () {
 
   // if screenAspect < sourceAspect, then change the width, else change the height
   if (screenAspect < sourceAspect) {
-    console.log("in the upper screen aspect");
-    console.log("sourceHeight: ", sourceHeight);
-    console.log("sourceWidth: ", sourceWidth);
-    console.log("screenWidth: ", screenWidth);
-    console.log("screenHeight: ", screenHeight);
     // compute newWidth and set .width/.marginLeft
     var newWidth = sourceAspect * screenHeight;
     this.domElement.style.width = newWidth + "px";
@@ -385,11 +380,6 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
     otherElement.style.height = this.domElement.style.height;
     otherElement.style.marginLeft = this.domElement.style.marginLeft;
     otherElement.style.marginTop = this.domElement.style.marginTop;
-    console.log("WE are in LANDSCAPE mode");
-    console.log("width: ", otherElement.style.width);
-    console.log("height: ", otherElement.style.height);
-    console.log("marginLeft: ", otherElement.style.marginLeft);
-    console.log("marginTop: ", otherElement.style.marginTop);
   } else {
     //portrait
     otherElement.style.height = this.domElement.style.height;
@@ -397,9 +387,6 @@ ARjs.Source.prototype.copyElementSizeTo = function (otherElement) {
       (parseInt(otherElement.style.height) * 4) / 3 + "px";
     otherElement.style.marginLeft = "0px";
     otherElement.style.marginTop = 0;
-    console.log("We are in PORTRAIT mode!");
-    console.log(" height: ", otherElement.style.height);
-    console.log("width: ", otherElement.style.width);
   }
 };
 

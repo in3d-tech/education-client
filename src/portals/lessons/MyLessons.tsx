@@ -102,7 +102,7 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
                         style={{ width: "100%" }}
                       >
                         <span className="my-lessons-created-by-headline">
-                          {lesson?.headline}
+                          {lesson?.lessonData?.headline}
                         </span>
                         <span className="my-lessons-created-by-name">
                           {lesson?.createdByInfo?.firstName}{" "}

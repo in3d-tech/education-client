@@ -121,7 +121,7 @@ function Lesson() {
         >
           <div className="lesson-content-container">
             <h1 style={{ color: "black" }}>
-              {currentLesson?.headline || "headline"}
+              {currentLesson?.lessonData?.headline || "headline"}
             </h1>
           </div>
           <div className="lesson-content-container">
@@ -139,11 +139,15 @@ function Lesson() {
             </span>
           </div>
           <div className="lesson-content-container">
-            <h3 style={{ color: "black" }}>{currentLesson?.description}</h3>
+            <h3 style={{ color: "black" }}>
+              {currentLesson?.lessonData?.description}
+            </h3>
           </div>
           <div className="lesson-content-container">
             <span>הוראות: </span>
-            <h3 style={{ color: "black" }}>{currentLesson?.instructions}</h3>
+            <h3 style={{ color: "black" }}>
+              {currentLesson?.lessonData?.instructions}
+            </h3>
           </div>
           <div
             style={{

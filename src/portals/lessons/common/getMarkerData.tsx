@@ -53,7 +53,7 @@ export const handleMarkerData = ({
     const texture = new THREE.TextureLoader().load(URL.createObjectURL(blob));
 
     // planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-    planeGeo = new THREE.PlaneGeometry(3.6, 3.6, 1);
+    planeGeo = new THREE.PlaneGeometry(2.6, 2.6, 1);
 
     planeMat = new THREE.MeshBasicMaterial({ map: texture });
     mesh = new THREE.Mesh(planeGeo, planeMat);
@@ -61,13 +61,17 @@ export const handleMarkerData = ({
     mesh.position.y = 0.1;
     markerRoot.add(mesh);
   } else {
-    let imgTexture = new THREE.TextureLoader().load(
-      "/assets/images/aug-real.jpg"
-    );
-    planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-    planeMat = new THREE.MeshBasicMaterial({ map: imgTexture });
-    mesh = new THREE.Mesh(planeGeo, planeMat);
-    mesh.rotation.x = -1.5;
+    if (marker == "letterY") {
+      // obj loader
+    } else {
+      let imgTexture = new THREE.TextureLoader().load(
+        "/assets/images/aug-real.jpg"
+      );
+      planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
+      planeMat = new THREE.MeshBasicMaterial({ map: imgTexture });
+      mesh = new THREE.Mesh(planeGeo, planeMat);
+      mesh.rotation.x = -1.5;
+    }
   }
 };
 
