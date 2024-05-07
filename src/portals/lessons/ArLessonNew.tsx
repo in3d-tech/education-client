@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { handleMarkerData } from "./common/getMarkerData";
+// import { stopTest } from "./logic/arLogic";
 
 function cleanMaterial(material) {
   material.dispose();
@@ -154,62 +155,45 @@ const initializeAR = ({
         // regular photo
 
         if (images.length > 10) {
-          const test = images.map((img, imagesArrIndex) => {
-            if (imagesArrIndex == i) {
-              handleMarkerData({
-                mesh,
-                markerRoot,
-                image: img,
-                marker: patternArray[i],
-                mesh0,
-              });
-            }
+          // const test = images.map((img, imagesArrIndex) => {
+          //   if (imagesArrIndex == i) {
+          handleMarkerData({
+            mesh,
+            markerRoot,
+            image: img,
+            marker: patternArray[i],
+            mesh0,
           });
+          //   }
+          // });
         } else {
-          if (patternArray[i] == "letterZ") {
-            // let geometry1 = new THREE.PlaneBufferGeometry(2, 2, 4, 4);
-            // let loader = new THREE.TextureLoader();
-            // // let texture = loader.load( 'images/earth.jpg', render );
-            // let material1 = new THREE.MeshBasicMaterial({
-            //   // color: 0x0000ff,
-            //   opacity: 1,
-            // });
-            // mesh1 = new THREE.Mesh(geometry1, material1);
-            // mesh1.rotation.x = -Math.PI / 2;
-            // markerRoot.add(mesh1);
-            // function onProgress(xhr) {
-            //   console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-            // }
-            // function onError(xhr) {
-            //   console.log("An error happened");
-            // }
-            // new THREE.MTLLoader()
-            //   .setPath("/assets/models/")
-            //   .load("Soldier_Statue.mtl", function (materials) {
-            //     materials.preload();
-            //     new THREE.OBJLoader()
-            //       .setMaterials(materials)
-            //       .setPath("/assets/models/")
-            //       .load(
-            //         "Soldier_Statue.obj",
-            //         function (group) {
-            //           group.children.forEach((child, index) => {
-            //             // Access and add each part to the markerRoot
-            //             mesh0 = child;
-            //             mesh0.material = new THREE.MeshPhongMaterial({
-            //               // color: 0x0000ff,
-            //               // opacity: 0.8,
-            //             });
-            //             mesh0.scale.set(0.02, 0.02, 0.02);
-            //             // mesh0.rotation.x = -Math.PI / 2;
-            //             // mesh.position.y = 1.25 / 2;
-            //             markerRoot.add(mesh0);
-            //           });
-            //         },
-            //         onProgress,
-            //         onError
-            //       );
-            //   });
+          if (patternArray[i] == "letterA") {
+            let imgTexture = new THREE.TextureLoader().load(
+              "/assets/images/aug-real.jpg"
+              // "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/4.jpg"
+            );
+            planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
+            planeMat = new THREE.MeshBasicMaterial({
+              map: imgTexture,
+              doubleSide: true,
+            });
+            mesh = new THREE.Mesh(planeGeo, planeMat);
+            mesh.rotation.x = -1.5;
+
+            //   let imgTexture = new THREE.TextureLoader().load(
+            //     "/assets/images/aug-real.jpg"
+            //     // "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/4.jpg"
+            // );
+
+            // // Ensure the image is loaded before creating the material
+            // imgTexture.image.onload = () => {
+            //     planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
+            //     planeMat = new THREE.MeshBasicMaterial({
+            //         map: imgTexture,
+            //         doubleSide: true,
+            //     });
+            //     mesh = new THREE.Mesh(planeGeo, planeMat);
+            // };
           } else {
             mesh = new THREE.Mesh(
               patternArray[i] == "pattern1"
@@ -297,7 +281,7 @@ const initializeAR = ({
     render();
   }
 
-  return { initialize, update, render, animate, scene, camera, stop };
+  return { initialize, animate, scene, stop };
 };
 
 const ArLessonNew = ({
@@ -355,3 +339,50 @@ const ArLessonNew = ({
 };
 
 export default ArLessonNew;
+
+//  -------------------------------- mtl obj loader
+// ----------------------------------------------------------------
+// mesh.rotation.x = -1.5;
+// // let geometry1 = new THREE.PlaneBufferGeometry(2, 2, 4, 4);
+// // let loader = new THREE.TextureLoader();
+// // // let texture = loader.load( 'images/earth.jpg', render );
+// // let material1 = new THREE.MeshBasicMaterial({
+// //   // color: 0x0000ff,
+// //   opacity: 1,
+// // });
+// // mesh1 = new THREE.Mesh(geometry1, material1);
+// // mesh1.rotation.x = -Math.PI / 2;
+// // markerRoot.add(mesh1);
+// // function onProgress(xhr) {
+// //   console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+// // }
+// // function onError(xhr) {
+// //   console.log("An error happened");
+// // }
+// // new THREE.MTLLoader()
+// //   .setPath("/assets/models/")
+// //   .load("Soldier_Statue.mtl", function (materials) {
+// //     materials.preload();
+// //     new THREE.OBJLoader()
+// //       .setMaterials(materials)
+// //       .setPath("/assets/models/")
+// //       .load(
+// //         "Soldier_Statue.obj",
+// //         function (group) {
+// //           group.children.forEach((child, index) => {
+// //             // Access and add each part to the markerRoot
+// //             mesh0 = child;
+// //             mesh0.material = new THREE.MeshPhongMaterial({
+// //               // color: 0x0000ff,
+// //               // opacity: 0.8,
+// //             });
+// //             mesh0.scale.set(0.02, 0.02, 0.02);
+// //             // mesh0.rotation.x = -Math.PI / 2;
+// //             // mesh.position.y = 1.25 / 2;
+// //             markerRoot.add(mesh0);
+// //           });
+// //         },
+// //         onProgress,
+// //         onError
+// //       );
+// //   });

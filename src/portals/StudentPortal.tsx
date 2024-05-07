@@ -52,7 +52,7 @@ export function StudentPortal({ user }: StudentPortalProps) {
 
         {/* <a href="/hello-cube.html">Quick jump to camera</a>
         <Link to="/test">jumpTo module</Link> */}
-        <div>
+        {/* <div>
           HEloo world!
           <div>
             <Link
@@ -69,13 +69,15 @@ export function StudentPortal({ user }: StudentPortalProps) {
               TO TEST LESSON
             </Link>
           </div>
-        </div>
+        </div> */}
         <div
           style={{
+            width: "90%",
             display: "grid",
             gridTemplateColumns: "repeat(2, 1fr)",
             gridTemplateRows: "repeat(2, 1fr)",
             gap: "1em",
+            border: "1px solid yellow",
           }}
         >
           <button className="student-btn" onClick={() => handleModel(false)}>
@@ -83,18 +85,19 @@ export function StudentPortal({ user }: StudentPortalProps) {
           </button>
           {/* <img src="https://res.cloudinary.com/dxminwnb3/image/upload/v1702805169/fake-user_kwwbfv.png" /> */}
           {/* https://res.cloudinary.com/dxminwnb3/image/upload/v1702822789/HJNb7FR.md_b6btwm.jpg */}
-          <Link
-            className="student-btn"
-            onClick={() => handleModel(false)}
-            style={{
-              background:
-                'url("/assets/images/my-account.jpg") no-repeat center',
-              color: "black",
-              backgroundSize: "contain",
-            }}
-            to="/account"
-          >
-            My Account
+          <Link to="/account">
+            <button
+              className="student-btn"
+              onClick={() => handleModel(false)}
+              style={{
+                background:
+                  'url("/assets/images/my-account.jpg") no-repeat center',
+                color: "black",
+                backgroundSize: "contain",
+              }}
+            >
+              My Account
+            </button>
           </Link>
           <button
             style={{

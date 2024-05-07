@@ -24,95 +24,6 @@ video {
   height: 100%;
 }
 
-/* body,
-html,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-} */
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -128,7 +39,7 @@ video {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 body {
@@ -138,7 +49,7 @@ body {
   background: -webkit-linear-gradient(#ffffff, #d68f44);
   background: -moz-linear-gradient(#ffffff, #d68f44);
   background: linear-gradient(#ffffff, #d68f44);
-  overflow: hidden;
+  overflow-x: hidden;
   background: url("/assets/images/class-bg.avif") no-repeat center;
   background-size: cover;
 }
@@ -279,7 +190,16 @@ label {
   /* background: black; */
   height: inherit;
   /* width: 100%; */
-  opacity: 0.8;
+  /* opacity: 0.6; */
+}
+
+.form-bg-image {
+  background: url("/assets/images/lines_texture.png") no-repeat center;
+  /* border: 5px solid red; */
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0.2;
 }
 
 .join-lesson-container {
@@ -488,15 +408,14 @@ label {
   margin-top: 50px;
   border-radius: 20px;
   cursor: pointer;
-  position: relative;
-
+  width: 100%;
   box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   height: 11em;
   background: url("/assets/images/aug-real.jpg") no-repeat center;
   background-size: cover;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 
 .text-button {
