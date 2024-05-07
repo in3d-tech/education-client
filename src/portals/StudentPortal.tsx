@@ -50,27 +50,7 @@ export function StudentPortal({ user }: StudentPortalProps) {
           />
         </Modal>
 
-        {/* <a href="/hello-cube.html">Quick jump to camera</a>
-        <Link to="/test">jumpTo module</Link> */}
-        {/* <div>
-          HEloo world!
-          <div>
-            <Link
-              className="student-btn"
-              onClick={() => handleModel(false)}
-              style={{
-                background:
-                  'url("/assets/images/my-account.jpg") no-repeat center',
-                color: "black",
-                backgroundSize: "contain",
-              }}
-              to="/testLesson"
-            >
-              TO TEST LESSON
-            </Link>
-          </div>
-        </div> */}
-        <div
+        {/* <div
           style={{
             width: "90%",
             display: "grid",
@@ -82,8 +62,6 @@ export function StudentPortal({ user }: StudentPortalProps) {
           <button className="student-btn" onClick={() => handleModel(false)}>
             My Lessons
           </button>
-          {/* <img src="https://res.cloudinary.com/dxminwnb3/image/upload/v1702805169/fake-user_kwwbfv.png" /> */}
-          {/* https://res.cloudinary.com/dxminwnb3/image/upload/v1702822789/HJNb7FR.md_b6btwm.jpg */}
           <Link to="/account">
             <button
               className="student-btn"
@@ -121,7 +99,7 @@ export function StudentPortal({ user }: StudentPortalProps) {
           >
             My Statistics
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
