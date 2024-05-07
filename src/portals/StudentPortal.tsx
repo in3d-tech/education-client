@@ -53,7 +53,14 @@ export function StudentPortal({ user }: StudentPortalProps) {
           My Lessons
         </button>
 
-        <Link style={{ width: "100%" }} to="/account">
+        <Link
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          to="/account"
+        >
           <button
             className="student-btn"
             style={{
