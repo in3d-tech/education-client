@@ -62,7 +62,7 @@ function Lesson() {
 
         // For example, you can create URLs for these Blobs
         const blobUrls = blobs.map((blob) => URL.createObjectURL(blob));
-        // console.log(blobUrls);
+        console.log(blobUrls);
       } catch (error) {
         console.error(error);
       }
