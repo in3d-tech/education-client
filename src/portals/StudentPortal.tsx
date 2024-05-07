@@ -3,7 +3,7 @@ import { useState } from "react";
 import { User } from "../App";
 import { MyLessons } from "./lessons/MyLessons";
 import { Navbar } from "../navigation/Navbar";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // import { MyLessonsModal } from "./lessons/MyLessonsModal";
 
 type StudentPortalProps = {
