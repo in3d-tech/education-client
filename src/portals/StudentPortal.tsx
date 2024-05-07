@@ -49,53 +49,47 @@ export function StudentPortal({ user }: StudentPortalProps) {
             onCloseClick={onCloseClick}
           />
         </Modal>
+        <button className="student-btn" onClick={() => handleModel(false)}>
+          My Lessons
+        </button>
 
-        <div
+        <Link style={{ width: "100%" }} to="/account">
+          <button
+            className="student-btn"
+            style={{
+              background:
+                'url("/assets/images/my-account.jpg") no-repeat center',
+              color: "black",
+              backgroundSize: "contain",
+            }}
+            onClick={() => handleModel(false)}
+          >
+            My Account
+          </button>
+        </Link>
+
+        <button
+          className="student-btn"
           style={{
-            width: "90%",
+            background: 'url("/assets/images/statistics.jpg") no-repeat center',
+            color: "black",
+            backgroundSize: "contain",
+            opacity: 0.8,
           }}
         >
-          <button className="student-btn" onClick={() => handleModel(false)}>
-            My Lessons
-          </button>
-          <Link to="/account">
-            <button
-              className="student-btn"
-              onClick={() => handleModel(false)}
-              style={{
-                background:
-                  'url("/assets/images/my-account.jpg") no-repeat center',
-                color: "black",
-                backgroundSize: "contain",
-              }}
-            >
-              My Account
-            </button>
-          </Link>
-          <button
-            style={{
-              background:
-                'url("/assets/images/statistics.jpg") no-repeat center',
-              color: "black",
-              backgroundSize: "contain",
-              opacity: 0.8,
-            }}
-            className="student-btn"
-          >
-            Feature Coming Soon
-          </button>
-          <button
-            style={{
-              background:
-                'url("/assets/images/statistics.jpg") no-repeat center',
-              color: "black",
-              backgroundSize: "contain",
-            }}
-            className="student-btn"
-          >
-            My Statistics
-          </button>
-        </div>
+          Feature Coming Soon
+        </button>
+
+        <button
+          className="student-btn"
+          style={{
+            background: 'url("/assets/images/statistics.jpg") no-repeat center',
+            color: "black",
+            backgroundSize: "contain",
+          }}
+        >
+          My Statistics
+        </button>
       </div>
     </div>
   );
