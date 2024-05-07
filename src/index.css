@@ -39,7 +39,7 @@ video {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  /* overflow: hidden; */
+  overflow-x: hidden;
 }
 
 body {
@@ -414,7 +414,7 @@ label {
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   height: 11em;
   background: url("/assets/images/aug-real.jpg") no-repeat center;
-  background-size: cover;
+  background-size: contain;
   font-size: 1em;
 }
 

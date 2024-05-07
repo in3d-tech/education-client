@@ -3,7 +3,7 @@ import { useState } from "react";
 import { User } from "../App";
 import { MyLessons } from "./lessons/MyLessons";
 import { Navbar } from "../navigation/Navbar";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import { MyLessonsModal } from "./lessons/MyLessonsModal";
 
 type StudentPortalProps = {
@@ -50,13 +50,9 @@ export function StudentPortal({ user }: StudentPortalProps) {
           />
         </Modal>
 
-        {/* <div
+        <div
           style={{
             width: "90%",
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gridTemplateRows: "repeat(2, 1fr)",
-            gap: "1em",
           }}
         >
           <button className="student-btn" onClick={() => handleModel(false)}>
@@ -99,7 +95,7 @@ export function StudentPortal({ user }: StudentPortalProps) {
           >
             My Statistics
           </button>
-        </div> */}
+        </div>
       </div>
     </div>
   );
