@@ -24,9 +24,10 @@ function Lesson() {
   const [startScanning, setStartScanning] = useState<boolean>(false);
   const { activeLesson, user } = useAppContext();
   const [photoDataArray, setPhotoDataArray] = useState([]);
+  // const [blobs, setBlobs] = useState<any>([]);
+  const [preloadedImages, setPreloadedImages] = useState<any>([]);
 
   if (!activeLesson) {
-    console.log(user);
     return (
       <div>
         <h1>Error Finding Lesson</h1>
@@ -35,6 +36,41 @@ function Lesson() {
   }
 
   const { height, width } = useWindowDimensions();
+
+  const imagesTest: any[] = [
+    "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/4.jpg",
+    "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/5.jpg",
+    "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/6.jpg",
+  ];
+
+  async function fetchImageAndCreateBlob(url: any) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return blob;
+  }
+
+  useEffect(() => {
+    // Function to fetch all images and create Blobs
+    async function fetchImagesAndCreateBlobs(imagesTest: string[]) {
+      try {
+        const blobPromises = imagesTest.map((url) =>
+          fetchImageAndCreateBlob(url)
+        );
+        const blobs = await Promise.all(blobPromises);
+        setPreloadedImages(blobs);
+        // console.log({ blobs });
+
+        // For example, you can create URLs for these Blobs
+        const blobUrls = blobs.map((blob) => URL.createObjectURL(blob));
+        // console.log(blobUrls);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // Fetch and preload images
+    fetchImagesAndCreateBlobs(imagesTest);
+  }, []); // Run only once on component mount
 
   // const fetchPhotoDataArray = async () => {
   //   try {
@@ -55,7 +91,11 @@ function Lesson() {
   // }, []);
 
   // const [photoDataArray, setPhotoDataArray] = useState([]);
-  const { error, response }: any = useFetch("/fetchPhotos", null, "GET");
+
+  const { error, response }: any = useFetch(
+    "/fetchPhotos",
+    JSON.stringify({ lessonId: activeLesson[0].lessonId })
+  );
 
   // useEffect(() => {
   //   if (response && response.data) {
@@ -98,6 +138,60 @@ function Lesson() {
 
   // console.log(currentLesson);
 
+  // const imagesTest: any[] = [
+  //   "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/4.jpg",
+  //   "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/5.jpg",
+  //   "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/6.jpg",
+  // ];
+
+  // async function fetchImageAndCreateBlob(url: any) {
+  //   const response = await fetch(url);
+  //   const blob = await response.blob();
+  //   return blob;
+  // }
+
+  // // Function to fetch all images and create Blobs
+  // async function fetchImagesAndCreateBlobs(imagesTest: any[]) {
+  //   const blobPromises = imagesTest.map((url: any) =>
+  //     fetchImageAndCreateBlob(url)
+  //   );
+  //   const blobs = await Promise.all(blobPromises);
+  //   console.log("the first BLOCK!");
+  //   console.log({ blobs });
+  //   return blobs;
+  // }
+
+  // // Example usage
+  // fetchImagesAndCreateBlobs(imagesTest)
+  //   .then((blobs) => {
+  //     // Now 'blobs' is an array of Blobs, and you can use them as needed
+  //     // console.log(blobs);
+  //     if (!blobs.length) setBlobs(blobs);
+  //     // For example, you can create URLs for these Blobs
+  //     const blobUrls = blobs.map((blob) => URL.createObjectURL(blob));
+  //     console.log(blobUrls);
+
+  //     // Use blobUrls to display or manipulate the images on your frontend
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
+
+  // const imageUrl =
+  //   "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/4.jpg";
+
+  // const loadImage = (url: any) => {
+  //   return new Promise((resolve, reject) => {
+  //     const img = new Image();
+  //     img.onload = () => resolve(img);
+  //     img.onerror = reject;
+  //     img.src = url;
+  //   });
+  // };
+
+  // const img = await loadImage(imageUrl);
+  // Now you can use the preloaded image in your AR scene initialization
+
   return (
     <>
       <Navbar title="Lesson - temp" user={user} />
@@ -106,7 +200,7 @@ function Lesson() {
           setStartScanning={setStartScanning}
           firstImage={photoDataArray.length > 0 ? photoDataArray[0] : null}
           secondImage={photoDataArray.length > 1 ? photoDataArray[1] : null}
-          images={photoDataArray}
+          images={preloadedImages}
           screenHeight={height}
           screenWidth={width}
         />
@@ -139,7 +233,9 @@ function Lesson() {
             </span>
           </div>
           <div className="lesson-content-container">
+            <span>תיאור:</span>
             <h3 style={{ color: "black" }}>
+              {" "}
               {currentLesson?.lessonData?.description}
             </h3>
           </div>
@@ -154,7 +250,7 @@ function Lesson() {
               width: "96%",
               display: "flex",
               justifyContent: "center",
-              marginTop: "4em",
+              // marginTop: "4em",
             }}
           >
             <button

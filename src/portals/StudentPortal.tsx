@@ -77,7 +77,6 @@ export function StudentPortal({ user }: StudentPortalProps) {
             gridTemplateColumns: "repeat(2, 1fr)",
             gridTemplateRows: "repeat(2, 1fr)",
             gap: "1em",
-            border: "1px solid yellow",
           }}
         >
           <button className="student-btn" onClick={() => handleModel(false)}>
