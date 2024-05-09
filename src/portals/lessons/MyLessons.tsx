@@ -11,7 +11,7 @@ type MyLessonsProps = {
 };
 
 export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
-  const [lessonCode, setLessonCode] = useState<string>("");
+  // const [lessonCode, setLessonCode] = useState<string>("");
 
   const { myLessons, setMyLessons, setActiveLesson } = useAppContext();
   try {

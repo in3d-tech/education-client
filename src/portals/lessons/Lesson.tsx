@@ -37,11 +37,11 @@ function Lesson() {
 
   const { height, width } = useWindowDimensions();
 
-  const imagesTest: any[] = [
-    "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/4.jpg",
-    "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/5.jpg",
-    "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/6.jpg",
-  ];
+  // const imagesTest: any[] = [
+  //   "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/4.jpg",
+  //   "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/5.jpg",
+  //   "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/6.jpg",
+  // ];
 
   // async function fetchImageAndCreateBlob(url: any) {
   //   const response = await fetch(url);
