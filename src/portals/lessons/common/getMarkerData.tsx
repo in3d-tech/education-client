@@ -8,6 +8,9 @@ export const markerData = {
   letterF: {},
 };
 
+const imageUrl =
+  "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/4.jpg";
+
 export const handleMarkerData = ({
   mesh,
   image,
@@ -38,40 +41,43 @@ export const handleMarkerData = ({
   //   console.log("THERE IS AN G");
   // }
 
+  async function fetchImageAsBlob(url) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return blob;
+  }
+
   // } else {
   if (image) {
-    // Create a Blob from the base64 image data
-    const byteCharacters = atob(image.data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let j = 0; j < byteCharacters.length; j++) {
-      byteNumbers[j] = byteCharacters.charCodeAt(j);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: "image/jpeg" });
+    fetchImageAsBlob(image)
+      .then((blob) => {
+        // Create an object URL from the blob
+        const objectUrl = URL.createObjectURL(blob);
 
-    // Create a texture from the Blob
-    const texture = new THREE.TextureLoader().load(URL.createObjectURL(blob));
+        // Create a texture
+        const textureLoader = new THREE.TextureLoader();
+        const texture = textureLoader.load(objectUrl);
 
-    // planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-    planeGeo = new THREE.PlaneGeometry(2.6, 2.6, 1);
+        planeGeo = new THREE.PlaneGeometry(2.6, 2.6, 1);
 
-    planeMat = new THREE.MeshBasicMaterial({ map: texture });
-    mesh = new THREE.Mesh(planeGeo, planeMat);
-    mesh.rotation.x = -1.5;
-    mesh.position.y = 0.1;
-    markerRoot.add(mesh);
+        planeMat = new THREE.MeshBasicMaterial({ map: texture });
+        mesh = new THREE.Mesh(planeGeo, planeMat);
+        mesh.rotation.x = -1.5;
+        mesh.position.y = 0.1;
+        markerRoot.add(mesh);
+      })
+      .catch((error) => {
+        console.error("Error fetching image:", error);
+      });
   } else {
-    if (marker == "letterY") {
-      // obj loader
-    } else {
-      let imgTexture = new THREE.TextureLoader().load(
-        "/assets/images/aug-real.jpg"
-      );
-      planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-      planeMat = new THREE.MeshBasicMaterial({ map: imgTexture });
-      mesh = new THREE.Mesh(planeGeo, planeMat);
-      mesh.rotation.x = -1.5;
-    }
+    console.log("sgiykd bve here");
+    let imgTexture = new THREE.TextureLoader().load(
+      "/assets/images/aug-real.jpg"
+    );
+    planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
+    planeMat = new THREE.MeshBasicMaterial({ map: imgTexture });
+    mesh = new THREE.Mesh(planeGeo, planeMat);
+    // mesh.rotation.x = -1.5;
   }
 };
 

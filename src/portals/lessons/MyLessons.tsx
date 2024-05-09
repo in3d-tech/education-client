@@ -130,7 +130,7 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
             </div>
           )}
         </div>
-        <div className="join-lesson-container">
+        {/* <div className="join-lesson-container">
           <input
             onChange={(e) => setLessonCode(e.target.value)}
             type="text"
@@ -140,8 +140,13 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
           <button onClick={joinLesson} className="btn" style={{ margin: 0 }}>
             Join Lesson
           </button>
-        </div>
-        <button onClick={onCloseClick}>close</button>
+        </div> */}
+        <button
+          style={{ borderRadius: "12px", width: "6em", marginBottom: "0.5em" }}
+          onClick={onCloseClick}
+        >
+          close
+        </button>
       </div>
     </div>
   );

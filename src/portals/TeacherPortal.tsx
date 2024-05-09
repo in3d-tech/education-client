@@ -56,7 +56,6 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
               height: "100%",
             }}
           >
-            <h1 style={{ textAlign: "center", color: "white" }}>הוסף שיעור</h1>
             <CreateLessonForm
               setModalIsOpen={setModalIsOpen}
               userId={user?.userId}

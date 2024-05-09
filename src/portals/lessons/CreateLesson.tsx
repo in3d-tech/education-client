@@ -126,6 +126,9 @@ export const CreateLessonForm = ({
       className="form-bg"
       encType="multipart/form-data"
     >
+      <div className="form-bg-image"></div>
+      <h1 style={{ textAlign: "center", color: "white" }}>הוסף שיעור</h1>
+
       <div className="input-container">
         {/* <label htmlFor="headline">Headline: </label> */}
         <input
@@ -195,7 +198,13 @@ export const CreateLessonForm = ({
       >
         הוסף QR ובחר דגם תלת מימד
       </button>
-      <div style={{ width: "80%", marginTop: "1em" }}>
+      <div
+        style={{
+          width: "80%",
+          marginTop: "1em",
+          zIndex: 24,
+        }}
+      >
         {list.length ? (
           <div
             style={{

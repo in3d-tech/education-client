@@ -154,13 +154,13 @@ const initializeAR = ({
         // ----------------------------------------------------------------
         // regular photo
 
-        if (images.length > 10) {
+        if (images.length) {
           // const test = images.map((img, imagesArrIndex) => {
           //   if (imagesArrIndex == i) {
           handleMarkerData({
             mesh,
             markerRoot,
-            image: img,
+            image: images[i],
             marker: patternArray[i],
             mesh0,
           });
@@ -179,21 +179,6 @@ const initializeAR = ({
             });
             mesh = new THREE.Mesh(planeGeo, planeMat);
             mesh.rotation.x = -1.5;
-
-            //   let imgTexture = new THREE.TextureLoader().load(
-            //     "/assets/images/aug-real.jpg"
-            //     // "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/4.jpg"
-            // );
-
-            // // Ensure the image is loaded before creating the material
-            // imgTexture.image.onload = () => {
-            //     planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-            //     planeMat = new THREE.MeshBasicMaterial({
-            //         map: imgTexture,
-            //         doubleSide: true,
-            //     });
-            //     mesh = new THREE.Mesh(planeGeo, planeMat);
-            // };
           } else {
             mesh = new THREE.Mesh(
               patternArray[i] == "pattern1"
@@ -208,15 +193,8 @@ const initializeAR = ({
             );
             mesh.position.y = 1.25 / 2;
           }
-          // mesh.position.x = 2;
         }
-        // if (!mesh) {
-        //   return;
-        // }
-        // mesh.position.y =
-        //   patternArray[i] == "letterC" || patternArray[i] == "letterB"
-        //     ? 0.1
-        //     : 1.25 / 2;
+
         markerRoot.add(mesh);
       }
     }

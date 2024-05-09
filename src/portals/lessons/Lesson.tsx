@@ -70,47 +70,18 @@ function Lesson() {
 
     // Fetch and preload images
     fetchImagesAndCreateBlobs(imagesTest);
-  }, []); // Run only once on component mount
-
-  // const fetchPhotoDataArray = async () => {
-  //   try {
-  //     const { error, response }: any = useFetch("/fetchPhotos", null, "GET");
-  //     if (response && response.data) {
-  //       setPhotoDataArray(response.data);
-  //     }
-  //     if (error) {
-  //       console.log(error);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching photos:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchPhotoDataArray();
-  // }, []);
-
-  // const [photoDataArray, setPhotoDataArray] = useState([]);
+  }, []);
 
   const { error, response }: any = useFetch(
     "/fetchPhotos",
     JSON.stringify({ lessonId: activeLesson[0].lessonId })
   );
 
-  // useEffect(() => {
-  //   if (response && response.data) {
-  //     setPhotoDataArray(response.data);
-  //   }
-  //   if (error) {
-  //     console.log(error);
-  //   }
-  // }, [activeLesson, photoDataArray]);
-
   useEffect(() => {
     const fetchPhotoDataArray = async () => {
       try {
-        if (response && response.photos) {
-          setPhotoDataArray(response.photos);
+        if (response && response.images) {
+          setPhotoDataArray(response.images);
         }
         if (error) {
           console.log(error);
@@ -200,7 +171,7 @@ function Lesson() {
           setStartScanning={setStartScanning}
           firstImage={photoDataArray.length > 0 ? photoDataArray[0] : null}
           secondImage={photoDataArray.length > 1 ? photoDataArray[1] : null}
-          images={preloadedImages}
+          images={photoDataArray}
           screenHeight={height}
           screenWidth={width}
         />
