@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
 import { formatDate } from "../../common/logic/formatDate";
