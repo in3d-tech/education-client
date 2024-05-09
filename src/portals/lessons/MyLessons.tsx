@@ -33,32 +33,32 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
     console.error(err);
   }
 
-  const joinLesson = async () => {
-    try {
-      const data = { lessonCode, userId };
+  // const joinLesson = async () => {
+  //   try {
+  //     const data = { lessonCode, userId };
 
-      if (myLessons.length) {
-        const isUserAlreadyInLesson = myLessons.some(
-          (lesson) => lesson.lessonId == lessonCode
-        );
-        if (isUserAlreadyInLesson) {
-          alert("Already enrolled in that lesson");
-          setLessonCode("");
-          return;
-        }
-      }
+  //     if (myLessons.length) {
+  //       const isUserAlreadyInLesson = myLessons.some(
+  //         (lesson) => lesson.lessonId == lessonCode
+  //       );
+  //       if (isUserAlreadyInLesson) {
+  //         alert("Already enrolled in that lesson");
+  //         setLessonCode("");
+  //         return;
+  //       }
+  //     }
 
-      const { error } = useFetch("/join-lesson", JSON.stringify(data));
+  //     const { error } = useFetch("/join-lesson", JSON.stringify(data));
 
-      if (error) {
-        console.log(error);
-      }
-      // do something with response
-    } catch {
-      alert("error with login ");
-      console.log("error with login");
-    }
-  };
+  //     if (error) {
+  //       console.log(error);
+  //     }
+  //     // do something with response
+  //   } catch {
+  //     alert("error with login ");
+  //     console.log("error with login");
+  //   }
+  // };
 
   return (
     <div className="my-lesson-wrapper">

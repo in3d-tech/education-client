@@ -25,7 +25,7 @@ function Lesson() {
   const { activeLesson, user } = useAppContext();
   const [photoDataArray, setPhotoDataArray] = useState([]);
   // const [blobs, setBlobs] = useState<any>([]);
-  const [preloadedImages, setPreloadedImages] = useState<any>([]);
+  // const [preloadedImages, setPreloadedImages] = useState<any>([]);
 
   if (!activeLesson) {
     return (
@@ -43,34 +43,34 @@ function Lesson() {
     "https://res.cloudinary.com/dxminwnb3/image/upload/v1705584776/24/6.jpg",
   ];
 
-  async function fetchImageAndCreateBlob(url: any) {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return blob;
-  }
+  // async function fetchImageAndCreateBlob(url: any) {
+  //   const response = await fetch(url);
+  //   const blob = await response.blob();
+  //   return blob;
+  // }
 
-  useEffect(() => {
-    // Function to fetch all images and create Blobs
-    async function fetchImagesAndCreateBlobs(imagesTest: string[]) {
-      try {
-        const blobPromises = imagesTest.map((url) =>
-          fetchImageAndCreateBlob(url)
-        );
-        const blobs = await Promise.all(blobPromises);
-        setPreloadedImages(blobs);
-        // console.log({ blobs });
+  // useEffect(() => {
+  //   // Function to fetch all images and create Blobs
+  //   async function fetchImagesAndCreateBlobs(imagesTest: string[]) {
+  //     try {
+  //       const blobPromises = imagesTest.map((url) =>
+  //         fetchImageAndCreateBlob(url)
+  //       );
+  //       const blobs = await Promise.all(blobPromises);
+  //       setPreloadedImages(blobs);
+  //       // console.log({ blobs });
 
-        // For example, you can create URLs for these Blobs
-        const blobUrls = blobs.map((blob) => URL.createObjectURL(blob));
-        console.log(blobUrls);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+  //       // For example, you can create URLs for these Blobs
+  //       const blobUrls = blobs.map((blob) => URL.createObjectURL(blob));
+  //       console.log(blobUrls);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
 
-    // Fetch and preload images
-    fetchImagesAndCreateBlobs(imagesTest);
-  }, []);
+  //   // Fetch and preload images
+  //   fetchImagesAndCreateBlobs(imagesTest);
+  // }, []);
 
   const { error, response }: any = useFetch(
     "/fetchPhotos",
