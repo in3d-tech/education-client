@@ -23,9 +23,9 @@ export function Navbar({ user, title }: NavbarProps) {
           style={{ color: "black", fontFamily: "gotham", marginRight: "2em" }}
         >
           {user ? `היי ${capitalizeFirstLetter(user?.name)}` : ""}
-          <a type="button" href="/hello-cube.html">
+          {/* <a type="button" href="/hello-cube.html">
             Quick look
-          </a>
+          </a> */}
         </h3>
       </div>
     </div>

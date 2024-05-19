@@ -109,16 +109,16 @@ export const CreateLessonForm = ({
     setList(updatedList);
   };
 
-  const handleTypeSelect = (event: any, id: any, selectedType: string) => {
-    event.preventDefault();
-    const updatedList = list.map((item) => {
-      if (item.uniqueId === id) {
-        return { ...item, selectedType };
-      }
-      return item;
-    });
-    setList(updatedList);
-  };
+  // const handleTypeSelect = (event: any, id: any, selectedType: string) => {
+  //   event.preventDefault();
+  //   const updatedList = list.map((item) => {
+  //     if (item.uniqueId === id) {
+  //       return { ...item, selectedType };
+  //     }
+  //     return item;
+  //   });
+  //   setList(updatedList);
+  // };
 
   return (
     <form
@@ -163,10 +163,10 @@ export const CreateLessonForm = ({
         </label>
         <select {...register("language")}>
           <option value="he">עיברית</option>
-          <option value="ar">עֲרָבִית</option>
+          {/* <option value="ar">עֲרָבִית</option> */}
         </select>
       </div>
-      <div
+      {/* <div
         style={{
           width: "50%",
           display: "flex",
@@ -184,7 +184,7 @@ export const CreateLessonForm = ({
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
       <button
         style={{
           marginTop: "2em",
@@ -218,7 +218,7 @@ export const CreateLessonForm = ({
               color: "black",
             }}
           >
-            <span>choose type:</span>
+            {/* <span>choose type:</span> */}
             <span>choose/upload:</span>
             <span>QR id:</span>
             <span>Delete</span>
@@ -238,7 +238,7 @@ export const CreateLessonForm = ({
               height: "3em",
             }}
           >
-            <div>
+            {/* <div>
               <button
                 style={{
                   backgroundColor:
@@ -259,7 +259,7 @@ export const CreateLessonForm = ({
               >
                 3D Model
               </button>
-            </div>
+            </div> */}
 
             <div>
               {item.selectedType === "3D Model" ? (
@@ -315,7 +315,7 @@ export const CreateLessonForm = ({
         type="submit"
         value={"שלח"}
       />
-      <div style={{ height: "30px" }}></div>
+      {/* <div style={{ height: "60px", marginTop: "2em" }}></div> */}
     </form>
   );
 };

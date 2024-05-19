@@ -76,7 +76,7 @@ const CreateLesson = ({
             background: "black",
             opacity: 0.8,
             padding: 0,
-            overflow: "scroll",
+            overflowY: "scroll",
             boxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
             WebkitBoxShadow: "-2px 2px 15px 1px rgba(0, 0, 0, 0.75)",
           },

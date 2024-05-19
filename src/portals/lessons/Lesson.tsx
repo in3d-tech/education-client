@@ -178,18 +178,21 @@ function Lesson() {
       ) : (
         <div
           style={{
-            height: "100vh",
+            height: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <div className="lesson-content-container">
-            <h1 style={{ color: "black" }}>
-              {currentLesson?.lessonData?.headline || "headline"}
-            </h1>
-          </div>
-          <div className="lesson-content-container">
+          {currentLesson?.lessonData?.headline ? (
+            <div className="lesson-content-container">
+              כּוֹתֶרֶת:
+              <h1 style={{ color: "black" }}>
+                {currentLesson?.lessonData?.headline}
+              </h1>
+            </div>
+          ) : null}
+          <div style={{ marginTop: "1em", color: "black" }}>
             נוצר על ידי:
             <span
               className="lesson-content-font"
@@ -198,24 +201,27 @@ function Lesson() {
               {currentLesson.createdByInfo?.firstName}{" "}
               {currentLesson.createdByInfo?.lastName}
             </span>
-            כיתה:{" "}
+            כיתה:
             <span className="lesson-content-font">
-              {classObj[currentLesson.classAgeGroup] || "Error"}
+              {classObj[currentLesson.classAgeGroup] || ""}
             </span>
           </div>
-          <div className="lesson-content-container">
-            <span>תיאור:</span>
-            <h3 style={{ color: "black" }}>
-              {" "}
-              {currentLesson?.lessonData?.description}
-            </h3>
-          </div>
-          <div className="lesson-content-container">
-            <span>הוראות: </span>
-            <h3 style={{ color: "black" }}>
-              {currentLesson?.lessonData?.instructions}
-            </h3>
-          </div>
+          {currentLesson?.lessonData?.description ? (
+            <div className="lesson-content-container">
+              <span>תיאור:</span>
+              <h3 style={{ color: "black" }}>
+                {currentLesson?.lessonData.description}
+              </h3>
+            </div>
+          ) : null}
+          {currentLesson?.lessonData?.instructions ? (
+            <div className="lesson-content-container">
+              <span>הוראות: </span>
+              <h3 style={{ color: "black" }}>
+                {currentLesson?.lessonData?.instructions}
+              </h3>
+            </div>
+          ) : null}
           <div
             style={{
               width: "96%",

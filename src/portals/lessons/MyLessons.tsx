@@ -69,16 +69,16 @@ export function MyLessons({
 
   return (
     <div className="my-lesson-wrapper">
-      <div style={{ position: "absolute", left: "1.3em", top: "1em" }}>
+      <div style={{ position: "absolute", right: "1em", top: "0.6em" }}>
         <button
-          style={{ borderRadius: "12px", width: "5em" }}
+          style={{ borderRadius: "50%", width: "2em", height: "2em" }}
           onClick={() =>
             handleCurrentLessonsModal
               ? handleCurrentLessonsModal(currentLessonsModal)
               : null
           }
         >
-          close
+          x
         </button>
       </div>
       <div className="my-lessons-list">
