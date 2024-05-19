@@ -10,7 +10,7 @@ export function Navbar({ user, title }: NavbarProps) {
       {/* <div> */}
       <Link to={"/"} className="nav-left-corner">
         <img
-          style={{ width: "9em", marginLeft: "2em" }}
+          style={{ width: "9em", marginLeft: "0.5em" }}
           src="/assets/images/logo.png"
         />
       </Link>
