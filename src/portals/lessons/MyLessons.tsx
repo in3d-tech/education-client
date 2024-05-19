@@ -8,15 +8,15 @@ type MyLessonsProps = {
   userId: string | undefined;
   role?: string | undefined | null;
   // onCloseClick?: () => void;
-  handleCurrentLessonsModal: (prevState: boolean) => void;
-  currentLessonsModal: boolean;
+  handleCurrentLessonsModal?: (prevState: boolean) => void;
+  currentLessonsModal?: boolean;
 };
 
 export function MyLessons({
   userId,
   // onCloseClick,
   handleCurrentLessonsModal,
-  currentLessonsModal,
+  currentLessonsModal = false,
 }: MyLessonsProps) {
   // const [lessonCode, setLessonCode] = useState<string>("");
 
@@ -72,7 +72,11 @@ export function MyLessons({
       <div style={{ position: "absolute", left: "1.3em", top: "1em" }}>
         <button
           style={{ borderRadius: "12px", width: "5em" }}
-          onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
+          onClick={() =>
+            handleCurrentLessonsModal
+              ? handleCurrentLessonsModal(currentLessonsModal)
+              : null
+          }
         >
           close
         </button>

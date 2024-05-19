@@ -17,9 +17,9 @@ export function StudentPortal({ user }: StudentPortalProps) {
     setModalIsOpen(!prevState);
   };
 
-  const onCloseClick = () => {
-    handleModel(modalIsOpen);
-  };
+  // const onCloseClick = () => {
+  //   handleModel(modalIsOpen);
+  // };
   return (
     <div
       style={{
@@ -46,7 +46,7 @@ export function StudentPortal({ user }: StudentPortalProps) {
           <MyLessons
             userId={user?.userId}
             role={user?.role}
-            onCloseClick={onCloseClick}
+            // onCloseClick={onCloseClick}
           />
         </Modal>
         <button className="student-btn" onClick={() => handleModel(false)}>

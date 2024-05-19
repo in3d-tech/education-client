@@ -2,7 +2,7 @@ import { useState, Dispatch, SetStateAction } from "react";
 import Modal from "react-modal";
 import { User } from "../App";
 import { MyLessons } from "./lessons/MyLessons";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Navbar } from "../navigation/Navbar";
 import { CreateLessonForm } from "./lessons/CreateLesson";
 
