@@ -7,10 +7,17 @@ import { useFetch } from "../../common/logic/useFetch";
 type MyLessonsProps = {
   userId: string | undefined;
   role?: string | undefined | null;
-  onCloseClick?: () => void;
+  // onCloseClick?: () => void;
+  handleCurrentLessonsModal: (prevState: boolean) => void;
+  currentLessonsModal: boolean;
 };
 
-export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
+export function MyLessons({
+  userId,
+  // onCloseClick,
+  handleCurrentLessonsModal,
+  currentLessonsModal,
+}: MyLessonsProps) {
   // const [lessonCode, setLessonCode] = useState<string>("");
 
   const { myLessons, setMyLessons, setActiveLesson } = useAppContext();
@@ -62,13 +69,22 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
 
   return (
     <div className="my-lesson-wrapper">
+      <div style={{ position: "absolute", left: "1.3em", top: "1em" }}>
+        <button
+          style={{ borderRadius: "12px", width: "5em" }}
+          onClick={() => handleCurrentLessonsModal(currentLessonsModal)}
+        >
+          close
+        </button>
+      </div>
       <div className="my-lessons-list">
         <span
           style={{
             color: "black",
             height: ".1em",
-            fontSize: "1.2em",
-            textDecoration: "underline",
+            fontSize: "2.5em",
+            // textDecoration: "underline",
+            fontFamily: "gotham",
           }}
         >
           My Lessons
@@ -141,12 +157,13 @@ export function MyLessons({ userId, onCloseClick }: MyLessonsProps) {
             Join Lesson
           </button>
         </div> */}
-        <button
+        {/* // up is join lesson ---- down is close modal (not functional) */}
+        {/* <button
           style={{ borderRadius: "12px", width: "6em", marginBottom: "0.5em" }}
           onClick={onCloseClick}
         >
           close
-        </button>
+        </button> */}
       </div>
     </div>
   );

@@ -318,7 +318,7 @@ label {
 
 .my-lessons-list-container {
   width: 96%;
-  height: 70%;
+  height: 84%;
   background: #a966224f;
   overflow-y: scroll;
   /* height: 400px; */
@@ -330,6 +330,7 @@ label {
   box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.35);
   -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.35);
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.35);
+  border: 2px solid yellow;
 }
 
 .my-lesson-wrapper {
@@ -341,7 +342,7 @@ label {
   box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 .nav-left-corner {
@@ -384,6 +385,13 @@ label {
   flex-direction: column;
   align-items: center;
   width: 100vw;
+}
+
+.teacher-portal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
 }
 
 .profile-pic {
@@ -499,3 +507,9 @@ ul li a:focus {
 ul li {
   margin: 1em;
 } */
+
+@media screen and (max-width: 9090px) {
+  .teacher-portal-wrapper {
+    width: 80%;
+  }
+}
