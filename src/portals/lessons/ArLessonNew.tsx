@@ -122,15 +122,27 @@ const initializeAR = ({
     });
     let loader = new THREE.TextureLoader();
     let texture = loader.load("/assets/images/border.png");
+    // let patternArray = [
+    //   "letterA",
+    //   "letterB",
+    //   "letterC",
+    //   "letterD",
+    //   "letterF",
+    //   "kanji",
+    //   "hiro",
+    //   "pattern1",
+    // ];
     let patternArray = [
-      "letterA",
-      "letterB",
-      "letterC",
-      "letterD",
-      "letterF",
-      "kanji",
-      "hiro",
-      "pattern1",
+      "pattern-01",
+      "pattern-02",
+      "pattern-03",
+      "pattern-04",
+      "pattern-05",
+      "pattern-06",
+      "pattern-07",
+      "pattern-08",
+      "pattern-09",
+      "pattern-10",
     ];
     let colorArray = [
       16711680, 16753920, 16776960, 52480, 255, 13434879, 13434828, 16711680,
@@ -138,14 +150,17 @@ const initializeAR = ({
     let mesh;
     let mesh0;
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 10; i++) {
       if (arToolkitContext) {
         let markerRoot = new THREE.Group();
         scene.add(markerRoot);
         let markerControls = new THREEx.ArMarkerControls(
           arToolkitContext,
           markerRoot,
-          { type: "pattern", patternUrl: "/data/" + patternArray[i] + ".patt" }
+          {
+            type: "pattern",
+            patternUrl: "/data/markers/" + patternArray[i] + ".patt",
+          }
         );
         // if (patternArray[i] == "letterC") {
 
