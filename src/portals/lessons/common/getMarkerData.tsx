@@ -58,7 +58,7 @@ export const handleMarkerData = ({
         const textureLoader = new THREE.TextureLoader();
         const texture = textureLoader.load(objectUrl);
 
-        planeGeo = new THREE.PlaneGeometry(2.6, 2.6, 1);
+        planeGeo = new THREE.PlaneGeometry(1.4, 1.4, 1);
 
         planeMat = new THREE.MeshBasicMaterial({ map: texture });
         mesh = new THREE.Mesh(planeGeo, planeMat);
