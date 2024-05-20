@@ -84,7 +84,7 @@ export const CreateLessonForm = ({
   };
 
   const handleAddQr = () => {
-    if (list.length >= 5) return;
+    if (list.length >= 10) return;
     const standardModel = "square";
     setList([
       ...list,
