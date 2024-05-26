@@ -18,23 +18,6 @@ export const handleMarkerData = ({
   markerRoot,
   mesh0,
 }) => {
-  //   let imgTexture = new THREE.TextureLoader().load(
-  //     "/assets/images/aug-real.jpg"
-  //   );
-  //   let planeGeo = new THREE.PlaneGeometry(1.6, 1.6, 1);
-  //   let planeMat = new THREE.MeshBasicMaterial({ map: imgTexture });
-  //   mesh = new THREE.Mesh(planeGeo, planeMat);
-  //   mesh.rotation.x = -1.5;
-  // } else if (patternArray[i] == "letterB") {
-  //   mesh = new THREE.Mesh(
-  //     new THREE.CylinderGeometry(1.25, 1.25, 1.25),
-  //     new THREE.MeshBasicMaterial({
-  //       color: colorArray[i],
-  //       map: texture,
-  //       transparent: true,
-  //       opacity: 0.5,
-  //     })
-  //   );
   let planeGeo;
   let planeMat;
   // if (marker == "letterJ") {

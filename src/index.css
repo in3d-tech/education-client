@@ -319,16 +319,17 @@ label {
 
 .my-lessons-list-container {
   width: 96%;
-  height: 84%;
+  height: 100%;
   background: #a966224f;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   /* height: 400px; */
+  margin-top: 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2px;
   border-radius: 10px;
-  box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.35);
+  box-shadow: -2px 2px 15px 1px rgba(53, 52, 52, 0.35);
   -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.35);
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.35);
 }

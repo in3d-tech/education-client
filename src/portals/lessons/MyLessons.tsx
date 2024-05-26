@@ -71,7 +71,14 @@ export function MyLessons({
     <div className="my-lesson-wrapper">
       <div style={{ position: "absolute", right: "1em", top: "0.6em" }}>
         <button
-          style={{ borderRadius: "50%", width: "2em", height: "2em" }}
+          style={{
+            borderRadius: "50%",
+            width: "2em",
+            height: "2em",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
           onClick={() =>
             handleCurrentLessonsModal
               ? handleCurrentLessonsModal(currentLessonsModal)

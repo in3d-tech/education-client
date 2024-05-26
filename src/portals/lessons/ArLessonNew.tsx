@@ -3,11 +3,14 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { handleMarkerData } from "./common/getMarkerData";
-// import { stopTest } from "./logic/arLogic";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { MTLLoader, OBJLoader } from "three/examples/jsm/Addons.js";
+import { useGLTF, useProgress } from "@react-three/drei";
 
+// import { stopTest } from "./logic/arLogic";
+// const test = new FREE.
 function cleanMaterial(material) {
   material.dispose();
-
   for (const key of Object.keys(material)) {
     const value = material[key];
     if (value && typeof value === "object" && "minFilter" in value) {
@@ -50,7 +53,7 @@ const initializeAR = ({
     // if (scene) return;
     scene = new THREE.Scene();
 
-    let ambientLight = new THREE.DirectionalLight(); //(5242880, 0.5);
+    let ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // new THREE.DirectionalLight(); //(5242880, 0.5);
     scene.add(ambientLight);
     camera = new THREE.Camera();
     scene.add(camera);
@@ -151,6 +154,7 @@ const initializeAR = ({
     let mesh0;
 
     for (let i = 0; i < 10; i++) {
+      console.log("MADE IT INSIDE THE LOOPS AT LEAST");
       if (arToolkitContext) {
         let markerRoot = new THREE.Group();
         scene.add(markerRoot);
@@ -170,18 +174,87 @@ const initializeAR = ({
         // regular photo
 
         if (images.length) {
-          // const test = images.map((img, imagesArrIndex) => {
-          //   if (imagesArrIndex == i) {
-          handleMarkerData({
-            mesh,
-            markerRoot,
-            image: images[i],
-            marker: patternArray[i],
-            mesh0,
-          });
-          //   }
-          // });
+          if (typeof images[i] !== "string") {
+            let geometry1 = new THREE.PlaneBufferGeometry(2, 2, 4, 4);
+            let loader = new THREE.TextureLoader();
+            // let texture = loader.load( 'images/earth.jpg', render );
+            let material1 = new THREE.MeshBasicMaterial({
+              // color: 0x0000ff,
+              opacity: 1,
+            });
+            mesh = new THREE.Mesh(geometry1, material1);
+            // mesh.rotation.x = -Math.PI / 2;
+            markerRoot.add(mesh);
+            function onProgress(xhr) {
+              console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+            }
+            function onError(xhr) {
+              console.log("An error happened");
+            }
+
+            if (images[i]?.mtl) {
+              const mtlLoader = new THREE.MTLLoader();
+
+              mtlLoader.load(
+                "https://res.cloudinary.com/dxminwnb3/raw/upload/v1716455491/models/blue_plus_sign_tubzc1.mtl",
+                (materials) => {
+                  materials.preload();
+
+                  const objLoader = new THREE.OBJLoader();
+
+                  objLoader.setMaterials(materials);
+
+                  objLoader.load(
+                    "https://res.cloudinary.com/dxminwnb3/raw/upload/v1716455491/models/ImageToStl.com_blue_plus_sign_mled07.obj",
+                    (object) => {
+                      object.scale.set(0.1, 0.1, 0.1);
+
+                      object.rotation.x = 3; // rotation for  +
+
+                      markerRoot.add(object);
+                    }
+                  );
+                }
+              );
+            } else {
+              const objLoader = new THREE.OBJLoader();
+
+              objLoader.load(
+                "/assets/models/ImageToStl.com_text.obj",
+                (object) => {
+                  object.scale.set(0.06, 0.06, 0.06);
+
+                  object.rotation.x = 0;
+                  object.rotation.y = 0;
+
+                  // Optionally set a default material if no MTL is present
+
+                  object.traverse((child) => {
+                    if (child instanceof THREE.Mesh) {
+                      child.material = new THREE.MeshPhongMaterial({
+                        color: 0x00ff00,
+                      });
+                    }
+                  });
+
+                  markerRoot.add(object);
+                }
+              );
+            }
+
+            console.log("just past the loaders");
+          } else {
+            handleMarkerData({
+              mesh,
+              markerRoot,
+              image: images[i],
+              marker: patternArray[i],
+              mesh0,
+            });
+          }
         } else {
+          // condition for if no urls/image. default to boxes and 1 image --------------
+
           if (patternArray[i] == "letterA") {
             let imgTexture = new THREE.TextureLoader().load(
               "/assets/images/aug-real.jpg"
@@ -287,6 +360,8 @@ const ArLessonNew = ({
 }) => {
   const arScript = React.useRef(null);
 
+  console.log({ images });
+
   useEffect(() => {
     const arScriptInstance = initializeAR({
       setStartScanning,
@@ -379,3 +454,60 @@ export default ArLessonNew;
 // //         onError
 // //       );
 // //   });
+
+// --------------------------- working with url -----------------------------------
+
+// function loadModel(objUrl, mtlUrl, markerRoot) {
+// WORKING OBJ MTL LOGIC ----------------------------------------------------------------
+// const mtlLoader = new THREE.MTLLoader();
+
+// mtlLoader.load(
+//   "https://res.cloudinary.com/dxminwnb3/raw/upload/v1716455491/models/blue_plus_sign_tubzc1.mtl",
+//   (materials) => {
+//     materials.preload();
+
+//     const objLoader = new THREE.OBJLoader();
+
+//     objLoader.setMaterials(materials);
+
+//     objLoader.load(
+//       "https://res.cloudinary.com/dxminwnb3/raw/upload/v1716455491/models/ImageToStl.com_blue_plus_sign_mled07.obj",
+//       (object) => {
+//         object.scale.set(0.1, 0.1, 0.1);
+
+//         object.rotation.x = 3; // rotation for  +
+
+//         markerRoot.add(object);
+//       }
+//     );
+//   }
+// );
+// WORKING OBJ MTL LOGIC ----------------------------------------------------------------
+
+// }
+
+// WORKING OBJ ONLY ------------------------------------------------------------
+// const objLoader = new THREE.OBJLoader();
+
+// objLoader.load(
+//   "/assets/models/ImageToStl.com_text.obj",
+//   (object) => {
+//     object.scale.set(0.06, 0.06, 0.06);
+
+//     object.rotation.x = 0;
+//     object.rotation.y = 0;
+
+//     // Optionally set a default material if no MTL is present
+
+//     object.traverse((child) => {
+//       if (child instanceof THREE.Mesh) {
+//         child.material = new THREE.MeshPhongMaterial({
+//           color: 0x00ff00,
+//         });
+//       }
+//     });
+
+//     markerRoot.add(object);
+//   }
+// );
+// WORKING OBJ ONLY ---------------------
