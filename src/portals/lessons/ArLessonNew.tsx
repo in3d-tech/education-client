@@ -174,25 +174,25 @@ const initializeAR = ({
         // regular photo
 
         if (images.length) {
-          if (typeof images[i] !== "string") {
-            let geometry1 = new THREE.PlaneBufferGeometry(2, 2, 4, 4);
-            let loader = new THREE.TextureLoader();
-            // let texture = loader.load( 'images/earth.jpg', render );
-            let material1 = new THREE.MeshBasicMaterial({
-              // color: 0x0000ff,
-              opacity: 1,
-            });
-            mesh = new THREE.Mesh(geometry1, material1);
-            // mesh.rotation.x = -Math.PI / 2;
-            markerRoot.add(mesh);
-            function onProgress(xhr) {
-              console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-            }
-            function onError(xhr) {
-              console.log("An error happened");
-            }
+          if (images[i].includes(".mtl") || images[i].includes(".obj")) {
+            // let geometry1 = new THREE.PlaneBufferGeometry(2, 2, 4, 4);
+            // let loader = new THREE.TextureLoader();
+            // // let texture = loader.load( 'images/earth.jpg', render );
+            // let material1 = new THREE.MeshBasicMaterial({
+            //   // color: 0x0000ff,
+            //   opacity: 1,
+            // });
+            // mesh = new THREE.Mesh(geometry1, material1);
+            // // mesh.rotation.x = -Math.PI / 2;
+            // markerRoot.add(mesh);
+            // function onProgress(xhr) {
+            //   console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+            // }
+            // function onError(xhr) {
+            //   console.log("An error happened");
+            // }
 
-            if (images[i]?.mtl) {
+            if (images[i].includes(".mtl")) {
               const mtlLoader = new THREE.MTLLoader();
 
               mtlLoader.load(
@@ -219,27 +219,24 @@ const initializeAR = ({
             } else {
               const objLoader = new THREE.OBJLoader();
 
-              objLoader.load(
-                "/assets/models/ImageToStl.com_text.obj",
-                (object) => {
-                  object.scale.set(0.06, 0.06, 0.06);
+              objLoader.load(images[i], (object) => {
+                object.scale.set(0.06, 0.06, 0.06);
 
-                  object.rotation.x = 0;
-                  object.rotation.y = 0;
+                object.rotation.x = 0;
+                object.rotation.y = 0;
 
-                  // Optionally set a default material if no MTL is present
+                // Optionally set a default material if no MTL is present
 
-                  object.traverse((child) => {
-                    if (child instanceof THREE.Mesh) {
-                      child.material = new THREE.MeshPhongMaterial({
-                        color: 0x00ff00,
-                      });
-                    }
-                  });
+                object.traverse((child) => {
+                  if (child instanceof THREE.Mesh) {
+                    child.material = new THREE.MeshPhongMaterial({
+                      color: 0x00ff00,
+                    });
+                  }
+                });
 
-                  markerRoot.add(object);
-                }
-              );
+                markerRoot.add(object);
+              });
             }
 
             console.log("just past the loaders");
