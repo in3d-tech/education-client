@@ -154,7 +154,6 @@ const initializeAR = ({
     let mesh0;
 
     for (let i = 0; i < 10; i++) {
-      console.log("MADE IT INSIDE THE LOOPS AT LEAST");
       if (arToolkitContext) {
         let markerRoot = new THREE.Group();
         scene.add(markerRoot);
@@ -173,8 +172,8 @@ const initializeAR = ({
         // ----------------------------------------------------------------
         // regular photo
 
-        if (images.length) {
-          if (images[i].includes(".mtl") || images[i].includes(".obj")) {
+        if (images.length && images[i]) {
+          if (images[i]?.mtl || images[i]?.obj) {
             // let geometry1 = new THREE.PlaneBufferGeometry(2, 2, 4, 4);
             // let loader = new THREE.TextureLoader();
             // // let texture = loader.load( 'images/earth.jpg', render );
@@ -192,11 +191,14 @@ const initializeAR = ({
             //   console.log("An error happened");
             // }
 
-            if (images[i].includes(".mtl")) {
+            if (images[i]?.mtl) {
+              console.log(images[i]);
               const mtlLoader = new THREE.MTLLoader();
 
               mtlLoader.load(
-                "https://res.cloudinary.com/dxminwnb3/raw/upload/v1716455491/models/blue_plus_sign_tubzc1.mtl",
+                // "https://res.cloudinary.com/dxminwnb3/raw/upload/v1716455491/models/blue_plus_sign_tubzc1.mtl",
+                images[i].mtl,
+                // "/assets/models/apple.mtl",
                 (materials) => {
                   materials.preload();
 
@@ -205,11 +207,16 @@ const initializeAR = ({
                   objLoader.setMaterials(materials);
 
                   objLoader.load(
-                    "https://res.cloudinary.com/dxminwnb3/raw/upload/v1716455491/models/ImageToStl.com_blue_plus_sign_mled07.obj",
+                    // "https://res.cloudinary.com/dxminwnb3/raw/upload/v1716455491/models/ImageToStl.com_blue_plus_sign_mled07.obj",
+                    images[i].obj,
+                    // "/assets/models/ImageToStl.com_apple.obj",
                     (object) => {
-                      object.scale.set(0.1, 0.1, 0.1);
-
-                      object.rotation.x = 3; // rotation for  +
+                      i != 4
+                        ? object.scale.set(0.1, 0.1, 0.1)
+                        : object.scale.set(1, 1, 1);
+                      // object.scale.set(1, 1, 1);
+                      // object.position.z = -1;
+                      // object.rotation.x = 3; // rotation for  +
 
                       markerRoot.add(object);
                     }
@@ -219,10 +226,10 @@ const initializeAR = ({
             } else {
               const objLoader = new THREE.OBJLoader();
 
-              objLoader.load(images[i], (object) => {
-                object.scale.set(0.06, 0.06, 0.06);
+              objLoader.load(images[i]?.obj, (object) => {
+                object.scale.set(0.03, 0.03, 0.03);
 
-                object.rotation.x = 0;
+                object.rotation.x = -0.5;
                 object.rotation.y = 0;
 
                 // Optionally set a default material if no MTL is present
@@ -230,10 +237,29 @@ const initializeAR = ({
                 object.traverse((child) => {
                   if (child instanceof THREE.Mesh) {
                     child.material = new THREE.MeshPhongMaterial({
-                      color: 0x00ff00,
+                      color: "black", //0x00ff00,
                     });
                   }
                 });
+
+                let geometry1 = new THREE.PlaneBufferGeometry(
+                  2.5,
+                  2.5,
+                  4.5,
+                  4.5
+                );
+                let loader = new THREE.TextureLoader();
+                // let texture = loader.load( 'images/earth.jpg', render );
+                let material1 = new THREE.MeshBasicMaterial({
+                  // color: 0x0000ff,
+                  opacity: 1,
+                });
+                mesh = new THREE.Mesh(geometry1, material1);
+                mesh.rotation.x = -0.5;
+                mesh.position.z = -1;
+                mesh.position.y = -0.5;
+
+                markerRoot.add(mesh);
 
                 markerRoot.add(object);
               });
@@ -244,7 +270,7 @@ const initializeAR = ({
             handleMarkerData({
               mesh,
               markerRoot,
-              image: images[i],
+              image: images[i].image,
               marker: patternArray[i],
               mesh0,
             });

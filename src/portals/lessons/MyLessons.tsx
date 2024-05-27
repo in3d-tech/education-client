@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
 import { formatDate } from "../../common/logic/formatDate";
@@ -14,58 +14,28 @@ type MyLessonsProps = {
 
 export function MyLessons({
   userId,
-  // onCloseClick,
   handleCurrentLessonsModal,
   currentLessonsModal = false,
 }: MyLessonsProps) {
-  // const [lessonCode, setLessonCode] = useState<string>("");
-
   const { myLessons, setMyLessons, setActiveLesson } = useAppContext();
-  try {
-    const { error, response } = useFetch(
-      "/active-lessons",
-      JSON.stringify({ userId })
-    );
 
-    // useEffect which updates myLessons when response is updated
-    useEffect(() => {
-      if (response) {
-        setMyLessons(response);
-      }
-      if (error) {
-        console.error("Error fetching my lessons:", error);
-      }
-    }, [response, error]);
-  } catch (err) {
-    console.error(err);
-  }
+  const fetchBody = useMemo(() => JSON.stringify({ userId }), [userId]);
 
-  // const joinLesson = async () => {
-  //   try {
-  //     const data = { lessonCode, userId };
+  const { error, response } = useFetch(
+    "/active-lessons",
+    fetchBody,
+    "POST",
+    "application/json"
+  );
 
-  //     if (myLessons.length) {
-  //       const isUserAlreadyInLesson = myLessons.some(
-  //         (lesson) => lesson.lessonId == lessonCode
-  //       );
-  //       if (isUserAlreadyInLesson) {
-  //         alert("Already enrolled in that lesson");
-  //         setLessonCode("");
-  //         return;
-  //       }
-  //     }
-
-  //     const { error } = useFetch("/join-lesson", JSON.stringify(data));
-
-  //     if (error) {
-  //       console.log(error);
-  //     }
-  //     // do something with response
-  //   } catch {
-  //     alert("error with login ");
-  //     console.log("error with login");
-  //   }
-  // };
+  useEffect(() => {
+    if (response) {
+      setMyLessons(response);
+    }
+    if (error) {
+      console.error("Error fetching my lessons:", error);
+    }
+  }, [response, error, setMyLessons]);
 
   return (
     <div className="my-lesson-wrapper">
@@ -92,9 +62,11 @@ export function MyLessons({
         <span
           style={{
             color: "black",
+
             height: ".1em",
+
             fontSize: "2.5em",
-            // textDecoration: "underline",
+
             fontFamily: "gotham",
           }}
         >
@@ -103,14 +75,18 @@ export function MyLessons({
         <div className="my-lessons-list-container">
           {myLessons.length ? (
             myLessons
+
               .map((lesson, idx) => {
                 return (
                   <div
                     key={idx}
                     style={{
                       color: "black",
+
                       marginTop: "2em",
+
                       margin: 0,
+
                       width: "96%",
                     }}
                   >
@@ -119,7 +95,7 @@ export function MyLessons({
                       style={{ width: "100%" }}
                       onClick={() => {
                         const activeLesson = myLessons.filter(
-                          (__, idx2) => idx == idx2
+                          (__, idx2) => idx === idx2
                         );
                         setActiveLesson(activeLesson);
                       }}
@@ -157,24 +133,7 @@ export function MyLessons({
             </div>
           )}
         </div>
-        {/* <div className="join-lesson-container">
-          <input
-            onChange={(e) => setLessonCode(e.target.value)}
-            type="text"
-            placeholder="Lesson code"
-            value={lessonCode}
-          />
-          <button onClick={joinLesson} className="btn" style={{ margin: 0 }}>
-            Join Lesson
-          </button>
-        </div> */}
-        {/* // up is join lesson ---- down is close modal (not functional) */}
-        {/* <button
-          style={{ borderRadius: "12px", width: "6em", marginBottom: "0.5em" }}
-          onClick={onCloseClick}
-        >
-          close
-        </button> */}
+        {/* Additional UI components can be included here */}
       </div>
     </div>
   );

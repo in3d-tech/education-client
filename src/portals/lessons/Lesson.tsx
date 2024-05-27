@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useAppContext } from "../../context/appContext";
 import { Navbar } from "../../navigation/Navbar";
 import ArLessonNew from "./ArLessonNew";
@@ -20,12 +20,53 @@ const classObj: any = {
   12: "יב",
 };
 
-function Lesson() {
-  const [startScanning, setStartScanning] = useState<boolean>(false);
+const Lesson = () => {
+  const [startScanning, setStartScanning] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const { activeLesson, user } = useAppContext();
   const [photoDataArray, setPhotoDataArray] = useState([]);
-  // const [blobs, setBlobs] = useState<any>([]);
-  // const [preloadedImages, setPreloadedImages] = useState<any>([]);
+  const { height, width } = useWindowDimensions();
+
+  // Memoize your request body to avoid re-creating on every render
+
+  const fetchBody = useMemo(
+    () =>
+      JSON.stringify({
+        lessonId: activeLesson ? activeLesson[0].lessonId : null,
+      }),
+    [activeLesson]
+  );
+
+  // Ensure the fetchIs only called when necessary.
+
+  const { error, response } = useFetch(
+    "/fetchPhotos",
+    fetchBody,
+    "POST",
+    "application/json"
+  );
+
+  useEffect(() => {
+    if (!activeLesson) {
+      return;
+    }
+    const fetchPhotoDataArray = async () => {
+      try {
+        if (response) {
+          setPhotoDataArray(response);
+        }
+        if (error) {
+          console.log(error);
+        }
+      } catch (error) {
+        console.error("Error fetching photos:", error);
+      }
+    };
+
+    fetchPhotoDataArray();
+  }, [response, error, activeLesson]);
+
+  // Render Error Screen if no active lesson
 
   if (!activeLesson) {
     return (
@@ -33,33 +74,6 @@ function Lesson() {
         <h1>Error Finding Lesson</h1>
       </div>
     );
-  }
-  console.log("SHE CSELL ");
-
-  const { height, width } = useWindowDimensions();
-
-  if (true) {
-    const { error, response }: any = useFetch(
-      "/fetchPhotos",
-      JSON.stringify({ lessonId: activeLesson[0].lessonId })
-    );
-
-    useEffect(() => {
-      const fetchPhotoDataArray = async () => {
-        try {
-          if (response && response.sortedUrls) {
-            setPhotoDataArray(response.sortedUrls);
-          }
-          if (error) {
-            console.log(error);
-          }
-        } catch (error) {
-          console.error("Error fetching photos:", error);
-        }
-      };
-
-      fetchPhotoDataArray();
-    }, [response, error]);
   }
 
   const currentLesson = activeLesson[0];
@@ -69,6 +83,7 @@ function Lesson() {
   return (
     <>
       <Navbar title="Lesson - temp" user={user} />
+
       {startScanning ? (
         <ArLessonNew
           setStartScanning={setStartScanning}
@@ -82,8 +97,11 @@ function Lesson() {
         <div
           style={{
             height: "100%",
+
             display: "flex",
+
             flexDirection: "column",
+
             alignItems: "center",
           }}
         >
@@ -95,6 +113,7 @@ function Lesson() {
               </h1>
             </div>
           ) : null}
+
           <div style={{ marginTop: "1em", color: "black" }}>
             נוצר על ידי:
             <span
@@ -109,17 +128,21 @@ function Lesson() {
               {classObj[currentLesson.classAgeGroup] || ""}
             </span>
           </div>
+
           {currentLesson?.lessonData?.description ? (
             <div className="lesson-content-container">
               <span>תיאור:</span>
+
               <h3 style={{ color: "black" }}>
                 {currentLesson?.lessonData.description}
               </h3>
             </div>
           ) : null}
+
           {currentLesson?.lessonData?.instructions ? (
             <div className="lesson-content-container">
-              <span>הוראות: </span>
+              <span>הוראות:</span>
+
               <h3 style={{ color: "black" }}>
                 {currentLesson?.lessonData?.instructions}
               </h3>
@@ -130,28 +153,27 @@ function Lesson() {
               width: "96%",
               display: "flex",
               justifyContent: "center",
-              // marginTop: "4em",
             }}
           >
             <button
+              disabled={disabled}
               style={{ textAlign: "center", fontSize: "1.3em" }}
               className="btn"
-              onClick={() => setStartScanning(true)}
-              // href="/hello-cube.html"
+              onClick={() => {
+                setDisabled(true);
+                setTimeout(() => {
+                  setDisabled(false);
+                  setStartScanning(true);
+                }, 1000);
+              }}
             >
               Start Scanning
             </button>
-            {/* <img
-              src="https://res.cloudinary.com/dxminwnb3/image/upload/v1702977460/llcjzexbkdh90d2w7moh.jpg" //https://asset.cloudinary.com/dxminwnb3/ea9ce3e5ef002228c8413cd0740053b7"
-              alt="WTF"
-              style={{ width: "300px", height: "300px" }}
-            /> */}
           </div>
         </div>
       )}
     </>
   );
-  // );
-}
+};
 
 export default Lesson;
