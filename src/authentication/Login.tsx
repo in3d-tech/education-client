@@ -38,7 +38,7 @@ export function Login({
     const {
       register,
       handleSubmit,
-      formState: { errors },
+      // formState: { errors },
     } = useForm<StudentLogin | TeacherAdminLogin>();
 
     const onSubmit = async (data: FormData) => {

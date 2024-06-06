@@ -21,6 +21,8 @@ type FormData = {
   file?: any;
 };
 
+const developmentTypePass = false;
+
 export const CreateLessonForm = ({
   setModalIsOpen,
   userId,
@@ -72,6 +74,9 @@ export const CreateLessonForm = ({
 
       if (res.acknowledged) {
         setModalIsOpen(false);
+        if (developmentTypePass) {
+          setFiles([]);
+        }
       } else {
         console.log("issue creating lesson");
       }

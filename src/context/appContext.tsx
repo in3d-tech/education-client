@@ -34,16 +34,16 @@ type Context = {
 //   role: "student",
 // };
 
-const tempUser3 = {
-  name: "tom",
-  email: "tomj@yahoo.ca",
-  phone: "0587870292",
-  role: "student",
-  userId: "e9a6835d-a0f7-4aed-a72d-5359f0f64bee",
-  orgCode: 1,
-  profilePic:
-    "http://res.cloudinary.com/dxminwnb3/image/upload/v1702977460/llcjzexbkdh90d2w7moh.jpg",
-};
+// const tempUser3 = {
+//   name: "tom",
+//   email: "tomj@yahoo.ca",
+//   phone: "0587870292",
+//   role: "student",
+//   userId: "e9a6835d-a0f7-4aed-a72d-5359f0f64bee",
+//   orgCode: 1,
+//   profilePic:
+//     "http://res.cloudinary.com/dxminwnb3/image/upload/v1702977460/llcjzexbkdh90d2w7moh.jpg",
+// };
 
 export const AppContext = createContext<Context | null>(null);
 
