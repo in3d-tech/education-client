@@ -57,7 +57,9 @@ body {
 .auth-btns-wrapper {
   width: 80%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 .auth-child {
@@ -157,7 +159,7 @@ label {
   color: #fff;
   padding: 10px 20px;
   text-transform: uppercase;
-  margin-top: 1em;
+  margin-top: 1.5em;
   border-radius: 20px;
   cursor: pointer;
   position: relative;
@@ -249,11 +251,24 @@ label {
   justify-content: flex-start;
   align-items: flex-start;
   opacity: 0.9;
+  border-radius: 12px;
+  width: 80%;
 }
 
 .my-account-deets-row {
   margin-right: 1em;
   font-family: SecularOne-Regular;
+}
+
+.edit-profile-pic-btn {
+  all: unset;
+  border: 1px solid rgb(0, 0, 0, 0.5);
+  border-radius: 12px;
+  width: 5em;
+  text-align: center;
+  box-shadow: -1px 1px 17px -2px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: -1px 1px 17px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 1px 17px -2px rgba(0, 0, 0, 0.75);
 }
 
 .my-lessons-created-by-headline {
@@ -384,7 +399,7 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
+  width: 50%;
 }
 
 .teacher-portal-wrapper {
@@ -508,8 +523,11 @@ ul li {
   margin: 1em;
 } */
 
-@media screen and (max-width: 9090px) {
+@media screen and (max-width: 1075px) {
   .teacher-portal-wrapper {
-    width: 80%;
+    width: 90%;
+  }
+  .portal-wrapper {
+    width: 90%;
   }
 }

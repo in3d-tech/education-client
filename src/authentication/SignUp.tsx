@@ -1,8 +1,8 @@
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 // import useFetch from "../common/useFetch";
 import { useAppContext } from "../context/appContext";
 // import { useFetch } from "../common/logic/useFetch";
-// import { useEffect } from "react";
+import { useState } from "react";
 
 type SignupProps = {
   // setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -10,32 +10,42 @@ type SignupProps = {
 };
 
 export function SignUp({ setUserSignup }: SignupProps) {
-  const { setUser } = useAppContext();
+  const [error, setError] = useState("");
+  const { setUser, setToken } = useAppContext();
   const Form: React.FC = () => {
     const { register, handleSubmit } = useForm<FormData>();
 
-    const onSubmit = async (data: FormData) => {
+    const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
       if (
-        data &&
         data.password &&
         data.confirmPassword &&
         data.password !== data.confirmPassword
       ) {
-        alert("passwords don't match");
+        alert("סיסמאות אינן תואמות");
         return;
       }
       try {
-        const response = await fetch(
-          "https://edu-server-ke5y.onrender.com/signup",
-          {
-            // const response = await fetch("http://192.168.1.224:3000/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          }
-        );
+        // const response = await fetch(
+        //   "https://edu-server-ke5y.onrender.com/signup",
+        //   {
+        const response = await fetch("http://192.168.1.224:3000/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
         const res = await response.json();
-        if (res.user) setUser(res.user);
+        console.log({ res });
+        if (res.user) {
+          setUser(res.user);
+          if (res.token) {
+            console.log("supppp signupo");
+            setToken(res.token);
+          }
+        } else if (!res || res.error) {
+          setError(
+            res.error ? res.error : "Error with signup, please try again"
+          );
+        }
       } catch (err) {
         console.log("error with signup", err);
       }
@@ -84,23 +94,22 @@ export function SignUp({ setUserSignup }: SignupProps) {
           />
         </div>
 
-        <div className="input-container">
-          {/* <label htmlFor="phone">טלפון: </label> */}
+        {/* <div className="input-container">
           <input
             placeholder="טלפון"
-            {...register("phone")} // , { required: "Phone Required" }
+            {...register("phone")} 
           />
-        </div>
+        </div> */}
 
         <div className="input-container">
           {/* <label htmlFor="code">קוד: </label> */}
           <input
-            placeholder="חברה קוד"
+            placeholder="קוד ארגון"
             {...register("orgCode", { required: "org code required" })} // , { required: "Phone Required" }
           />
         </div>
 
-        <div style={{}} className="input-container-select">
+        {/* <div style={{}} className="input-container-select">
           <label htmlFor="role" style={{ color: "black" }}>
             Role:
           </label>
@@ -108,11 +117,11 @@ export function SignUp({ setUserSignup }: SignupProps) {
             <option value="teacher">Teacher</option>
             <option value="student">Student</option>
           </select>
-        </div>
+        </div> */}
 
         <input
           type="submit"
-          value="Sign up"
+          value="להירשם"
           className="btn"
           style={{ width: "10em" }}
         />
@@ -134,6 +143,11 @@ export function SignUp({ setUserSignup }: SignupProps) {
   return (
     <div className="auth-child signup-wrapper">
       <Form />
+      {error ? (
+        <h4 style={{ color: "red" }}>
+          {typeof error == "string" ? error : "Error"}
+        </h4>
+      ) : null}
     </div>
   );
 }

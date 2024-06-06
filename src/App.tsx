@@ -4,30 +4,34 @@ import { Homepage } from "./homepage/Homepage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Modal from "react-modal";
 import { useAppContext } from "./context/appContext";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import LessonNew from "./common/TestLesson";
+import { MyOrganization } from "./portals/MyOrganization";
+import { verifyToken } from "./authentication/validation/verifyToken";
 
 const LazyLesson = lazy(() => import("./portals/lessons/Lesson"));
 const LazyAccountDetails = lazy(() => import("./portals/MyAccountDetails"));
 
 function App() {
-  const { user } = useAppContext();
+  const { user, token, setUser, setToken } = useAppContext();
+
+  useEffect(() => {
+    if (token) {
+      console.log("have token at least");
+      if (!user) {
+        verifyToken({ token, setUser, setToken });
+      }
+      localStorage.setItem("arken", token);
+    } else {
+      console.log("why are we awaitng token");
+      // localStorage.removeItem("arken");
+    }
+  }, [token]);
 
   Modal.setAppElement("#root");
 
-  // function isMobile() {
-  //   const regex =
-  //     /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-  //   return regex.test(navigator.userAgent);
-  // }
+  // https://www.youtube.com/watch?v=NIXJJoqM8BQ&ab_channel=AlvinTang aframe-ar/scan
 
-  // if (isMobile()) {
-  //   console.log("Mobile device detected");
-  // } else {
-  //   console.log("Desktop device detected");
-  // }
-
-  // https://www.youtube.com/watch?v=NIXJJoqM8BQ&ab_channel=AlvinTang    ar/scan
   return (
     <>
       <Router>
@@ -53,6 +57,7 @@ function App() {
             }
           />
           <Route path="/testLesson" element={<LessonNew />} />
+          <Route path="/myOrg" element={<MyOrganization />} />
         </Routes>
       </Router>
     </>
@@ -63,9 +68,11 @@ export default App;
 
 export type User = {
   name: string;
-  email: string;
-  phone: string;
-  role: string;
+  email?: string;
+  role?: string;
   userId: string;
   profilePic?: string;
+  orgCode: number | string;
+  orgName: string;
+  isAdmin?: boolean;
 } | null;

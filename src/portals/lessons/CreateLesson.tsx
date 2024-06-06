@@ -6,6 +6,7 @@ import { MyDropzone } from "../../common/components/Dropzone";
 type LessonFormProps = {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   userId: string | undefined;
+  orgCode: string | number;
 };
 
 type FormData = {
@@ -23,11 +24,12 @@ type FormData = {
 export const CreateLessonForm = ({
   setModalIsOpen,
   userId,
+  orgCode,
 }: LessonFormProps) => {
   const { register, handleSubmit } = useForm<FormData>();
   const [files, setFiles] = useState<any[]>([]);
   const [list, setList] = useState<any[]>([]);
-  let [uniqueId, setUniqueId] = useState(1); // To uniquely identify each form
+  let [uniqueId, setUniqueId] = useState(1);
 
   const formData = new FormData();
 
@@ -38,6 +40,7 @@ export const CreateLessonForm = ({
 
     confirm("Are you sure you're ready to send?");
     // return;
+    data.orgCode = orgCode;
     data.userId = userId;
 
     for (const key in data) {
@@ -55,8 +58,8 @@ export const CreateLessonForm = ({
 
     try {
       const response = await fetch(
-        "https://edu-server-ke5y.onrender.com/create-lesson",
-        // "http://localhost:3000/create-lesson",
+        // "https://edu-server-ke5y.onrender.com/create-lesson",
+        "http://localhost:3000/create-lesson",
         {
           // const response = await fetch("http://192.168.1.224:3000/signup", {
           method: "POST",
@@ -65,7 +68,9 @@ export const CreateLessonForm = ({
       );
       const res = await response.json();
 
-      if (res.ok) {
+      console.log({ res });
+
+      if (res.acknowledged) {
         setModalIsOpen(false);
       } else {
         console.log("issue creating lesson");
@@ -75,12 +80,15 @@ export const CreateLessonForm = ({
     }
   };
 
-  const handleFileChange = (files: any) => {
-    const selectedFile = files.length && files[0];
+  const handleFileChange = (file: any, id: number) => {
+    // const selectedFile = files.length && files[0];
 
-    if (selectedFile) {
-      setFiles((prevFiles) => [...prevFiles, selectedFile]);
-    }
+    // if (selectedFile) {
+    //   setFiles((prevFiles) => [...prevFiles, selectedFile]);
+    // }
+    setList((prevList) =>
+      prevList.map((item) => (item.uniqueId === id ? { ...item, file } : item))
+    );
   };
 
   const handleAddQr = () => {
@@ -90,13 +98,25 @@ export const CreateLessonForm = ({
       ...list,
       { uniqueId, model: standardModel, selectedType: "image" },
     ]);
-    // Each time a marker is added, increment uniqueId
     //-- remember to make sure after one is deleted the next continues the cycle
     setUniqueId(uniqueId + 1);
   };
 
   const handleDeleteQr = (id: any) => {
-    setList(list.filter((item) => item.uniqueId !== id));
+    // const updatedList = list.filter((item) => item.uniqueId !== id);
+    // const renumberedList = updatedList.map((item, index) => ({
+    //   ...item,
+    //   uniqueId: index + 1,
+    // }));
+    // setList(renumberedList);
+    // setUniqueId(renumberedList.length + 1);
+    const updatedList = list.filter((item) => item.uniqueId !== id);
+    const renumberedList = updatedList.map((item, index) => ({
+      ...item,
+      uniqueId: index + 1,
+    }));
+    setList(renumberedList);
+    setUniqueId(renumberedList.length + 1);
   };
 
   const handleModelSelect = (id: any, selectedModel: string) => {
@@ -145,7 +165,14 @@ export const CreateLessonForm = ({
       </div>
       <div className="input-container" style={{ height: "6em" }}>
         {/* <label htmlFor="instructions">Instructions: </label> */}
-        <input
+        <textarea
+          style={{
+            width: "100%",
+            height: "100%",
+            resize: "none",
+            border: "none",
+            fontFamily: "gotham",
+          }}
           placeholder="הוראות"
           {...register("instructions")} // , { required: "Email Required" }
         />
@@ -281,8 +308,10 @@ export const CreateLessonForm = ({
                 //   onChange={(e) => handleFileChange(e)}
                 // />
                 <MyDropzone
-                  // register={{ ...register(`photo-${idx}`) }}
-                  handleFileChange={handleFileChange}
+                  // handleFileChange={handleFileChange}
+                  handleFileChange={(file: any) =>
+                    handleFileChange(file, item.uniqueId)
+                  }
                 />
               )}
             </div>
@@ -315,7 +344,7 @@ export const CreateLessonForm = ({
         type="submit"
         value={"שלח"}
       />
-      {/* <div style={{ height: "60px", marginTop: "2em" }}></div> */}
+      <div style={{ height: "60px", marginTop: "2em", opacity: 0 }}>- </div>
     </form>
   );
 };

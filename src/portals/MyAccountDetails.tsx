@@ -7,7 +7,6 @@ type AccountDetails = {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string | number;
   profilePic?: string;
 } | null;
 
@@ -73,21 +72,27 @@ function MyAccountDetails() {
     <>
       <Navbar title="My Account" />
       {!accountDetails ? null : (
-        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100vw",
+          }}
+        >
           <div
             style={{
               color: "black",
-              flex: 1,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
+              // width: "50%",
             }}
           >
             <img
               style={{
-                height: "50%",
-                width: "50%",
+                height: "10em",
+                width: "10em",
                 marginTop: "2em",
                 borderRadius: "50%",
               }}
@@ -101,50 +106,63 @@ function MyAccountDetails() {
             />
             <div
               className="my-account-details-container"
-              style={{ marginTop: "5.3em" }}
+              style={{
+                marginTop: "5.3em",
+                display: "flex",
+                justifyContent: "space-evenly",
+              }}
             >
-              <input type="file" onChange={handleFileChange} />
-              <button onClick={handleUpload}>Upload</button>
+              <input
+                type="file"
+                onChange={handleFileChange}
+                // style={{ borderRadius: "12px", width:'4em' }}
+              />
+              <button className="edit-profile-pic-btn" onClick={handleUpload}>
+                Upload
+              </button>
             </div>
+
+            {accountDetails ? (
+              <div
+                style={{
+                  border: "1px solid grey",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <div className="my-account-details-container">
+                  <div>שם:</div>
+                  <div className="my-account-deets-row">
+                    {accountDetails.firstName}{" "}
+                    <span>{accountDetails.lastName}</span>
+                  </div>
+                </div>
+
+                <div className="my-account-details-container">
+                  <div>דואר אלקטרוני</div>
+                  <div className="my-account-deets-row">
+                    {accountDetails.email}
+                  </div>
+                </div>
+
+                {/* <button style={{}} className="btn">
+                  Edit
+                </button> */}
+                <div style={{ height: "50px" }}></div>
+              </div>
+            ) : (
+              <div style={{ color: "black" }}>Loading details...</div>
+            )}
           </div>
-          {accountDetails ? (
-            <div style={{ flex: 1 }}>
-              <div className="my-account-details-container">
-                <div>שם פרטי:</div>
-                <div className="my-account-deets-row">
-                  {accountDetails.firstName}
-                </div>
-              </div>
-              <div className="my-account-details-container">
-                <div>שם משפחה: </div>
-                <div className="my-account-deets-row">
-                  {accountDetails.lastName}
-                </div>
-              </div>
-              <div className="my-account-details-container">
-                <div>דואר אלקטרוני</div>
-                <div className="my-account-deets-row">
-                  {accountDetails.email}
-                </div>
-              </div>
-              <div className="my-account-details-container">
-                <div>טלפון:</div>
-                <div className="my-account-deets-row">
-                  {accountDetails.phone}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div style={{ color: "black" }}>Loading details...</div>
-          )}
-          {accountDetails ? (
-            <button
-              style={{ position: "absolute", bottom: "16em", right: "30%" }}
-              className="btn"
-            >
+
+          {/* {accountDetails ? (
+            <button style={{}} className="btn">
               Edit
             </button>
-          ) : null}
+          ) : null} */}
         </div>
       )}
     </>

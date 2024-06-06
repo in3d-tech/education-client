@@ -5,6 +5,7 @@ import { MyLessons } from "./lessons/MyLessons";
 // import { Link } from "react-router-dom";
 import { Navbar } from "../navigation/Navbar";
 import { CreateLessonForm } from "./lessons/CreateLesson";
+import { Link } from "react-router-dom";
 
 type TeacherPortalProps = {
   user: User;
@@ -44,6 +45,32 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           currentLessonsModal={currentLessonsModal}
           user={user}
         />
+        <Link
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          to="/account"
+        >
+          <button className="btn" onClick={() => handleModel(false)}>
+            My Account
+          </button>
+        </Link>
+        {!user?.isAdmin ? (
+          <Link
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            to="/myOrg"
+          >
+            <button className="btn" onClick={() => handleModel(false)}>
+              My Organization
+            </button>
+          </Link>
+        ) : null}
       </div>
     </div>
   );
@@ -90,6 +117,7 @@ const CreateLesson = ({
           <CreateLessonForm
             setModalIsOpen={setModalIsOpen}
             userId={user?.userId}
+            orgCode={user ? user.orgCode : 0}
           />
         </div>
       </Modal>

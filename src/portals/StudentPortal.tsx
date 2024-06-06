@@ -81,7 +81,7 @@ export function StudentPortal({ user }: StudentPortalProps) {
             background: 'url("/assets/images/statistics.jpg") no-repeat center',
             color: "black",
             backgroundSize: "contain",
-            opacity: 0.8,
+            opacity: 0.6,
           }}
         >
           Feature Coming Soon
@@ -93,6 +93,7 @@ export function StudentPortal({ user }: StudentPortalProps) {
             background: 'url("/assets/images/statistics.jpg") no-repeat center',
             color: "black",
             backgroundSize: "contain",
+            opacity: 0.6,
           }}
         >
           My Statistics

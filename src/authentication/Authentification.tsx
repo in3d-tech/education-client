@@ -9,14 +9,19 @@ import { Navbar } from "../navigation/Navbar";
 
 export function Authentification() {
   const [userSignup, setUserSignup] = useState<boolean>(false);
+  const [isStudentLogin, setIsStudentLogin] = useState<boolean>(true);
 
   return (
     <div className="auth-wrapper">
-      <Navbar title={userSignup ? "נעים להכיר!" : "Login"} />
+      <Navbar title={userSignup ? "נעים להכיר!" : "התחבר"} />
       {userSignup ? (
         <SignUp setUserSignup={setUserSignup} />
       ) : (
-        <Login setUserSignup={setUserSignup} />
+        <Login
+          setUserSignup={setUserSignup}
+          isStudentLogin={isStudentLogin}
+          setIsStudentLogin={setIsStudentLogin}
+        />
       )}
     </div>
   );
