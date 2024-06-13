@@ -44,6 +44,7 @@ export function StudentPortal({ user }: StudentPortalProps) {
           }}
         >
           <MyLessons
+            orgCode={user?.orgCode}
             userId={user?.userId}
             role={user?.role}
             // onCloseClick={onCloseClick}

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAppContext } from "../context/appContext";
 import { useEffect, useState } from "react";
+import { onSubmit } from "./logic/submitAuthForms";
 
 type LoginProps = {
   setUserSignup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,13 +9,13 @@ type LoginProps = {
   setIsStudentLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const tempUser = {
-  userId: "26040550-3950-424e-ba29-ee5382d4c6e0",
-  name: "Demo User",
-  role: "teacher",
-  orgCode: "Gy1jU4",
-  orgName: "Demo",
-};
+// const tempUser = {
+//   userId: "26040550-3950-424e-ba29-ee5382d4c6e0",
+//   name: "Demo User",
+//   role: "teacher",
+//   orgCode: "Gy1jU4",
+//   orgName: "Demo",
+// };
 
 export function Login({
   setUserSignup,
@@ -41,59 +42,60 @@ export function Login({
       // formState: { errors },
     } = useForm<StudentLogin | TeacherAdminLogin>();
 
-    const onSubmit = async (data: FormData) => {
-      try {
-        const validatedLoginData = validateLogin(data, isStudentLogin);
+    // const onSubmit = async (data: FormData) => {
+    //   try {
+    //     const validatedLoginData = validateLogin(data, isStudentLogin);
 
-        if (validatedLoginData !== true) {
-          console.log("dont wanna be here", { validatedLoginData });
-          if (
-            validatedLoginData == "emailLengthError" ||
-            validatedLoginData == "passwordLengthError" ||
-            validatedLoginData == "invalidOrgCode"
-          )
-            setError(
-              "There was an issue with your credentials. Please try again"
-            );
-          return;
-        }
+    //     if (validatedLoginData !== true) {
+    //       if (
+    //         validatedLoginData == "emailLengthError" ||
+    //         validatedLoginData == "passwordLengthError" ||
+    //         validatedLoginData == "invalidOrgCode"
+    //       )
+    //         setError(
+    //           "There was an issue with your credentials. Please try again"
+    //         );
+    //       return;
+    //     }
 
-        if (isStudentLogin) {
-          const studentLoginData = data as StudentLogin;
-          if (studentLoginData.orgCode === "0") {
-            setUser(tempUser);
-            return;
-          }
-        }
+    //     const response = await fetch("http://192.168.1.224:3000/login", {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify(data),
+    //     });
 
-        const response = await fetch("http://192.168.1.224:3000/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
+    //     const res = await response.json();
+    //     console.log("THE LOGIN RES");
+    //     console.log({ res });
 
-        const res = await response.json();
-        console.log("THE LOGIN RES");
-        console.log({ res });
+    //     if (isStudentLogin && res) {
+    //       // const studentLoginData = data as StudentLogin;
+    //       // if (studentLoginData.orgCode === "0") {
+    //       setUser(res);
+    //       return;
 
-        if (res && res.userObj) {
-          setUser(res.userObj);
-          if (res.token) {
-            console.log("supppp login");
-            setToken(res.token);
-          }
-        } else if (!res || res.error) {
-          setError(`${res.error}`);
-        }
-      } catch {
-        alert("error with login ");
-        console.log("error with login 5");
-      }
-    };
+    //       // }
+    //     }
+
+    //     if (!isStudentLogin && res && res.userObj) {
+    //       setUser(res.userObj);
+    //       if (res.token) {
+    //         setToken(res.token);
+    //       }
+    //     } else if (!res || res.error) {
+    //       setError(`${res.error}`);
+    //     }
+    //   } catch {
+    //     alert("error with login ");
+    //     console.log("error with login 5");
+    //   }
+    // };
 
     return (
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit((data: FormData) =>
+          onSubmit(data, isStudentLogin, setError, setUser, setToken)
+        )}
         className="signup-form-wrapper"
         style={{ marginTop: "8em" }}
       >
@@ -119,6 +121,7 @@ export function Login({
       </form>
     );
   };
+
   return (
     <div className="auth-child signup-wrapper">
       <Form />
@@ -183,28 +186,6 @@ type TeacherAdminLogin = {
 };
 
 type FormData = StudentLogin | TeacherAdminLogin;
-
-const validateLogin = (loginData: FormData, isStudentLogin: boolean) => {
-  if (!loginData) {
-    return null;
-  }
-  if (isStudentLogin) {
-    const studentLogin = loginData as StudentLogin;
-    if (studentLogin.orgCode != "0") {
-      if (studentLogin.orgCode.length !== 6) {
-        return "invalidOrgCode";
-      }
-    }
-  }
-  if (!isStudentLogin) {
-    const teacherAdminLogin = loginData as TeacherAdminLogin;
-
-    if (teacherAdminLogin.email.length < 5) return "emailLengthError";
-    if (teacherAdminLogin.password.length < 6) return "passwordLengthError";
-  }
-
-  return true;
-};
 
 const TeacherAdminLogin = ({ register }: any) => {
   return (

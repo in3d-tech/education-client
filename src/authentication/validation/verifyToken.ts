@@ -17,8 +17,8 @@ export const verifyToken = async ({ token, setToken, setUser }: any) => {
     const response = await verifyToken.json();
     console.log("in verify token function");
     console.log({ response });
-    if (response.data.valid) {
-      setUser(response.data.user);
+    if (response) {
+      setUser(response);
     } else {
       setToken(null);
     }
