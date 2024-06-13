@@ -24,7 +24,7 @@ function App() {
       localStorage.setItem("arken", token);
     } else {
       console.log("why are we awaitng token");
-      // localStorage.removeItem("arken");
+      localStorage.removeItem("arken");
     }
   }, [token]);
 
@@ -52,7 +52,7 @@ function App() {
             path="/account"
             element={
               <Suspense fallback="Loading AccountDetails">
-                <LazyAccountDetails />
+                {user ? <LazyAccountDetails /> : null}
               </Suspense>
             }
           />
@@ -72,7 +72,7 @@ export type User = {
   role?: string;
   userId: string;
   profilePic?: string;
-  orgCode: number | string;
+  orgCode: string;
   orgName: string;
   isAdmin?: boolean;
 } | null;

@@ -10,16 +10,21 @@ type MyLessonsProps = {
   // onCloseClick?: () => void;
   handleCurrentLessonsModal?: (prevState: boolean) => void;
   currentLessonsModal?: boolean;
+  orgCode: string | undefined;
 };
 
 export function MyLessons({
   userId,
   handleCurrentLessonsModal,
   currentLessonsModal = false,
+  orgCode,
 }: MyLessonsProps) {
   const { myLessons, setMyLessons, setActiveLesson } = useAppContext();
 
-  const fetchBody = useMemo(() => JSON.stringify({ userId }), [userId]);
+  const fetchBody = useMemo(
+    () => JSON.stringify(userId ? { userId } : { orgCode }),
+    [userId]
+  );
 
   const { error, response } = useFetch(
     "/active-lessons",

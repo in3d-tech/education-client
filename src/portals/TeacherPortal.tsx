@@ -162,6 +162,7 @@ const MyLesson = ({
           </button>
         </div> */}
         <MyLessons
+          orgCode={user?.orgCode}
           userId={user?.userId}
           role={user?.role}
           handleCurrentLessonsModal={handleCurrentLessonsModal}

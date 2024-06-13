@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 import { Navbar } from "../navigation/Navbar";
 import { useFetch } from "../common/logic/useFetch";
+import { Link } from "react-router-dom";
 
 type AccountDetails = {
   firstName: string;
@@ -17,7 +18,7 @@ function MyAccountDetails() {
   const [accountDetails, setAccountDetails] = useState<AccountDetails>(null);
   const [file, setFile] = useState<File | null>(null);
 
-  const { user } = useAppContext();
+  const { user, setUser, setToken } = useAppContext();
 
   try {
     const { error, response } = useFetch(
@@ -151,6 +152,28 @@ function MyAccountDetails() {
                 {/* <button style={{}} className="btn">
                   Edit
                 </button> */}
+                <div
+                  style={{
+                    width: "90%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Link
+                    to={"/"}
+                    onClick={() => {
+                      setUser(null);
+                      setToken(null);
+                    }}
+                    style={{
+                      width: "90%",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <button className="btn">Log out</button>
+                  </Link>
+                </div>
                 <div style={{ height: "50px" }}></div>
               </div>
             ) : (
