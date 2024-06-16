@@ -120,7 +120,7 @@ label {
 .input-container {
   position: relative;
   margin-bottom: 25px;
-  width: 90%;
+  width: 96%;
   background: white;
   border-radius: 10px;
   padding: 5px;
@@ -163,7 +163,7 @@ label {
   border-radius: 20px;
   cursor: pointer;
   position: relative;
-  width: 80%;
+  width: 90%;
   box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -2px 2px 15px 1px rgba(0, 0, 0, 0.75);

@@ -141,7 +141,7 @@ export function Login({
           style={{
             border: "1px solid rgb(0, 0, 0, 0.4)",
             borderRadius: "12px",
-            width: "4em",
+            width: "4.5em",
             background: "unset",
             fontSize: "1.2em",
             textDecoration: "underline",
@@ -162,14 +162,17 @@ export function Login({
         <div
           style={{
             position: "absolute",
-            bottom: "3em",
-            width: "80%",
+            bottom: "3.5em",
+            width: "70%",
             textAlign: "center",
             color: "black",
+            fontSize: "1.1em",
+            fontWeight: 600,
           }}
         >
-          *In order to try our demo, just type the number '0' as the
-          organization code
+          כדי לנסות את ההדגמה שלנו, הקלד את המספר '0' בתור קוד הארגון
+          {/* *In order to try our demo, just type the number '0' as the
+          organization code */}
         </div>
       ) : null}
     </div>
