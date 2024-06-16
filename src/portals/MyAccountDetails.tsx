@@ -119,7 +119,7 @@ function MyAccountDetails() {
                 // style={{ borderRadius: "12px", width:'4em' }}
               />
               <button className="edit-profile-pic-btn" onClick={handleUpload}>
-                Upload
+                שלח
               </button>
             </div>
 
@@ -171,7 +171,7 @@ function MyAccountDetails() {
                       justifyContent: "center",
                     }}
                   >
-                    <button className="btn">Log out</button>
+                    <button className="btn"> להתנתק</button>
                   </Link>
                 </div>
                 <div style={{ height: "50px" }}></div>

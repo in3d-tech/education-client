@@ -34,17 +34,18 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
     >
       <Navbar user={user} title={"פורטל מורים"} />
       <div className="teacher-portal-wrapper">
+        <MyLesson
+          handleCurrentLessonsModal={handleCurrentLessonsModal}
+          currentLessonsModal={currentLessonsModal}
+          user={user}
+        />
         <CreateLesson
           handleModel={handleModel}
           modalIsOpen={modalIsOpen}
           user={user}
           setModalIsOpen={setModalIsOpen}
         />
-        <MyLesson
-          handleCurrentLessonsModal={handleCurrentLessonsModal}
-          currentLessonsModal={currentLessonsModal}
-          user={user}
-        />
+
         <Link
           style={{
             width: "100%",
@@ -54,7 +55,8 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
           to="/account"
         >
           <button className="btn" onClick={() => handleModel(false)}>
-            My Account
+            {/* My Account */}
+            האזור שלי
           </button>
         </Link>
         {!user?.isAdmin ? (
@@ -67,7 +69,8 @@ export function TeacherPortal({ user }: TeacherPortalProps) {
             to="/myOrg"
           >
             <button className="btn" onClick={() => handleModel(false)}>
-              My Organization
+              {/* My Organization */}
+              הארגון שלי
             </button>
           </Link>
         ) : null}
@@ -92,7 +95,8 @@ const CreateLesson = ({
   return (
     <>
       <button className="btn" onClick={() => handleModel(false)}>
-        New Lesson
+        {/* New Lesson */}
+        שיעור חדש
       </button>
       <Modal
         isOpen={modalIsOpen}
@@ -139,7 +143,8 @@ const MyLesson = ({
   return (
     <>
       <button className="btn" onClick={() => handleCurrentLessonsModal(false)}>
-        My Lessons
+        {/* My Lessons */}
+        שיעורים
       </button>
       <Modal
         isOpen={currentLessonsModal}
