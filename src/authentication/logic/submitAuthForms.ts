@@ -18,7 +18,8 @@ export const onSubmit = async (
       return;
     }
 
-    const response = await fetch("http://192.168.1.224:3000/login", {
+    // const response = await fetch("http://192.168.1.224:3000/login", {
+    const response = await fetch("https://edu-server-ke5y.onrender.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
