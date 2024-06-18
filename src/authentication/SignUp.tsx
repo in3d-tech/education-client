@@ -25,14 +25,15 @@ export function SignUp({ setUserSignup }: SignupProps) {
         return;
       }
       try {
-        // const response = await fetch(
-        //   "https://edu-server-ke5y.onrender.com/signup",
-        //   {
-        const response = await fetch("http://192.168.1.224:3000/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
+        const response = await fetch(
+          "https://edu-server-ke5y.onrender.com/signup",
+          {
+            // const response = await fetch("http://192.168.1.224:3000/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          }
+        );
         const res = await response.json();
         console.log({ res });
         if (res.user) {

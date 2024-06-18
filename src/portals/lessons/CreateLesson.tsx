@@ -60,8 +60,8 @@ export const CreateLessonForm = ({
 
     try {
       const response = await fetch(
-        // "https://edu-server-ke5y.onrender.com/create-lesson",
-        "http://localhost:3000/create-lesson",
+        "https://edu-server-ke5y.onrender.com/create-lesson",
+        // "http://localhost:3000/create-lesson",
         {
           // const response = await fetch("http://192.168.1.224:3000/signup", {
           method: "POST",

@@ -8,7 +8,8 @@ export const verifyToken = async ({ token, setToken, setUser }: any) => {
 
   try {
     const verifyToken: any = await fetch(
-      "http://192.168.1.224:3000/verify-token",
+      // "http://192.168.1.224:3000/verify-token",
+      "https://edu-server-ke5y.onrender.com/verify-token",
       {
         method: "POST",
         headers: { "Content-Type": "application/json", authorization: token },
