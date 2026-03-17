@@ -42,62 +42,12 @@ export function Login({
       // formState: { errors },
     } = useForm<StudentLogin | TeacherAdminLogin>();
 
-    // const onSubmit = async (data: FormData) => {
-    //   try {
-    //     const validatedLoginData = validateLogin(data, isStudentLogin);
-
-    //     if (validatedLoginData !== true) {
-    //       if (
-    //         validatedLoginData == "emailLengthError" ||
-    //         validatedLoginData == "passwordLengthError" ||
-    //         validatedLoginData == "invalidOrgCode"
-    //       )
-    //         setError(
-    //           "There was an issue with your credentials. Please try again"
-    //         );
-    //       return;
-    //     }
-
-    //     const response = await fetch("http://192.168.1.224:3000/login", {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify(data),
-    //     });
-
-    //     const res = await response.json();
-    //     console.log("THE LOGIN RES");
-    //     console.log({ res });
-
-    //     if (isStudentLogin && res) {
-    //       // const studentLoginData = data as StudentLogin;
-    //       // if (studentLoginData.orgCode === "0") {
-    //       setUser(res);
-    //       return;
-
-    //       // }
-    //     }
-
-    //     if (!isStudentLogin && res && res.userObj) {
-    //       setUser(res.userObj);
-    //       if (res.token) {
-    //         setToken(res.token);
-    //       }
-    //     } else if (!res || res.error) {
-    //       setError(`${res.error}`);
-    //     }
-    //   } catch {
-    //     alert("error with login ");
-    //     console.log("error with login 5");
-    //   }
-    // };
-
     return (
       <form
         onSubmit={handleSubmit((data: FormData) =>
-          onSubmit(data, isStudentLogin, setError, setUser, setToken)
+          onSubmit(data, isStudentLogin, setError, setUser, setToken),
         )}
         className="signup-form-wrapper"
-        style={{ marginTop: "8em" }}
       >
         {isStudentLogin ? (
           <StudentLogin register={register} />
