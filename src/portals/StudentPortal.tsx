@@ -65,9 +65,6 @@ export function StudentPortal({ user }: StudentPortalProps) {
           <button
             className="student-btn"
             style={{
-              background:
-                'url("/assets/images/my-account.jpg") no-repeat center',
-              color: "black",
               backgroundSize: "contain",
             }}
             onClick={() => handleModel(false)}
@@ -79,8 +76,6 @@ export function StudentPortal({ user }: StudentPortalProps) {
         <button
           className="student-btn"
           style={{
-            background: 'url("/assets/images/statistics.jpg") no-repeat center',
-            color: "black",
             backgroundSize: "contain",
             opacity: 0.6,
           }}
@@ -91,8 +86,6 @@ export function StudentPortal({ user }: StudentPortalProps) {
         <button
           className="student-btn"
           style={{
-            background: 'url("/assets/images/statistics.jpg") no-repeat center',
-            color: "black",
             backgroundSize: "contain",
             opacity: 0.6,
           }}

@@ -1,0 +1,148 @@
+/* ═══════════════════════════════════════════════════════════
+   Navbar — "HoloLearn" Glass Topbar
+   Frosted glass strip with centered title, logo left, user right.
+   Sticks to the top. Cyan underline glow.
+   ═══════════════════════════════════════════════════════════ */
+
+.holo-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 56px;
+  padding: 0 1rem;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-glow);
+}
+
+/* Centered cyan glow line under the bar */
+.holo-nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ── Logo ── */
+.holo-nav-logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.holo-nav-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.9;
+  transition: opacity var(--transition-fast);
+  /* If logo is dark/black, invert it for the dark theme.
+     Remove this filter if your logo already works on dark backgrounds. */
+  filter: brightness(0) invert(1);
+}
+
+.holo-nav-logo-link:hover .holo-nav-logo {
+  opacity: 1;
+}
+
+/* ── Title (centered) ── */
+.holo-nav-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: var(--text-primary);
+  text-shadow: 0 0 18px var(--accent-cyan-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55%;
+  text-align: center;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* ── User Area (right side in LTR, left in RTL) ── */
+.holo-nav-user {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.holo-nav-greeting {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.holo-nav-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--accent-cyan-dim);
+  color: var(--accent-cyan);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1.5px solid rgba(0, 229, 255, 0.25);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.holo-nav-avatar:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 12px var(--accent-cyan-dim);
+}
+
+/* Spacer when no user is logged in — keeps the title centered */
+.holo-nav-spacer {
+  width: 32px;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+@media (max-width: 380px) {
+  .holo-nav {
+    padding: 0 0.75rem;
+  }
+
+  .holo-nav-logo {
+    height: 24px;
+  }
+
+  .holo-nav-title {
+    font-size: 0.78rem;
+    max-width: 45%;
+  }
+
+  .holo-nav-greeting {
+    display: none;
+  }
+}

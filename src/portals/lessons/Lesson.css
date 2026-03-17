@@ -1,0 +1,425 @@
+/* ═══════════════════════════════════════════════════════════
+   Lesson Page — "HoloLearn" Mission Briefing
+   The pre-scan launch pad. Feels like an AR mission brief:
+   status indicator, info card, and a prominent launch button.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Page Layout ── */
+.lesson-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+  padding: 1.2rem 1.2rem 2.5rem;
+  max-width: 520px;
+  margin: 0 auto;
+  animation: lessonPageIn 0.5s ease both;
+}
+
+@keyframes lessonPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Status Bar ── */
+.lesson-status-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: rgba(0, 191, 165, 0.1);
+  border: 1px solid rgba(0, 191, 165, 0.2);
+  border-radius: var(--radius-full);
+  margin-bottom: 1.2rem;
+  animation: statusPulseIn 0.6s ease both 0.2s;
+}
+
+@keyframes statusPulseIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lesson-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-teal);
+  animation: statusBlink 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes statusBlink {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 191, 165, 0.4);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(0, 191, 165, 0);
+    opacity: 0.7;
+  }
+}
+
+.lesson-status-text {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-teal);
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════
+   BRIEFING CARD
+   ═══════════════════════════════════════ */
+.lesson-briefing-card {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+  animation: cardSlideUp 0.5s ease both 0.15s;
+}
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Decorative top-edge glow */
+.lesson-briefing-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-cyan),
+    var(--accent-teal),
+    transparent
+  );
+  border-radius: 2px;
+}
+
+/* Subtle corner glow */
+.lesson-briefing-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle at top right,
+    var(--accent-cyan-dim),
+    transparent 70%
+  );
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ── Header / Title ── */
+.lesson-briefing-header {
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.lesson-briefing-title {
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* ── Meta Chips ── */
+.lesson-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.lesson-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  background: var(--bg-glass-light);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.lesson-meta-chip-icon {
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* ── Divider ── */
+.lesson-briefing-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-glow),
+    transparent
+  );
+  margin-bottom: 1.2rem;
+}
+
+/* ── Content Sections ── */
+.lesson-briefing-section {
+  margin-bottom: 1.1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.lesson-briefing-section:last-child {
+  margin-bottom: 0;
+}
+
+.lesson-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin: 0 0 0.45rem 0;
+}
+
+.lesson-section-label svg {
+  opacity: 0.7;
+}
+
+.lesson-section-body {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════
+   LAUNCH BUTTON AREA
+   ═══════════════════════════════════════ */
+.lesson-launch-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.8rem;
+  animation: launchAreaIn 0.5s ease both 0.35s;
+}
+
+@keyframes launchAreaIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lesson-launch-btn {
+  width: 100%;
+  padding: 1.05rem 2rem;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-teal));
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-smooth);
+  box-shadow: 0 0 20px var(--accent-cyan-dim);
+}
+
+/* Shimmer sweep on idle */
+.lesson-launch-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shimmerSweep 3s ease-in-out infinite;
+}
+
+@keyframes shimmerSweep {
+  0% {
+    left: -100%;
+  }
+  50%,
+  100% {
+    left: 150%;
+  }
+}
+
+.lesson-launch-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow:
+    var(--shadow-glow-strong),
+    0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.lesson-launch-btn:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.lesson-launch-btn-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Loading State ── */
+.lesson-launch-btn--loading {
+  background: var(--bg-card);
+  color: var(--accent-cyan);
+  border: 1.5px solid var(--accent-cyan);
+  cursor: wait;
+  box-shadow: var(--shadow-glow);
+}
+
+.lesson-launch-btn--loading::before {
+  display: none;
+}
+
+.lesson-launch-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(0, 229, 255, 0.2);
+  border-top-color: var(--accent-cyan);
+  border-radius: 50%;
+  animation: spinRotate 0.7s linear infinite;
+}
+
+@keyframes spinRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Hint Text ── */
+.lesson-launch-hint {
+  margin-top: 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+/* ═══════════════════════════════════════
+   ERROR STATE
+   ═══════════════════════════════════════ */
+.lesson-error-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 2rem;
+  gap: 0.6rem;
+  animation: lessonPageIn 0.5s ease both;
+}
+
+.lesson-error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-xl);
+  background: var(--accent-warm-dim);
+  color: var(--accent-warm);
+  margin-bottom: 0.5rem;
+}
+
+.lesson-error-title {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.lesson-error-subtitle {
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+@media (max-width: 380px) {
+  .lesson-briefing-card {
+    padding: 1.3rem 1.1rem;
+  }
+
+  .lesson-briefing-title {
+    font-size: 1.2rem;
+  }
+
+  .lesson-launch-btn {
+    font-size: 0.82rem;
+    padding: 0.95rem 1.5rem;
+  }
+}

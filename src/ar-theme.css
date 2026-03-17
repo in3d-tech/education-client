@@ -1,0 +1,821 @@
+/* ═══════════════════════════════════════════════════════════
+   AR EDUCATION APP — "HoloLearn" Theme
+   A futuristic, glowing, depth-rich interface for AR education.
+   Font: Orbitron (display) + Heebo (body, Hebrew-friendly)
+   Palette: Deep navy/charcoal + cyan/teal accents + warm highlights
+   ═══════════════════════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Heebo:wght@300;400;500;600;700;800;900&display=swap");
+
+/* ── CSS Custom Properties ── */
+:root {
+  --bg-deep: #0a0e1a;
+  --bg-surface: #111827;
+  --bg-card: #1a2235;
+  --bg-card-hover: #1f2a40;
+  --bg-glass: rgba(17, 24, 39, 0.7);
+  --bg-glass-light: rgba(255, 255, 255, 0.04);
+
+  --accent-cyan: #00e5ff;
+  --accent-cyan-dim: rgba(0, 229, 255, 0.15);
+  --accent-cyan-glow: rgba(0, 229, 255, 0.35);
+  --accent-teal: #00bfa5;
+  --accent-warm: #ff6b35;
+  --accent-warm-dim: rgba(255, 107, 53, 0.15);
+  --accent-purple: #7c4dff;
+  --accent-purple-dim: rgba(124, 77, 255, 0.12);
+
+  --text-primary: #e8ecf4;
+  --text-secondary: #8b95a8;
+  --text-muted: #4a5568;
+  --text-accent: var(--accent-cyan);
+
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-glow: rgba(0, 229, 255, 0.2);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+  --radius-full: 9999px;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--border-subtle);
+  --shadow-glow:
+    0 0 20px var(--accent-cyan-dim), 0 0 60px rgba(0, 229, 255, 0.08);
+  --shadow-glow-strong:
+    0 0 30px var(--accent-cyan-glow), 0 0 80px rgba(0, 229, 255, 0.12);
+  --shadow-elevated: 0 12px 40px rgba(0, 0, 0, 0.5);
+
+  --font-display: "Orbitron", sans-serif;
+  --font-body: "Heebo", sans-serif;
+
+  --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Global Reset & Base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  direction: rtl;
+}
+
+/* ── Animated background grid (subtle) ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      rgba(0, 229, 255, 0.06) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 80% 100%,
+      rgba(124, 77, 255, 0.05) 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--bg-deep) 0%, #0d1220 100%);
+  z-index: -2;
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: -1;
+  pointer-events: none;
+  animation: gridPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes gridPulse {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* ═══════════════════════════════════════
+   NAVBAR
+   ═══════════════════════════════════════ */
+.navbar,
+nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-glow);
+  z-index: 100;
+}
+
+.navbar::after,
+nav::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-cyan),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+.navbar h1,
+.navbar .nav-title,
+nav h1 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  text-shadow: 0 0 20px var(--accent-cyan-dim);
+}
+
+.navbar .user-info {
+  position: absolute;
+  left: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navbar .user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--accent-cyan);
+  box-shadow: 0 0 10px var(--accent-cyan-dim);
+}
+
+/* ═══════════════════════════════════════
+   AUTHENTICATION WRAPPER
+   ═══════════════════════════════════════ */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative floating orbs behind login */
+.auth-wrapper::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--accent-cyan-dim) 0%,
+    transparent 70%
+  );
+  top: 10%;
+  right: -100px;
+  animation: floatOrb 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.auth-wrapper::after {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--accent-purple-dim) 0%,
+    transparent 70%
+  );
+  bottom: 15%;
+  left: -80px;
+  animation: floatOrb 8s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+}
+
+@keyframes floatOrb {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-30px) scale(1.1);
+  }
+}
+
+.auth-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.signup-wrapper {
+  flex: 1;
+}
+
+/* ═══════════════════════════════════════
+   AUTH FORM
+   ═══════════════════════════════════════ */
+.signup-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 5em !important;
+  padding: 2rem 1.8rem;
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glow);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glow);
+  animation: formSlideUp 0.6s var(--transition-smooth) both;
+}
+
+@keyframes formSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Inputs ── */
+.input-container {
+  width: 100%;
+  position: relative;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 0.95rem 1.2rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary) !important;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all var(--transition-fast);
+  direction: rtl;
+}
+
+.input-container input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.input-container input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow:
+    0 0 0 3px var(--accent-cyan-dim),
+    var(--shadow-glow);
+  background: var(--bg-card);
+}
+
+/* ── Auth Buttons ── */
+.auth-btns-wrapper {
+  display: flex;
+  gap: 0.8rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.btn {
+  flex: 1;
+  padding: 0.85rem 1.5rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-teal));
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow-strong);
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Secondary button style (signup) */
+.auth-btns-wrapper .btn:nth-child(2) {
+  background: transparent;
+  color: var(--accent-cyan);
+  border: 1.5px solid var(--accent-cyan);
+}
+
+.auth-btns-wrapper .btn:nth-child(2):hover {
+  background: var(--accent-cyan-dim);
+}
+
+/* ═══════════════════════════════════════
+   PORTAL WRAPPER (Student / Teacher)
+   ═══════════════════════════════════════ */
+.portal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem 1.5rem;
+  animation: staggerFadeIn 0.5s ease both;
+}
+
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Student Buttons ── */
+.student-btn {
+  width: 100%;
+  min-height: 90px;
+  padding: 1.4rem 1.5rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-primary) !important;
+  background: var(--bg-card) !important;
+  background-image: none !important;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-smooth);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.student-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--accent-cyan-dim), transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+}
+
+.student-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-cyan),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.student-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow), var(--shadow-elevated);
+  background: var(--bg-card-hover) !important;
+}
+
+.student-btn:hover::before,
+.student-btn:hover::after {
+  opacity: 1;
+}
+
+.student-btn:active {
+  transform: translateY(0);
+}
+
+/* Stagger animation for portal buttons */
+.portal-wrapper .student-btn:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.portal-wrapper .student-btn:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.portal-wrapper .student-btn:nth-child(3) {
+  animation-delay: 0.19s;
+}
+.portal-wrapper .student-btn:nth-child(4) {
+  animation-delay: 0.26s;
+}
+
+.portal-wrapper .student-btn {
+  animation: cardReveal 0.5s ease both;
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Disabled / Coming Soon buttons */
+.student-btn[style*="opacity: 0.6"],
+.student-btn:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════
+   MY LESSONS MODAL
+   ═══════════════════════════════════════ */
+
+/* Override react-modal styles */
+.ReactModal__Overlay {
+  background-color: rgba(5, 8, 18, 0.85) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+.ReactModal__Content {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-glow) !important;
+  border-radius: var(--radius-xl) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  box-shadow: var(--shadow-glow), var(--shadow-elevated) !important;
+  max-width: 440px;
+  margin: auto;
+  inset: 1.5rem !important;
+  animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.my-lesson-wrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+/* Close button */
+.my-lesson-wrapper > div:first-child button {
+  width: 2.2rem !important;
+  height: 2.2rem !important;
+  border-radius: var(--radius-full) !important;
+  background: var(--bg-card) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-subtle) !important;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-lesson-wrapper > div:first-child button:hover {
+  background: rgba(255, 107, 53, 0.15) !important;
+  color: var(--accent-warm) !important;
+  border-color: var(--accent-warm) !important;
+}
+
+.my-lessons-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.2rem 1.2rem;
+  flex: 1;
+  overflow: hidden;
+}
+
+.my-lessons-list > span {
+  font-family: var(--font-display) !important;
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em;
+  color: var(--text-primary) !important;
+  text-shadow: 0 0 20px var(--accent-cyan-dim);
+  margin-bottom: 1.2rem;
+}
+
+.my-lessons-list-container {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 0.3rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-cyan-dim) transparent;
+}
+
+.my-lessons-list-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.my-lessons-list-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.my-lessons-list-container::-webkit-scrollbar-thumb {
+  background: var(--accent-cyan-dim);
+  border-radius: 10px;
+}
+
+/* ── Lesson Cards ── */
+.my-lessons-btn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  padding: 1rem 1.2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  text-align: right;
+}
+
+.my-lessons-btn::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent-cyan), var(--accent-teal));
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.my-lessons-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow);
+  transform: translateX(-4px);
+}
+
+.my-lessons-btn:hover::before {
+  opacity: 1;
+}
+
+.my-lessons-created-by-headline {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.my-lessons-created-by-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.my-lessons-created-by-pic {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--accent-cyan);
+  object-fit: cover;
+}
+
+.my-lessons-created-at-date {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+/* Link reset inside lesson cards */
+.my-lessons-list-container a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.my-lessons-list-container > div {
+  margin-bottom: 0.7rem !important;
+  margin-top: 0 !important;
+  width: 100% !important;
+  color: var(--text-primary) !important;
+}
+
+/* "No active lessons" state */
+.my-lessons-list-container > div > div {
+  color: var(--text-muted) !important;
+  text-align: center;
+  padding: 2rem;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════
+   GENERAL LINK RESETS
+   ═══════════════════════════════════════ */
+a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-teal);
+}
+
+/* ═══════════════════════════════════════
+   UTILITY CLASSES (optional helpers)
+   ═══════════════════════════════════════ */
+.glow-text {
+  text-shadow:
+    0 0 10px var(--accent-cyan-dim),
+    0 0 40px rgba(0, 229, 255, 0.1);
+}
+
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glow);
+  border-radius: var(--radius-lg);
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Scanline overlay for AR vibes (apply to AR-related sections) */
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 229, 255, 0.015) 2px,
+    rgba(0, 229, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Pulsing dot indicator */
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--accent-cyan-glow);
+  }
+  50% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE TWEAKS
+   ═══════════════════════════════════════ */
+@media (max-width: 380px) {
+  .signup-form-wrapper {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .student-btn {
+    min-height: 80px;
+    padding: 1.1rem 1.2rem;
+    font-size: 0.88rem;
+  }
+
+  .my-lessons-list > span {
+    font-size: 1.1rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .portal-wrapper {
+    max-width: 500px;
+  }
+
+  .ReactModal__Content {
+    max-width: 500px;
+  }
+}

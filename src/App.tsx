@@ -1,4 +1,5 @@
 import "./App.css";
+import "./ar-theme.css";
 import { Authentification } from "./authentication/Authentification";
 import { Homepage } from "./homepage/Homepage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
