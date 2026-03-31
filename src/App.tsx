@@ -86,16 +86,34 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import { PinLogin } from "./authentication/PinLogin";
 import { Homepage } from "./homepage/Homepage";
 
 const LazyLesson = lazy(() => import("./portals/lessons/Lesson"));
+// const SERVER_URL = "http://localhost:3000";
+const SERVER_URL = "https://edu-server-ke5y.onrender.com";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return sessionStorage.getItem("arken_pin") === "true";
   });
+  const [serverUp, setServerUp] = useState(false);
+
+  const checkServer = useCallback(async () => {
+    try {
+      const res = await fetch(`${SERVER_URL}/health`, { method: "GET" });
+      setServerUp(res.ok);
+    } catch {
+      setServerUp(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkServer();
+    const interval = setInterval(checkServer, 30000); // re-check every 30s
+    return () => clearInterval(interval);
+  }, [checkServer]);
 
   const handlePinSuccess = () => {
     sessionStorage.setItem("arken_pin", "true");
@@ -109,7 +127,7 @@ function App() {
           path="/"
           element={
             isAuthenticated ? (
-              <Homepage />
+              <Homepage serverUp={serverUp} />
             ) : (
               <PinLogin onSuccess={handlePinSuccess} />
             )

@@ -15,10 +15,10 @@
 import { MyLessons } from "../portals/lessons/MyLessons";
 import { Navbar } from "../navigation/Navbar";
 
-export function Homepage() {
+export function Homepage({ serverUp }: { serverUp?: boolean }) {
   return (
     <div className="homepage-screen">
-      <Navbar user={null} title={"הלימודים שלי"} />
+      <Navbar serverUp={serverUp} user={null} title={"הלימודים שלי"} />
       <MyLessons />
     </div>
   );

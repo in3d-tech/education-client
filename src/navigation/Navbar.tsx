@@ -37,9 +37,9 @@ import { User } from "../App";
 import { capitalizeFirstLetter } from "../common/logic/capitalizeFirstLetter";
 import "./Navbar.css";
 
-type NavbarProps = { user?: User; title: string };
+type NavbarProps = { user?: User; title: string; serverUp?: boolean };
 
-export function Navbar({ user, title }: NavbarProps) {
+export function Navbar({ user, title, serverUp = false }: NavbarProps) {
   return (
     <nav className="holo-nav">
       {/* Logo / Home link */}
@@ -53,6 +53,10 @@ export function Navbar({ user, title }: NavbarProps) {
 
       {/* Page title */}
       <h1 className="holo-nav-title">{title}</h1>
+      <span
+        className={`server-dot ${serverUp ? "server-dot--up" : "server-dot--down"}`}
+        title={serverUp ? "Server connected" : "Server offline"}
+      />
 
       {/* User greeting */}
       <div className="holo-nav-user">
