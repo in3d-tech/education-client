@@ -1,252 +1,149 @@
-/* ═══════════════════════════════════════════════════════════
-   MyLessons — "HoloLearn" Lesson Panel
-   Futuristic card-based lesson list with glow accents,
-   staggered animations, and polished empty state.
-   ═══════════════════════════════════════════════════════════ */
+/* ─── MyLessons — Full Page Layout ─── */
 
-/* ── Panel Shell ── */
-.lessons-panel {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  overflow: hidden;
-  /* border: 5px solid red; */
+.lessons-page {
+  min-height: 100dvh;
+  background: #0a0a0f;
+  font-family: "Heebo", "Segoe UI", sans-serif;
+  direction: rtl;
+  padding-bottom: 2rem;
 }
 
 /* ── Header ── */
-.lessons-panel-header {
+
+.lessons-page-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 1.4rem;
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-glow);
-  position: relative;
-  flex-shrink: 0;
+  gap: 0.6rem;
+  padding: 1.25rem 1.5rem 1rem;
 }
 
-.lessons-panel-header::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 15%;
-  right: 15%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--accent-cyan),
-    transparent
-  );
-  opacity: 0.4;
-}
-
-.lessons-panel-header-content {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-
-.lessons-panel-icon {
+.lessons-page-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--accent-cyan-dim);
-  color: var(--accent-cyan);
-  flex-shrink: 0;
+  color: #818cf8;
 }
 
-.lessons-panel-title {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--text-primary);
+.lessons-page-title {
   margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f0f0f5;
+  letter-spacing: -0.01em;
 }
 
-.lessons-panel-count {
+.lessons-page-count {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 22px;
   height: 22px;
   padding: 0 6px;
-  border-radius: var(--radius-full);
-  background: var(--accent-cyan-dim);
-  color: var(--accent-cyan);
-  font-family: var(--font-display);
-  font-size: 0.7rem;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
 }
 
-/* ── Close Button ── */
-.lessons-panel-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-full);
-  background: var(--bg-card);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  flex-shrink: 0;
+/* ── Body ── */
+
+.lessons-page-body {
+  padding: 0 1rem;
 }
 
-.lessons-panel-close:hover {
-  background: var(--accent-warm-dim);
-  color: var(--accent-warm);
-  border-color: rgba(255, 107, 53, 0.3);
-  transform: rotate(90deg);
-}
+/* ── List ── */
 
-/* ── Body / Scroll Area ── */
-.lessons-panel-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem 1.2rem 1.5rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent-cyan-dim) transparent;
-}
-
-.lessons-panel-body::-webkit-scrollbar {
-  width: 4px;
-}
-
-.lessons-panel-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.lessons-panel-body::-webkit-scrollbar-thumb {
-  background: var(--accent-cyan-dim);
-  border-radius: 10px;
-}
-
-/* ── Lesson List ── */
 .lessons-list {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
 }
 
-/* ── Lesson Card Link ── */
+/* ── Card Link ── */
+
 .lesson-card-link {
   text-decoration: none;
   color: inherit;
   display: block;
-  animation: lessonCardIn 0.45s ease both;
+  animation: card-slide-in 0.35s ease both;
 }
 
-@keyframes lessonCardIn {
+@keyframes card-slide-in {
   from {
     opacity: 0;
-    transform: translateX(12px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
-/* ── Lesson Card ── */
+/* ── Card ── */
+
 .lesson-card {
   position: relative;
   display: flex;
-  align-items: stretch;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   overflow: hidden;
-  transition: all var(--transition-smooth);
-  cursor: pointer;
-}
-
-.lesson-card:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-glow);
-  box-shadow:
-    0 0 16px var(--accent-cyan-dim),
-    0 4px 20px rgba(0, 0, 0, 0.3);
-  transform: translateX(-4px);
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
 }
 
 .lesson-card:active {
-  transform: translateX(-2px) scale(0.995);
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.06);
 }
 
-/* ── Accent Bar (right edge for RTL) ── */
+/* Accent bar */
 .lesson-card-accent {
-  width: 3.5px;
+  width: 4px;
   flex-shrink: 0;
-  background: linear-gradient(180deg, var(--accent-cyan), var(--accent-teal));
-  opacity: 0;
-  transition: opacity var(--transition-fast);
+  background: linear-gradient(180deg, #6366f1 0%, #818cf8 100%);
   border-radius: 0 4px 4px 0;
 }
 
-.lesson-card:hover .lesson-card-accent {
-  opacity: 1;
-}
-
-/* ── Card Content ── */
+/* Content */
 .lesson-card-content {
   flex: 1;
   padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   min-width: 0;
 }
 
+/* Top row */
 .lesson-card-top-row {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-bottom: 0.55rem;
 }
 
 .lesson-card-headline {
-  font-family: var(--font-body);
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  line-height: 1.35;
   margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f0f0f5;
+  line-height: 1.35;
 }
 
 .lesson-card-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-full);
-  background: var(--bg-glass-light);
-  color: var(--text-muted);
   flex-shrink: 0;
-  transition: all var(--transition-fast);
+  color: rgba(255, 255, 255, 0.2);
+  margin-top: 2px;
+  transition: color 0.2s, transform 0.2s;
 }
 
-.lesson-card:hover .lesson-card-arrow {
-  background: var(--accent-cyan-dim);
-  color: var(--accent-cyan);
+.lesson-card:active .lesson-card-arrow {
+  color: #818cf8;
+  transform: translateX(-3px);
 }
 
-/* ── Meta Row ── */
+/* Meta */
 .lesson-card-meta {
   display: flex;
   align-items: center;
@@ -257,126 +154,105 @@
 .lesson-card-author {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 
 .lesson-card-avatar {
   width: 22px;
   height: 22px;
-  border-radius: var(--radius-full);
-  border: 1.5px solid var(--accent-cyan);
+  border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 6px var(--accent-cyan-dim);
 }
 
 .lesson-card-avatar-fallback {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 22px;
   height: 22px;
-  border-radius: var(--radius-full);
-  background: var(--accent-purple-dim);
-  color: var(--accent-purple);
-  font-family: var(--font-body);
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.18);
+  color: #a5b4fc;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lesson-card-author-name {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-size: 0.8rem;
+  color: #9898b0;
 }
 
 .lesson-card-date {
-  font-size: 0.72rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  white-space: nowrap;
+  font-size: 0.75rem;
+  color: #6a6a80;
 }
 
-/* ── Hover Glow Effect ── */
+/* Glow on hover/active */
 .lesson-card-glow {
   position: absolute;
   inset: 0;
   border-radius: inherit;
+  opacity: 0;
   background: radial-gradient(
-    ellipse 80% 100% at 100% 50%,
-    var(--accent-cyan-dim),
+    ellipse at 50% 0%,
+    rgba(99, 102, 241, 0.08) 0%,
     transparent 70%
   );
-  opacity: 0;
-  transition: opacity var(--transition-smooth);
+  transition: opacity 0.3s;
   pointer-events: none;
 }
 
-.lesson-card:hover .lesson-card-glow {
-  opacity: 0.5;
+.lesson-card:active .lesson-card-glow {
+  opacity: 1;
 }
 
-/* ═══════════════════════════════════════
-   EMPTY STATE
-   ═══════════════════════════════════════ */
+/* ── Empty State ── */
+
 .lessons-empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 3rem 1.5rem;
-  gap: 0.8rem;
-  animation: emptyFadeIn 0.6s ease both;
-}
-
-@keyframes emptyFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  padding: 4rem 2rem;
+  gap: 0.75rem;
 }
 
 .lessons-empty-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
-  border-radius: var(--radius-xl);
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.1);
   margin-bottom: 0.5rem;
-  position: relative;
-}
-
-.lessons-empty-icon::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, var(--accent-cyan-dim), transparent 60%);
-  z-index: -1;
-  opacity: 0.5;
 }
 
 .lessons-empty-title {
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text-secondary);
   margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #8888a0;
 }
 
 .lessons-empty-subtitle {
-  font-size: 0.85rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  max-width: 240px;
-  line-height: 1.5;
   margin: 0;
+  font-size: 0.85rem;
+  color: #5a5a72;
+  max-width: 260px;
+  line-height: 1.5;
+}
+
+/* ── Utility: homepage screen wrapper ── */
+
+.homepage-screen {
+  min-height: 100dvh;
+  background: #0a0a0f;
+}
+
+.loading-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background: #0a0a0f;
+  color: #8888a0;
+  font-family: "Heebo", "Segoe UI", sans-serif;
+  font-size: 1rem;
+  direction: rtl;
 }

@@ -1,0 +1,156 @@
+/* ─── Pin Login Screen ─── */
+
+.pin-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0f;
+  font-family: "Heebo", "Segoe UI", sans-serif;
+  direction: rtl;
+  overflow: hidden;
+}
+
+.pin-bg-glow {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: pin-pulse 4s ease-in-out infinite;
+}
+
+@keyframes pin-pulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 1;   transform: translate(-50%, -50%) scale(1.15); }
+}
+
+/* Card */
+.pin-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem 2rem 2rem;
+  width: min(88vw, 340px);
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.pin-card--shake {
+  animation: shake 0.45s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+  10%, 90%  { transform: translateX(-2px); }
+  20%, 80%  { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60%  { transform: translateX(6px); }
+}
+
+/* Icon ring */
+.pin-icon-ring {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(99, 102, 241, 0.12);
+  color: #818cf8;
+  margin-bottom: 0.25rem;
+}
+
+/* Text */
+.pin-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f0f0f5;
+  letter-spacing: -0.02em;
+}
+
+.pin-subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #8888a0;
+}
+
+/* Input */
+.pin-input-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.pin-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.9rem 1rem;
+  font-size: 1.6rem;
+  letter-spacing: 0.6em;
+  text-align: center;
+  border-radius: 0.75rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f0f0f5;
+  caret-color: #818cf8;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+  -webkit-appearance: none;
+}
+
+.pin-input::placeholder {
+  color: rgba(255, 255, 255, 0.15);
+  letter-spacing: 0.4em;
+}
+
+.pin-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.pin-input--error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.pin-error-msg {
+  font-size: 0.8rem;
+  color: #f87171;
+}
+
+/* Submit */
+.pin-submit-btn {
+  width: 100%;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: #6366f1;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 0.25rem;
+}
+
+.pin-submit-btn:active {
+  transform: scale(0.97);
+  background: #4f46e5;
+}

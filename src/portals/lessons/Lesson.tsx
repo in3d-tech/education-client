@@ -1,274 +1,4 @@
-// import { useEffect, useState, useMemo } from "react";
-// import { useAppContext } from "../../context/appContext";
-// import { Navbar } from "../../navigation/Navbar";
-// import ArLessonNew from "./ArLessonNew";
-// import { useFetch } from "../../common/logic/useFetch";
-// import useWindowDimensions from "../../common/logic/getViewport";
-
-// const classObj: any = {
-//   1: "א",
-//   2: "ב",
-//   3: "ג",
-//   4: "ד",
-//   5: "ה",
-//   6: "ו",
-//   7: "ז",
-//   8: "ח",
-//   9: "ט",
-//   10: "י",
-//   11: "יא",
-//   12: "יב",
-// };
-
-// const Lesson = () => {
-//   const [startScanning, setStartScanning] = useState(false);
-//   const [disabled, setDisabled] = useState(false);
-//   const { activeLesson, user } = useAppContext();
-//   const [photoDataArray, setPhotoDataArray] = useState([]);
-//   const { height, width } = useWindowDimensions();
-
-//   // Memoize your request body to avoid re-creating on every render
-
-//   const fetchBody = useMemo(
-//     () =>
-//       JSON.stringify({
-//         lessonId: activeLesson ? activeLesson[0].lessonId : null,
-//       }),
-//     [activeLesson],
-//   );
-
-//   // Ensure the fetchIs only called when necessary.
-
-//   const { error, response } = useFetch(
-//     "/fetchPhotos",
-//     fetchBody,
-//     "POST",
-//     "application/json",
-//   );
-
-//   useEffect(() => {
-//     if (!activeLesson) {
-//       return;
-//     }
-//     const fetchPhotoDataArray = async () => {
-//       try {
-//         if (response) {
-//           setPhotoDataArray(response);
-//         }
-//         if (error) {
-//           console.log(error);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching photos:", error);
-//       }
-//     };
-
-//     fetchPhotoDataArray();
-//   }, [response, error, activeLesson]);
-
-//   // Render Error Screen if no active lesson
-
-//   if (!activeLesson) {
-//     return (
-//       <div>
-//         <h1>Error Finding Lesson</h1>
-//       </div>
-//     );
-//   }
-
-//   const currentLesson = activeLesson[0];
-
-//   console.log({ photoDataArray });
-
-//   // ... (imports and logic remain exactly the same)
-
-//   return (
-//     <>
-//       <Navbar title="Lesson - temp" user={user} />
-
-//       {startScanning ? (
-//         <ArLessonNew
-//           setStartScanning={setStartScanning}
-//           firstImage={photoDataArray.length > 0 ? photoDataArray[0] : null}
-//           secondImage={photoDataArray.length > 1 ? photoDataArray[1] : null}
-//           images={photoDataArray}
-//           screenHeight={height}
-//           screenWidth={width}
-//         />
-//       ) : (
-//         <div className="lesson-page-wrapper">
-//           <div className="lesson-glass-card">
-//             {/* Headline Section */}
-//             {currentLesson?.lessonData?.headline && (
-//               <div className="info-group">
-//                 <span className="info-label">כּוֹתֶרֶת:</span>
-//                 <h1 className="info-headline" dir="auto">
-//                   {currentLesson.lessonData.headline}
-//                 </h1>
-//               </div>
-//             )}
-
-//             {/* Meta Info (Creator & Class) */}
-//             <div className="info-meta">
-//               <div className="meta-item">
-//                 <span className="info-label">נוצר על ידי:</span>
-//                 <span className="meta-value" dir="auto">
-//                   {currentLesson.createdByInfo?.firstName}{" "}
-//                   {currentLesson.createdByInfo?.lastName}
-//                 </span>
-//               </div>
-//               <div className="meta-item">
-//                 <span className="info-label">כיתה:</span>
-//                 <span className="meta-value">
-//                   {classObj[currentLesson.classAgeGroup] || ""}
-//                 </span>
-//               </div>
-//             </div>
-
-//             <hr className="card-divider" />
-
-//             {/* Description Section */}
-//             {currentLesson?.lessonData?.description && (
-//               <div className="info-group">
-//                 <span className="info-label">תיאור:</span>
-//                 <p className="info-body" dir="auto">
-//                   {currentLesson.lessonData.description}
-//                 </p>
-//               </div>
-//             )}
-
-//             {/* Instructions Section */}
-//             {currentLesson?.lessonData?.instructions && (
-//               <div className="info-group">
-//                 <span className="info-label">הוראות:</span>
-//                 <p className="info-body" dir="auto">
-//                   {currentLesson.lessonData.instructions}
-//                 </p>
-//               </div>
-//             )}
-//           </div>
-
-//           {/* Call to Action Button */}
-//           <div className="action-container">
-//             <button
-//               disabled={disabled}
-//               className={`primary-scan-btn ${disabled ? "disabled" : ""}`}
-//               onClick={() => {
-//                 setDisabled(true);
-//                 setTimeout(() => {
-//                   setDisabled(false);
-//                   setStartScanning(true);
-//                 }, 1000);
-//               }}
-//             >
-//               START SCANNING
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-
-// // return (
-// //   <>
-// //     <Navbar title="Lesson - temp" user={user} />
-
-// //     {startScanning ? (
-// //       <ArLessonNew
-// //         setStartScanning={setStartScanning}
-// //         firstImage={photoDataArray.length > 0 ? photoDataArray[0] : null}
-// //         secondImage={photoDataArray.length > 1 ? photoDataArray[1] : null}
-// //         images={photoDataArray}
-// //         screenHeight={height}
-// //         screenWidth={width}
-// //       />
-// //     ) : (
-// //       <div
-// //         style={{
-// //           height: "100%",
-
-// //           display: "flex",
-
-// //           flexDirection: "column",
-
-// //           alignItems: "center",
-// //         }}
-// //       >
-// //         {currentLesson?.lessonData?.headline ? (
-// //           <div className="lesson-content-container">
-// //             כּוֹתֶרֶת:
-// //             <h1 style={{ color: "black" }}>
-// //               {currentLesson?.lessonData?.headline}
-// //             </h1>
-// //           </div>
-// //         ) : null}
-
-// //         <div style={{ marginTop: "1em", color: "black" }}>
-// //           נוצר על ידי:
-// //           <span
-// //             className="lesson-content-font"
-// //             style={{ marginLeft: "10px" }}
-// //           >
-// //             {currentLesson.createdByInfo?.firstName}{" "}
-// //             {currentLesson.createdByInfo?.lastName}
-// //           </span>
-// //           כיתה:
-// //           <span className="lesson-content-font">
-// //             {classObj[currentLesson.classAgeGroup] || ""}
-// //           </span>
-// //         </div>
-
-// //         {currentLesson?.lessonData?.description ? (
-// //           <div className="lesson-content-container">
-// //             <span>תיאור:</span>
-
-// //             <h3 style={{ color: "black" }}>
-// //               {currentLesson?.lessonData.description}
-// //             </h3>
-// //           </div>
-// //         ) : null}
-
-// //         {currentLesson?.lessonData?.instructions ? (
-// //           <div className="lesson-content-container">
-// //             <span>הוראות:</span>
-
-// //             <h3 style={{ color: "black" }}>
-// //               {currentLesson?.lessonData?.instructions}
-// //             </h3>
-// //           </div>
-// //         ) : null}
-// //         <div
-// //           style={{
-// //             width: "96%",
-// //             display: "flex",
-// //             justifyContent: "center",
-// //           }}
-// //         >
-// //           <button
-// //             disabled={disabled}
-// //             style={{ textAlign: "center", fontSize: "1.3em" }}
-// //             className="btn"
-// //             onClick={() => {
-// //               setDisabled(true);
-// //               setTimeout(() => {
-// //                 setDisabled(false);
-// //                 setStartScanning(true);
-// //               }, 1000);
-// //             }}
-// //           >
-// //             Start Scanning
-// //           </button>
-// //         </div>
-// //       </div>
-// //     )}
-// //   </>
-// // );
-// // };
-
-// export default Lesson;
-
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useAppContext } from "../../context/appContext";
 import { Navbar } from "../../navigation/Navbar";
 import ArLessonNew from "./ArLessonNew";
@@ -298,6 +28,15 @@ const Lesson = () => {
   const [photoDataArray, setPhotoDataArray] = useState([]);
   const { height, width } = useWindowDimensions();
 
+  // ── Tripo 3D Model State ──
+  const [customModelBlob, setCustomModelBlob] = useState<Blob | null>(null);
+  const [isGeneratingModel, setIsGeneratingModel] = useState(false);
+  const [modelGenError, setModelGenError] = useState<string | null>(null);
+
+  // ── Prompt Dialog State ──
+  const [showPromptDialog, setShowPromptDialog] = useState(false);
+  const [modelPrompt, setModelPrompt] = useState("");
+
   const fetchBody = useMemo(
     () =>
       JSON.stringify({
@@ -322,6 +61,84 @@ const Lesson = () => {
       console.error("Error fetching photos:", err);
     }
   }, [response, error, activeLesson]);
+
+  // ── Generate 3D Model via Tripo ──
+  const handleGenerateModel = useCallback(async (prompt: string) => {
+    if (!prompt.trim()) return;
+
+    setShowPromptDialog(false);
+    setIsGeneratingModel(true);
+    setModelGenError(null);
+
+    // const serverToReach = "http://localhost:3000/generate-model"
+    const serverToReach = "https://edu-server-ke5y.onrender.com/generate-model";
+
+    try {
+      const res = await fetch(serverToReach, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: prompt.trim() }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Server responded with ${res.status}`);
+      }
+
+      console.log({ res });
+
+      const blob = await res.blob();
+      const contentType = res.headers.get("Content-Type") || "";
+      if (
+        !contentType.includes("model/gltf-binary") &&
+        !contentType.includes("application/octet-stream")
+      ) {
+        throw new Error("Server did not return a valid 3D model");
+      }
+
+      setCustomModelBlob(blob);
+      console.log({ blob });
+
+      // Trigger download
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `model-${Date.now()}.glb`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      // setCustomModelBlob(blob);
+
+      // // Trigger download
+      // const url = URL.createObjectURL(blob);
+      // const a = document.createElement("a");
+      // a.href = url;
+      // a.download = `model-${Date.now()}.glb`;
+      // document.body.appendChild(a);
+      // a.click();
+      // document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err: any) {
+      console.error("Failed to generate model:", err);
+      setModelGenError(err.message || "Failed to generate model");
+    } finally {
+      setIsGeneratingModel(false);
+    }
+  }, []);
+
+  const handlePromptSubmit = () => {
+    handleGenerateModel(modelPrompt);
+  };
+
+  const handlePromptKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handlePromptSubmit();
+    }
+    if (e.key === "Escape") {
+      setShowPromptDialog(false);
+      setModelPrompt("");
+    }
+  };
 
   // ── Error state ──
   if (!activeLesson) {
@@ -358,6 +175,66 @@ const Lesson = () => {
         user={user}
       />
 
+      {/* ── Prompt Dialog Overlay ── */}
+      {showPromptDialog && (
+        <div
+          className="prompt-overlay"
+          onClick={() => {
+            setShowPromptDialog(false);
+            setModelPrompt("");
+          }}
+        >
+          <div className="prompt-dialog" onClick={(e) => e.stopPropagation()}>
+            <div className="prompt-dialog-icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+            </div>
+            <h3 className="prompt-dialog-title">צור מודל תלת-ממד</h3>
+            <p className="prompt-dialog-subtitle">תאר את המודל שתרצה ליצור</p>
+            <input
+              className="prompt-dialog-input"
+              type="text"
+              dir="auto"
+              placeholder='לדוגמה: "דינוזאור כחול"'
+              value={modelPrompt}
+              onChange={(e) => setModelPrompt(e.target.value)}
+              onKeyDown={handlePromptKeyDown}
+              autoFocus
+            />
+            <div className="prompt-dialog-actions">
+              <button
+                className="prompt-dialog-btn prompt-dialog-btn--cancel"
+                onClick={() => {
+                  setShowPromptDialog(false);
+                  setModelPrompt("");
+                }}
+              >
+                ביטול
+              </button>
+              <button
+                className="prompt-dialog-btn prompt-dialog-btn--submit"
+                disabled={!modelPrompt.trim()}
+                onClick={handlePromptSubmit}
+              >
+                צור מודל
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {startScanning ? (
         <ArLessonNew
           setStartScanning={setStartScanning}
@@ -366,6 +243,7 @@ const Lesson = () => {
           images={photoDataArray}
           screenHeight={height}
           screenWidth={width}
+          customModelBlob={customModelBlob}
         />
       ) : (
         <div className="lesson-page">
@@ -377,7 +255,6 @@ const Lesson = () => {
 
           {/* ── Briefing Card ── */}
           <article className="lesson-briefing-card">
-            {/* Headline */}
             {currentLesson?.lessonData?.headline && (
               <header className="lesson-briefing-header">
                 <h1 className="lesson-briefing-title" dir="auto">
@@ -386,7 +263,6 @@ const Lesson = () => {
               </header>
             )}
 
-            {/* Meta chips */}
             <div className="lesson-meta-row">
               {currentLesson.createdByInfo && (
                 <div className="lesson-meta-chip">
@@ -436,7 +312,6 @@ const Lesson = () => {
 
             <div className="lesson-briefing-divider" />
 
-            {/* Description */}
             {currentLesson?.lessonData?.description && (
               <section className="lesson-briefing-section">
                 <h3 className="lesson-section-label">
@@ -463,7 +338,6 @@ const Lesson = () => {
               </section>
             )}
 
-            {/* Instructions */}
             {currentLesson?.lessonData?.instructions && (
               <section className="lesson-briefing-section">
                 <h3 className="lesson-section-label">
@@ -488,6 +362,97 @@ const Lesson = () => {
               </section>
             )}
           </article>
+
+          {/* ── Generate 3D Model Button ── */}
+          <div
+            className="lesson-launch-area"
+            style={{ marginBottom: "0.5rem" }}
+          >
+            <button
+              disabled={isGeneratingModel}
+              className={`lesson-launch-btn ${isGeneratingModel ? "lesson-launch-btn--loading" : ""}`}
+              style={{
+                background: customModelBlob
+                  ? "#22c55e"
+                  : isGeneratingModel
+                    ? "#9ca3af"
+                    : undefined,
+              }}
+              onClick={() => {
+                if (!isGeneratingModel && !customModelBlob) {
+                  setModelPrompt("");
+                  setShowPromptDialog(true);
+                }
+              }}
+            >
+              {isGeneratingModel ? (
+                <span className="lesson-launch-btn-inner">
+                  <span className="lesson-launch-spinner" />
+                  <span>יוצר מודל תלת-ממד...</span>
+                </span>
+              ) : customModelBlob ? (
+                <span className="lesson-launch-btn-inner">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>מודל מוכן!</span>
+                </span>
+              ) : (
+                <span className="lesson-launch-btn-inner">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg>
+                  <span>צור מודל תלת-ממד</span>
+                </span>
+              )}
+            </button>
+
+            {modelGenError && (
+              <p
+                style={{
+                  color: "#ef4444",
+                  fontSize: "0.85rem",
+                  marginTop: "0.5rem",
+                  textAlign: "center",
+                }}
+              >
+                שגיאה: {modelGenError}
+              </p>
+            )}
+
+            {customModelBlob && !isGeneratingModel && (
+              <p
+                style={{
+                  color: "#22c55e",
+                  fontSize: "0.85rem",
+                  marginTop: "0.5rem",
+                  textAlign: "center",
+                }}
+              >
+                המודל הורד בהצלחה — לחץ על "התחל סריקה" כדי להציג אותו
+              </p>
+            )}
+          </div>
 
           {/* ── Launch Button ── */}
           <div className="lesson-launch-area">

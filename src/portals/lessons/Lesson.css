@@ -406,6 +406,158 @@
   margin: 0;
 }
 
+/* ─── Prompt Dialog (append to Lesson.css) ─── */
+
+.prompt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: prompt-fade-in 0.2s ease;
+  padding: 1rem;
+}
+
+@keyframes prompt-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.prompt-dialog {
+  width: min(92vw, 360px);
+  background: #16161e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.1rem;
+  padding: 1.75rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  animation: prompt-slide-up 0.25s ease;
+  direction: rtl;
+  font-family: "Heebo", "Segoe UI", sans-serif;
+}
+
+@keyframes prompt-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prompt-dialog-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(99, 102, 241, 0.12);
+  color: #818cf8;
+  margin-bottom: 0.25rem;
+}
+
+.prompt-dialog-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f0f0f5;
+}
+
+.prompt-dialog-subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #8888a0;
+  text-align: center;
+}
+
+.prompt-dialog-input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.5rem;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.7rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f0f0f5;
+  caret-color: #818cf8;
+  outline: none;
+  font-family: inherit;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.prompt-dialog-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.prompt-dialog-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.prompt-dialog-actions {
+  display: flex;
+  gap: 0.6rem;
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.prompt-dialog-btn {
+  flex: 1;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.1s;
+}
+
+.prompt-dialog-btn:active {
+  transform: scale(0.97);
+}
+
+.prompt-dialog-btn--cancel {
+  background: rgba(255, 255, 255, 0.06);
+  color: #9898b0;
+}
+
+.prompt-dialog-btn--cancel:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.prompt-dialog-btn--submit {
+  background: #6366f1;
+  color: #fff;
+}
+
+.prompt-dialog-btn--submit:active {
+  background: #4f46e5;
+}
+
+.prompt-dialog-btn--submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* ═══════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════ */

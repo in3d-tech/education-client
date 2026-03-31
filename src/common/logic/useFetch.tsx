@@ -6,17 +6,18 @@ type FetchObj = {
   body?: any;
 };
 
-const baseUrl = "https://edu-server-ke5y.onrender.com"; // "http://localhost:3000";
+const baseUrl = "https://edu-server-ke5y.onrender.com";
+// const baseUrl = "http://localhost:3000";
 
 export const useFetch = (
   endpoint: string,
   body?: any,
   method: string = "POST",
-  contentType: string = "application/json"
+  contentType: string = "application/json",
 ) => {
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState<any>(null);
+  const [error, setError] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<any>(false);
 
   const url = `${baseUrl}${endpoint}`;
 
@@ -27,20 +28,25 @@ export const useFetch = (
         const fetchObj: FetchObj = {
           method,
           headers: { "Content-Type": contentType },
-          body: body,
         };
+
+        if (method !== "GET" && body) {
+          fetchObj.body = body;
+        }
+
         const res = await fetch(url, fetchObj);
         const data = await res.json();
+
         setResponse(data);
         setIsLoading(false);
-      } catch (error: any) {
+      } catch (error) {
         setError(error);
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [url, method, contentType, body]); // dependency array
+  }, [url, method, contentType, body]);
 
   return { response, error, isLoading };
 };

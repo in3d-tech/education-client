@@ -599,6 +599,466 @@
 // // );
 // // WORKING OBJ ONLY ---------------------
 
+// NEW STARTS HERE -------------------------------------------------------------------------------------------------------------
+
+// // @ts-nocheck
+// import React, { useEffect, useState, useRef } from "react";
+// import { Link } from "react-router-dom";
+// import { handleMarkerData } from "./common/getMarkerData";
+
+// // 1. IMPORT MODERN THREE.JS FROM NPM
+// import * as THREE from "three";
+// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+// import { MTLLoader, OBJLoader } from "three/examples/jsm/Addons.js";
+// import { useGLTF, useProgress } from "@react-three/drei";
+// import { clone as skeletonClone } from "three/examples/jsm/utils/SkeletonUtils.js";
+
+// // 2. THE BRIDGE: Bind modern Three.js to the global window
+// // so the older THREEx scripts can find it.
+// window.THREE = THREE;
+
+// function cleanMaterial(material) {
+//   material.dispose();
+//   for (const key of Object.keys(material)) {
+//     const value = material[key];
+//     if (value && typeof value === "object" && "minFilter" in value) {
+//       if (typeof value.dispose === "function") {
+//         value.dispose();
+//       }
+//     }
+//   }
+// }
+
+// const initializeAR = ({
+//   setStartScanning,
+//   firstImage,
+//   secondImage,
+//   images,
+//   screenHeight,
+//   screenWidth,
+// }) => {
+//   var scene,
+//     camera,
+//     renderer,
+//     clock,
+//     deltaTime,
+//     totalTime,
+//     arToolkitSource,
+//     arToolkitContext,
+//     planeGeo,
+//     planeMat,
+//     mesh1,
+//     mesh0;
+
+//   function initialize() {
+//     // Safety check moved inside initialize so it runs AFTER scripts load
+//     if (typeof THREEx === "undefined") {
+//       throw new Error("THREEx is not defined. Scripts did not load correctly.");
+//     }
+
+//     scene = new THREE.Scene();
+
+//     // Added a Directional Light so the GLB materials are visible
+//     let ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+//     scene.add(ambientLight);
+//     let directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+//     directionalLight.position.set(0, 10, 5);
+//     scene.add(directionalLight);
+
+//     camera = new THREE.Camera();
+//     scene.add(camera);
+
+//     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+//     renderer.setClearColor(new THREE.Color("lightgrey"), 0);
+//     renderer.setSize(640, 480);
+//     renderer.domElement.style.position = "absolute";
+//     renderer.domElement.style.top = "0";
+//     renderer.domElement.style.left = "0";
+
+//     document.body.appendChild(renderer.domElement);
+//     clock = new THREE.Clock();
+//     deltaTime = 0;
+//     totalTime = 0;
+
+//     arToolkitSource = new THREEx.ArToolkitSource({
+//       sourceType: "webcam",
+//     });
+
+//     function onResize() {
+//       if (arToolkitSource) {
+//         arToolkitSource.onResizeElement();
+//         arToolkitSource.copyElementSizeTo(renderer.domElement);
+//         if (arToolkitContext && arToolkitContext.arController !== null) {
+//           arToolkitSource.copyElementSizeTo(
+//             arToolkitContext.arController.canvas,
+//           );
+//         }
+//       }
+//     }
+
+//     arToolkitSource.init(function onReady() {
+//       setTimeout(function () {
+//         onResize();
+//       }, 200);
+//     });
+
+//     window.addEventListener("resize", async function () {
+//       onResize();
+//     });
+
+//     arToolkitContext = new THREEx.ArToolkitContext({
+//       cameraParametersUrl: "/data/camera_para.dat",
+//       detectionMode: "mono",
+//       maxDetectionRate: 30, // Optimized FPS
+//       canvasWidth: 640,
+//       canvasHeight: 480,
+//     });
+
+//     arToolkitContext.init(function onCompleted() {
+//       if (arToolkitContext) {
+//         camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+//       }
+//     });
+
+//     let patternArray = [
+//       "pattern-01",
+//       "pattern-02",
+//       "pattern-03",
+//       "pattern-04",
+//       "pattern-05",
+//       "pattern-06",
+//       "pattern-07",
+//       "pattern-08",
+//       "pattern-09",
+//       "pattern-10",
+//     ];
+
+//     // Initialize the GLTFLoader
+//     const gltfLoader = new GLTFLoader();
+
+//     // Create a Promise that loads the model only once
+//     const loadEngineer = new Promise((resolve, reject) => {
+//       gltfLoader.load(
+//         "/assets/models/engenir_model.glb",
+//         (gltf) => resolve(gltf),
+//         undefined,
+//         (error) => reject(error),
+//       );
+//     });
+
+//     const loadCustomize = new Promise((resolve, reject) => {
+//       gltfLoader.load(
+//         "/assets/models/costimize__model_v04 (1).glb",
+//         (gltf) => resolve(gltf),
+//         undefined,
+//         (error) => reject(error),
+//       );
+//     });
+
+//     // Loop through your markers
+//     for (let i = 0; i < 10; i++) {
+//       if (arToolkitContext) {
+//         let markerRoot = new THREE.Group();
+//         scene.add(markerRoot);
+
+//         let markerControls = new THREEx.ArMarkerControls(
+//           arToolkitContext,
+//           markerRoot,
+//           {
+//             type: "pattern",
+//             patternUrl: "/data/markers/" + patternArray[i] + ".patt",
+//             smooth: true,
+//             smoothCount: 5,
+//             smoothTolerance: 0.01,
+//             smoothThreshold: 2,
+//           },
+//         );
+//         if (i % 2 === 0) {
+//           loadEngineer
+//             .then((gltf) => {
+//               const model = skeletonClone(gltf.scene); // proper skinned mesh clone
+
+//               model.traverse((child) => {
+//                 child.frustumCulled = false;
+
+//                 // if (child.isSkinnedMesh) {
+//                 //   child.material = new THREE.MeshBasicMaterial({
+//                 //     color: 0x88aaff,
+//                 //     skinning: true,
+//                 //     wireframe: true,
+//                 //   });
+//                 //   child.material.needsUpdate = true;
+//                 //   // NO skeleton recalculation — let the original bind pose stay intact
+//                 // } else if (child.isMesh) {
+//                 //   child.material = new THREE.MeshBasicMaterial({
+//                 //     color: 0x88aaff,
+//                 //     wireframe: true,
+//                 //   });
+//                 //   child.material.needsUpdate = true;
+//                 // }
+//               });
+
+//               const box = new THREE.Box3().setFromObject(model);
+//               const size = box.getSize(new THREE.Vector3());
+//               const maxDim = Math.max(size.x, size.y, size.z);
+//               model.scale.set(1, 1, 1);
+
+//               const scaledBox = new THREE.Box3().setFromObject(model);
+//               model.position.y -= scaledBox.min.y;
+
+//               markerRoot.add(model);
+//             })
+//             .catch((err) => {
+//               console.error("Failed to load engenir_model.glb:", err);
+//             });
+//         } else {
+//           // Wait for the GLB to load, then clone it onto this marker
+//           loadCustomize
+//             .then((gltf) => {
+//               const model = skeletonClone(gltf.scene); // proper skinned mesh clone
+
+//               model.traverse((child) => {
+//                 child.frustumCulled = false;
+
+//                 // if (child.isSkinnedMesh) {
+//                 //   child.material = new THREE.MeshBasicMaterial({
+//                 //     color: 0x88aaff,
+//                 //     skinning: true,
+//                 //     wireframe: true,
+//                 //   });
+//                 //   child.material.needsUpdate = true;
+//                 //   // NO skeleton recalculation — let the original bind pose stay intact
+//                 // } else if (child.isMesh) {
+//                 //   child.material = new THREE.MeshBasicMaterial({
+//                 //     color: 0x88aaff,
+//                 //     wireframe: true,
+//                 //   });
+//                 //   child.material.needsUpdate = true;
+//                 // }
+//               });
+
+//               const box = new THREE.Box3().setFromObject(model);
+//               const size = box.getSize(new THREE.Vector3());
+//               const maxDim = Math.max(size.x, size.y, size.z);
+//               model.scale.set(1, 1, 1);
+
+//               const scaledBox = new THREE.Box3().setFromObject(model);
+//               model.position.y -= scaledBox.min.y;
+
+//               markerRoot.add(model);
+//             })
+//             .catch((err) => {
+//               console.error("Failed to load engenir_model.glb:", err);
+//             });
+//         }
+//       }
+//     }
+//   }
+
+//   function stop() {
+//     if (arToolkitSource && arToolkitSource.domElement.srcObject) {
+//       const tracks = arToolkitSource.domElement.srcObject.getTracks();
+//       tracks.forEach((track) => track.stop());
+//       arToolkitSource.domElement.srcObject = null;
+//       arToolkitSource.domElement.load();
+//     }
+
+//     const videoElements = document.querySelectorAll("video");
+//     videoElements.forEach((videoElement) => {
+//       videoElement.pause();
+//       videoElement.srcObject = null;
+//       document.body.removeChild(videoElement);
+//     });
+
+//     scene?.traverse(function (object) {
+//       if (!object.isMesh) return;
+//       object.geometry.dispose();
+//       if (object.material.isMaterial) {
+//         cleanMaterial(object.material);
+//       } else {
+//         for (const material of object.material) cleanMaterial(material);
+//       }
+//     });
+
+//     if (renderer && renderer.domElement) {
+//       document.body.removeChild(renderer.domElement);
+//     }
+
+//     if (renderer) {
+//       renderer.forceContextLoss();
+//       renderer.context = null;
+//       renderer.domElement = null;
+//       renderer = null;
+//     }
+
+//     arToolkitSource = null;
+//     if (arToolkitContext) {
+//       arToolkitContext = null;
+//     }
+//   }
+
+//   function update() {
+//     if (arToolkitSource?.ready !== false && arToolkitContext) {
+//       arToolkitContext.update(arToolkitSource.domElement);
+//     }
+//   }
+
+//   function render() {
+//     if (renderer) renderer.render(scene, camera);
+//   }
+
+//   // NOTE: We only handle updating data here, we let React handle the loop scheduling
+//   function animate() {
+//     deltaTime = clock?.getDelta();
+//     totalTime += deltaTime;
+//     update();
+//     render();
+//   }
+
+//   return { initialize, animate, scene, stop };
+// };
+
+// const ArLessonNew = ({
+//   setStartScanning,
+//   firstImage,
+//   secondImage,
+//   images,
+//   screenHeight,
+//   screenWidth,
+// }) => {
+//   const [arLoaded, setArLoaded] = useState(false);
+//   const requestRef = useRef();
+//   const arScriptInstance = useRef(null);
+
+//   // --- HOOK 1: Sequentially load the legacy THREEx scripts ---
+//   useEffect(() => {
+//     const loadScript = (src) => {
+//       return new Promise((resolve, reject) => {
+//         const script = document.createElement("script");
+//         script.src = src;
+//         script.async = false; // Forces scripts to load in order
+//         script.onload = resolve;
+//         script.onerror = reject;
+//         document.body.appendChild(script);
+//       });
+//     };
+
+//     const loadArScripts = async () => {
+//       try {
+//         await loadScript("/threex/threex-artoolkitsource.js");
+//         await loadScript("/threex/threex-artoolkitcontext.js");
+//         await loadScript("/threex/threex-arbasecontrols.js");
+//         await loadScript("/threex/threex-armarkercontrols.js");
+
+//         // --- THE EXPANDED PROTOTYPE PATCH ---
+//         // THREEx fails to copy modern ES6 class methods automatically.
+//         // We manually attach them to ALL THREEx modules here.
+//         const dispatcherMethods = [
+//           "addEventListener",
+//           "hasEventListener",
+//           "removeEventListener",
+//           "dispatchEvent",
+//         ];
+
+//         dispatcherMethods.forEach((method) => {
+//           if (window.THREEx) {
+//             if (window.THREEx.ArToolkitContext)
+//               window.THREEx.ArToolkitContext.prototype[method] =
+//                 THREE.EventDispatcher.prototype[method];
+//             if (window.THREEx.ArToolkitSource)
+//               window.THREEx.ArToolkitSource.prototype[method] =
+//                 THREE.EventDispatcher.prototype[method];
+//             if (window.THREEx.ArMarkerControls)
+//               window.THREEx.ArMarkerControls.prototype[method] =
+//                 THREE.EventDispatcher.prototype[method];
+//             if (window.THREEx.ArBaseControls)
+//               window.THREEx.ArBaseControls.prototype[method] =
+//                 THREE.EventDispatcher.prototype[method];
+//           }
+//         });
+//         // ------------------------------------
+
+//         console.log("Local THREEx scripts loaded and fully patched!");
+//         setArLoaded(true); // Unlock AR Initialization
+//       } catch (error) {
+//         console.error("Failed to load AR scripts", error);
+//       }
+//     };
+
+//     loadArScripts();
+
+//     return () => {
+//       // Cleanup scripts if component unmounts quickly
+//       const scripts = document.querySelectorAll('script[src^="/threex/"]');
+//       scripts.forEach((script) => document.body.removeChild(script));
+//     };
+//   }, []);
+
+//   // --- HOOK 2: Initialize AR ONLY after scripts are loaded ---
+//   useEffect(() => {
+//     if (!arLoaded) return; // Wait until ready
+
+//     arScriptInstance.current = initializeAR({
+//       setStartScanning,
+//       firstImage,
+//       secondImage,
+//       images,
+//       screenHeight,
+//       screenWidth,
+//     });
+
+//     arScriptInstance.current.initialize();
+
+//     // The perfectly sealed React animation loop!
+//     const animateLoop = () => {
+//       if (arScriptInstance.current) {
+//         arScriptInstance.current.animate();
+//         requestRef.current = requestAnimationFrame(animateLoop);
+//       }
+//     };
+
+//     requestRef.current = requestAnimationFrame(animateLoop);
+
+//     return () => {
+//       cancelAnimationFrame(requestRef.current);
+//       if (arScriptInstance.current) {
+//         arScriptInstance.current.stop();
+//         arScriptInstance.current = null;
+//       }
+//     };
+//   }, [arLoaded]);
+
+//   return (
+//     <div>
+//       {!arLoaded && (
+//         <div
+//           style={{
+//             position: "absolute",
+//             zIndex: 2,
+//             background: "white",
+//             padding: "10px",
+//           }}
+//         >
+//           Initializing AR Engine...
+//         </div>
+//       )}
+//       <button
+//         className="btn"
+//         style={{ position: "absolute", zIndex: 1, width: "7em" }}
+//         onClick={() => {
+//           setStartScanning(false);
+//         }}
+//       >
+//         Back
+//       </button>
+//     </div>
+//   );
+// };
+
+// export default ArLessonNew;
+
+// NEW END HERE ______________---------------------------------------------------_____________________-----------------------------
+
 // @ts-nocheck
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -627,6 +1087,11 @@ function cleanMaterial(material) {
   }
 }
 
+// ─────────────────────────────────────────────────────────────
+// UPDATED: accepts `customModelBlob` — a Blob of a GLB file.
+// If provided, it's used for ALL markers instead of the
+// even/odd engineer/customize split.
+// ─────────────────────────────────────────────────────────────
 const initializeAR = ({
   setStartScanning,
   firstImage,
@@ -634,6 +1099,7 @@ const initializeAR = ({
   images,
   screenHeight,
   screenWidth,
+  customModelBlob, // <── NEW PARAMETER
 }) => {
   var scene,
     camera,
@@ -707,7 +1173,7 @@ const initializeAR = ({
     arToolkitContext = new THREEx.ArToolkitContext({
       cameraParametersUrl: "/data/camera_para.dat",
       detectionMode: "mono",
-      maxDetectionRate: 30, // Optimized FPS
+      maxDetectionRate: 30,
       canvasWidth: 640,
       canvasHeight: 480,
     });
@@ -734,26 +1200,55 @@ const initializeAR = ({
     // Initialize the GLTFLoader
     const gltfLoader = new GLTFLoader();
 
-    // Create a Promise that loads the model only once
-    const loadEngineer = new Promise((resolve, reject) => {
-      gltfLoader.load(
-        "/assets/models/engenir_model.glb",
-        (gltf) => resolve(gltf),
-        undefined,
-        (error) => reject(error),
-      );
-    });
+    // ────────────────────────────────────────────────────────
+    // MODEL LOADING LOGIC
+    // If customModelBlob exists → load it from the Blob
+    // Otherwise → fall back to the original even/odd files
+    // ────────────────────────────────────────────────────────
 
-    const loadCustomize = new Promise((resolve, reject) => {
-      gltfLoader.load(
-        "/assets/models/costimize__model_v04 (1).glb",
-        (gltf) => resolve(gltf),
-        undefined,
-        (error) => reject(error),
-      );
-    });
+    let loadModelPromise;
 
-    // Loop through your markers
+    if (customModelBlob) {
+      // Convert the Blob into an ArrayBuffer, then parse it with GLTFLoader
+      loadModelPromise = customModelBlob.arrayBuffer().then((arrayBuffer) => {
+        return new Promise((resolve, reject) => {
+          gltfLoader.parse(
+            arrayBuffer,
+            "",
+            (gltf) => resolve(gltf),
+            (error) => reject(error),
+          );
+        });
+      });
+    }
+
+    // Original model loaders (only needed if no custom blob)
+    let loadEngineer;
+    let loadCustomize;
+
+    if (!customModelBlob) {
+      loadEngineer = new Promise((resolve, reject) => {
+        gltfLoader.load(
+          "/assets/models/engenir_model.glb",
+          (gltf) => resolve(gltf),
+          undefined,
+          (error) => reject(error),
+        );
+      });
+
+      loadCustomize = new Promise((resolve, reject) => {
+        gltfLoader.load(
+          "/assets/models/costimize__model_v04 (1).glb",
+          (gltf) => resolve(gltf),
+          undefined,
+          (error) => reject(error),
+        );
+      });
+    }
+
+    // ────────────────────────────────────────────────────────
+    // MARKER LOOP
+    // ────────────────────────────────────────────────────────
     for (let i = 0; i < 10; i++) {
       if (arToolkitContext) {
         let markerRoot = new THREE.Group();
@@ -771,35 +1266,44 @@ const initializeAR = ({
             smoothThreshold: 2,
           },
         );
-        if (i % 2 === 0) {
-          loadEngineer
+
+        if (customModelBlob) {
+          // ── CUSTOM MODEL PATH: same model on ALL markers ──
+          loadModelPromise
             .then((gltf) => {
-              const model = skeletonClone(gltf.scene); // proper skinned mesh clone
+              const model = skeletonClone(gltf.scene);
 
               model.traverse((child) => {
                 child.frustumCulled = false;
-
-                // if (child.isSkinnedMesh) {
-                //   child.material = new THREE.MeshBasicMaterial({
-                //     color: 0x88aaff,
-                //     skinning: true,
-                //     wireframe: true,
-                //   });
-                //   child.material.needsUpdate = true;
-                //   // NO skeleton recalculation — let the original bind pose stay intact
-                // } else if (child.isMesh) {
-                //   child.material = new THREE.MeshBasicMaterial({
-                //     color: 0x88aaff,
-                //     wireframe: true,
-                //   });
-                //   child.material.needsUpdate = true;
-                // }
               });
 
               const box = new THREE.Box3().setFromObject(model);
               const size = box.getSize(new THREE.Vector3());
               const maxDim = Math.max(size.x, size.y, size.z);
-              model.scale.set(1, 1, 1);
+              model.scale.set(1.5, 1.5, 1.5);
+
+              const scaledBox = new THREE.Box3().setFromObject(model);
+              model.position.y -= scaledBox.min.y;
+
+              markerRoot.add(model);
+            })
+            .catch((err) => {
+              console.error("Failed to load custom Tripo model:", err);
+            });
+        } else if (i % 2 === 0) {
+          // ── ORIGINAL EVEN PATH: engineer model ──
+          loadEngineer
+            .then((gltf) => {
+              const model = skeletonClone(gltf.scene);
+
+              model.traverse((child) => {
+                child.frustumCulled = false;
+              });
+
+              const box = new THREE.Box3().setFromObject(model);
+              const size = box.getSize(new THREE.Vector3());
+              const maxDim = Math.max(size.x, size.y, size.z);
+              model.scale.set(1.5, 1.5, 1.5);
 
               const scaledBox = new THREE.Box3().setFromObject(model);
               model.position.y -= scaledBox.min.y;
@@ -810,35 +1314,19 @@ const initializeAR = ({
               console.error("Failed to load engenir_model.glb:", err);
             });
         } else {
-          // Wait for the GLB to load, then clone it onto this marker
+          // ── ORIGINAL ODD PATH: customize model ──
           loadCustomize
             .then((gltf) => {
-              const model = skeletonClone(gltf.scene); // proper skinned mesh clone
+              const model = skeletonClone(gltf.scene);
 
               model.traverse((child) => {
                 child.frustumCulled = false;
-
-                // if (child.isSkinnedMesh) {
-                //   child.material = new THREE.MeshBasicMaterial({
-                //     color: 0x88aaff,
-                //     skinning: true,
-                //     wireframe: true,
-                //   });
-                //   child.material.needsUpdate = true;
-                //   // NO skeleton recalculation — let the original bind pose stay intact
-                // } else if (child.isMesh) {
-                //   child.material = new THREE.MeshBasicMaterial({
-                //     color: 0x88aaff,
-                //     wireframe: true,
-                //   });
-                //   child.material.needsUpdate = true;
-                // }
               });
 
               const box = new THREE.Box3().setFromObject(model);
               const size = box.getSize(new THREE.Vector3());
               const maxDim = Math.max(size.x, size.y, size.z);
-              model.scale.set(1, 1, 1);
+              model.scale.set(1.5, 1.5, 1.5);
 
               const scaledBox = new THREE.Box3().setFromObject(model);
               model.position.y -= scaledBox.min.y;
@@ -846,7 +1334,7 @@ const initializeAR = ({
               markerRoot.add(model);
             })
             .catch((err) => {
-              console.error("Failed to load engenir_model.glb:", err);
+              console.error("Failed to load costimize model:", err);
             });
         }
       }
@@ -905,7 +1393,6 @@ const initializeAR = ({
     if (renderer) renderer.render(scene, camera);
   }
 
-  // NOTE: We only handle updating data here, we let React handle the loop scheduling
   function animate() {
     deltaTime = clock?.getDelta();
     totalTime += deltaTime;
@@ -916,6 +1403,9 @@ const initializeAR = ({
   return { initialize, animate, scene, stop };
 };
 
+// ─────────────────────────────────────────────────────────────
+// COMPONENT — now accepts `customModelBlob` prop
+// ─────────────────────────────────────────────────────────────
 const ArLessonNew = ({
   setStartScanning,
   firstImage,
@@ -923,6 +1413,7 @@ const ArLessonNew = ({
   images,
   screenHeight,
   screenWidth,
+  customModelBlob, // <── NEW PROP
 }) => {
   const [arLoaded, setArLoaded] = useState(false);
   const requestRef = useRef();
@@ -934,7 +1425,7 @@ const ArLessonNew = ({
       return new Promise((resolve, reject) => {
         const script = document.createElement("script");
         script.src = src;
-        script.async = false; // Forces scripts to load in order
+        script.async = false;
         script.onload = resolve;
         script.onerror = reject;
         document.body.appendChild(script);
@@ -948,9 +1439,6 @@ const ArLessonNew = ({
         await loadScript("/threex/threex-arbasecontrols.js");
         await loadScript("/threex/threex-armarkercontrols.js");
 
-        // --- THE EXPANDED PROTOTYPE PATCH ---
-        // THREEx fails to copy modern ES6 class methods automatically.
-        // We manually attach them to ALL THREEx modules here.
         const dispatcherMethods = [
           "addEventListener",
           "hasEventListener",
@@ -974,10 +1462,9 @@ const ArLessonNew = ({
                 THREE.EventDispatcher.prototype[method];
           }
         });
-        // ------------------------------------
 
         console.log("Local THREEx scripts loaded and fully patched!");
-        setArLoaded(true); // Unlock AR Initialization
+        setArLoaded(true);
       } catch (error) {
         console.error("Failed to load AR scripts", error);
       }
@@ -986,7 +1473,6 @@ const ArLessonNew = ({
     loadArScripts();
 
     return () => {
-      // Cleanup scripts if component unmounts quickly
       const scripts = document.querySelectorAll('script[src^="/threex/"]');
       scripts.forEach((script) => document.body.removeChild(script));
     };
@@ -994,7 +1480,7 @@ const ArLessonNew = ({
 
   // --- HOOK 2: Initialize AR ONLY after scripts are loaded ---
   useEffect(() => {
-    if (!arLoaded) return; // Wait until ready
+    if (!arLoaded) return;
 
     arScriptInstance.current = initializeAR({
       setStartScanning,
@@ -1003,11 +1489,11 @@ const ArLessonNew = ({
       images,
       screenHeight,
       screenWidth,
+      customModelBlob, // <── PASS IT THROUGH
     });
 
     arScriptInstance.current.initialize();
 
-    // The perfectly sealed React animation loop!
     const animateLoop = () => {
       if (arScriptInstance.current) {
         arScriptInstance.current.animate();
